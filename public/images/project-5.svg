@@ -1,0 +1,33 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="750" fill="#F7FBFF"/>
+  <circle cx="225" cy="155" r="260" fill="#A7F3D0" fill-opacity=".36"/>
+  <circle cx="975" cy="165" r="270" fill="#BFDBFE" fill-opacity=".42"/>
+  <circle cx="930" cy="672" r="245" fill="#FBCFE8" fill-opacity=".32"/>
+  <rect x="410" y="70" width="380" height="610" rx="56" fill="#0F172A" fill-opacity=".88"/>
+  <rect x="434" y="102" width="332" height="546" rx="38" fill="#F8FAFC"/>
+  <rect x="472" y="138" width="126" height="16" rx="8" fill="#0F172A" fill-opacity=".72"/>
+  <rect x="472" y="188" width="256" height="118" rx="24" fill="url(#hero)"/>
+  <rect x="492" y="212" width="138" height="14" rx="7" fill="white" fill-opacity=".86"/>
+  <rect x="492" y="242" width="190" height="10" rx="5" fill="white" fill-opacity=".55"/>
+  <rect x="492" y="266" width="94" height="10" rx="5" fill="white" fill-opacity=".48"/>
+  <rect x="472" y="334" width="256" height="72" rx="20" fill="white" stroke="#E2E8F0"/>
+  <rect x="492" y="354" width="44" height="44" rx="14" fill="#22D3EE" fill-opacity=".22"/>
+  <rect x="552" y="354" width="148" height="12" rx="6" fill="#0F172A" fill-opacity=".62"/>
+  <rect x="552" y="380" width="112" height="10" rx="5" fill="#64748B" fill-opacity=".35"/>
+  <rect x="472" y="426" width="256" height="72" rx="20" fill="white" stroke="#E2E8F0"/>
+  <rect x="492" y="446" width="44" height="44" rx="14" fill="#A78BFA" fill-opacity=".2"/>
+  <rect x="552" y="446" width="136" height="12" rx="6" fill="#0F172A" fill-opacity=".62"/>
+  <rect x="552" y="472" width="160" height="10" rx="5" fill="#64748B" fill-opacity=".35"/>
+  <rect x="472" y="528" width="256" height="58" rx="22" fill="#0F172A"/>
+  <circle cx="516" cy="557" r="12" fill="#22D3EE"/>
+  <circle cx="600" cy="557" r="12" fill="#A78BFA"/>
+  <circle cx="684" cy="557" r="12" fill="#F472B6"/>
+  <path d="M260 480C358 428 438 434 540 486C642 538 744 553 858 489C972 425 1062 408 1200 468V750H260V480Z" fill="#67E8F9" fill-opacity=".18"/>
+  <defs>
+    <linearGradient id="hero" x1="472" x2="728" y1="188" y2="306" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#14B8A6"/>
+      <stop offset=".48" stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+</svg>

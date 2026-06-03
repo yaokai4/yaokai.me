@@ -1,0 +1,25 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#050816"/>
+  <path d="M0 460C170 398 255 405 394 459C540 516 686 545 846 455C1006 365 1076 261 1200 278V630H0V460Z" fill="url(#a)" opacity=".9"/>
+  <path d="M80 105H1120V525H80V105Z" stroke="url(#b)" stroke-width="2" opacity=".45"/>
+  <circle cx="957" cy="146" r="2" fill="#DDEBFF"/>
+  <circle cx="1000" cy="228" r="1.5" fill="#DDEBFF"/>
+  <circle cx="853" cy="250" r="1.5" fill="#DDEBFF"/>
+  <circle cx="190" cy="190" r="1.6" fill="#DDEBFF"/>
+  <circle cx="285" cy="277" r="1.2" fill="#DDEBFF"/>
+  <text x="120" y="254" fill="#F8FBFF" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="700">姚凯</text>
+  <text x="122" y="320" fill="#A9B6CA" font-family="Inter, Arial, sans-serif" font-size="28">代码 · 设计 · 产品 · AI 工作流</text>
+  <text x="122" y="390" fill="#77D2C2" font-family="Inter, Arial, sans-serif" font-size="24">创造有判断力的智能数字体验</text>
+  <defs>
+    <linearGradient id="a" x1="81" y1="361" x2="1112" y2="658" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2DD4BF"/>
+      <stop offset=".48" stop-color="#4EA8DE"/>
+      <stop offset="1" stop-color="#AC92EC"/>
+    </linearGradient>
+    <linearGradient id="b" x1="80" y1="105" x2="1120" y2="525" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4EA8DE"/>
+      <stop offset=".5" stop-color="#FFFFFF" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#AC92EC"/>
+    </linearGradient>
+  </defs>
+</svg>

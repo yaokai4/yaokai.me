@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">姚凯头像</title>
+  <desc id="desc">暖色纸张质感的原创线稿头像占位图</desc>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="64%">
+      <stop offset="0%" stop-color="#fff8dc"/>
+      <stop offset="58%" stop-color="#e9d7b4"/>
+      <stop offset="100%" stop-color="#c88867"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.18"/>
+      </feComponentTransfer>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect width="240" height="240" rx="120" fill="url(#bg)"/>
+  <g filter="url(#grain)">
+    <rect width="240" height="240" rx="120" fill="#fffdf4" opacity="0.28"/>
+  </g>
+  <g fill="none" stroke="#172033" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M75 170c15 22 74 25 99 3" stroke-width="5"/>
+    <path d="M80 151c10 5 18 6 27 3M136 154c11 3 21 1 31-5" stroke-width="4"/>
+    <path d="M83 113c17-29 54-42 89-19 20 13 28 36 22 64" stroke-width="6"/>
+    <path d="M82 117c-14 20-15 48-5 66M194 138c8 21 3 43-10 58" stroke-width="5"/>
+    <path d="M93 111c16-19 45-28 72-11 8 5 15 13 19 22" stroke-width="4"/>
+    <path d="M101 137c3-3 8-4 13-2M150 135c5-2 10-1 14 2" stroke-width="4"/>
+    <path d="M128 140c-1 12-4 21-10 27 6 5 15 5 22 0" stroke-width="4"/>
+    <path d="M108 187c18 11 43 10 60-2" stroke-width="4"/>
+  </g>
+  <path d="M64 119c11-39 51-67 96-51 18 6 32 18 40 34-33-13-68-10-101 9-13 8-24 12-35 8Z" fill="#1f2937" opacity="0.94"/>
+  <path d="M78 120c24-22 54-31 93-25" fill="none" stroke="#fff3d1" stroke-width="4" stroke-linecap="round" opacity="0.56"/>
+  <path d="M68 196c32 29 94 29 128-1-6 28-31 45-64 45-35 0-58-16-64-44Z" fill="#bb6f57" opacity="0.92"/>
+</svg>

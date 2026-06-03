@@ -1,0 +1,209 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("ADMIN")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Article {
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  excerpt        String
+  content        String
+  coverImage     String?
+  category       String
+  tags           String    @default("[]")
+  status         String    @default("DRAFT")
+  featured       Boolean   @default(false)
+  pinned         Boolean   @default(false)
+  seoTitle       String?
+  seoDescription String?
+  publishedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([featured])
+}
+
+model Project {
+  id         String   @id @default(cuid())
+  title      String
+  slug       String   @unique
+  excerpt    String
+  content    String
+  coverImage String?
+  category   String
+  techStack  String   @default("[]")
+  demoUrl    String?
+  githubUrl  String?
+  role       String
+  challenge  String
+  solution   String
+  result     String
+  featured   Boolean  @default(false)
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([featured, sortOrder])
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  content   String
+  images    String   @default("[]")
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([visible, createdAt])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  content   String
+  read      Boolean  @default(false)
+  ipHash    String?
+  createdAt DateTime @default(now())
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Skill {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  level       Int
+  description String
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category, sortOrder])
+}
+
+model TimelineItem {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        String
+  type        String
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Guide {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  excerpt     String
+  content     String
+  coverImage  String?
+  category    String
+  tags        String    @default("[]")
+  difficulty  String
+  audience    String
+  readingTime String
+  featured    Boolean   @default(false)
+  status      String    @default("DRAFT")
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([featured, category])
+}
+
+model Resource {
+  id          String   @id @default(cuid())
+  title       String
+  url         String
+  description String
+  category    String
+  tags        String   @default("[]")
+  reason      String
+  useCase     String
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([featured, category])
+}
+
+model NowItem {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  type        String
+  status      String
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([type, sortOrder])
+}
+
+model Playbook {
+  id           String   @id @default(cuid())
+  title        String
+  slug         String   @unique
+  scenario     String
+  principles   String   @default("[]")
+  steps        String   @default("[]")
+  example      String
+  relatedLinks String   @default("[]")
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([featured])
+}
+
+model ManifestoItem {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  sortOrder Int      @default(0)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([visible, sortOrder])
+}
+
+model ContentCollection {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  type        String
+  itemIds     String   @default("[]")
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([type, featured])
+}
