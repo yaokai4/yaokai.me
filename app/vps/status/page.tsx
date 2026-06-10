@@ -129,7 +129,7 @@ export default async function VpsStatusPage() {
             </div>
             <div className="mt-5 grid gap-3">
               {services.length ? services.map((service) => (
-                <article key={service.id} className="grid gap-3 rounded-md border border-white/70 bg-white/66 p-4 shadow-sm md:grid-cols-[1fr_auto_auto] md:items-center">
+                <article key={service.id} className="grid gap-3 rounded-md border border-[#DAE2EA] bg-white p-4 shadow-sm md:grid-cols-[1fr_auto_auto] md:items-center">
                   <div>
                     <h3 className="font-black text-slate-950">{service.name}</h3>
                     <p className="mt-1 text-sm text-slate-500">{service.type}</p>
@@ -138,7 +138,7 @@ export default async function VpsStatusPage() {
                   <p className="text-sm text-slate-500">{service.lastCheckedAt ? formatDate(service.lastCheckedAt) : "尚未检查"}</p>
                 </article>
               )) : (
-                <p className="rounded-md border border-dashed border-slate-300 bg-white/60 p-5 text-sm text-slate-500">暂无公开服务状态。</p>
+                <p className="rounded-md border border-dashed border-slate-300 bg-white p-5 text-sm text-slate-500">暂无公开服务状态。</p>
               )}
             </div>
           </section>
@@ -147,7 +147,7 @@ export default async function VpsStatusPage() {
             <Badge>节点状态</Badge>
             <div className="mt-5 grid gap-3">
               {nodes.length ? nodes.map((node) => (
-                <article key={node.id} className="grid gap-3 rounded-md border border-white/70 bg-white/66 p-4 shadow-sm md:grid-cols-[1fr_auto_auto] md:items-center">
+                <article key={node.id} className="grid gap-3 rounded-md border border-[#DAE2EA] bg-white p-4 shadow-sm md:grid-cols-[1fr_auto_auto] md:items-center">
                   <div>
                     <h3 className="font-black text-slate-950">{node.name}</h3>
                     <p className="mt-1 text-sm text-slate-500">{node.provider} / {node.region}</p>
@@ -156,7 +156,7 @@ export default async function VpsStatusPage() {
                   <p className="text-sm text-slate-500">{node.lastCheckedAt ? formatDate(node.lastCheckedAt) : "尚未检查"}</p>
                 </article>
               )) : (
-                <p className="rounded-md border border-dashed border-slate-300 bg-white/60 p-5 text-sm text-slate-500">暂无节点状态。</p>
+                <p className="rounded-md border border-dashed border-slate-300 bg-white p-5 text-sm text-slate-500">暂无节点状态。</p>
               )}
             </div>
           </section>
@@ -165,7 +165,7 @@ export default async function VpsStatusPage() {
             <Badge>历史故障记录</Badge>
             <div className="mt-5 grid gap-3">
               {alerts.length ? alerts.map((alert) => (
-                <article key={alert.id} className="grid gap-3 rounded-md border border-white/70 bg-white/66 p-4 shadow-sm md:grid-cols-[1fr_auto_auto] md:items-center">
+                <article key={alert.id} className="grid gap-3 rounded-md border border-[#DAE2EA] bg-white p-4 shadow-sm md:grid-cols-[1fr_auto_auto] md:items-center">
                   <div>
                     <h3 className="font-black text-slate-950">{alert.title}</h3>
                     <p className="mt-1 text-sm text-slate-500">触发：{formatDate(alert.triggeredAt)}</p>
@@ -174,7 +174,7 @@ export default async function VpsStatusPage() {
                   <StatusBadge label={alert.status === "resolved" ? "已解决" : alert.status === "acknowledged" ? "已确认" : "处理中"} tone={tone(alert.status)} />
                 </article>
               )) : (
-                <p className="rounded-md border border-dashed border-slate-300 bg-white/60 p-5 text-sm text-slate-500">暂无公开故障记录。</p>
+                <p className="rounded-md border border-dashed border-slate-300 bg-white p-5 text-sm text-slate-500">暂无公开故障记录。</p>
               )}
             </div>
           </section>

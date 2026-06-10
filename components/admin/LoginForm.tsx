@@ -46,7 +46,7 @@ export function LoginForm({
   }
 
   return (
-    <form onSubmit={submit} className="grid gap-5 rounded-md border border-slate-200/80 bg-white/76 p-6 shadow-[0_28px_90px_rgba(78,89,132,0.14)] backdrop-blur-xl">
+    <form onSubmit={submit} className="grid gap-5 rounded-md border border-slate-200/80 bg-white p-6 shadow-[0_1px_2px_rgba(15,45,78,0.04)]">
       <label className="grid gap-2 text-sm font-medium text-slate-700">
         账号
         <span className="relative">
@@ -54,7 +54,7 @@ export function LoginForm({
           <input
             value={form.account}
             onChange={(event) => setForm({ ...form, account: event.target.value })}
-            className="h-[52px] w-full rounded-md border border-slate-200 bg-white/86 pl-11 pr-4 text-base text-slate-950 outline-none transition placeholder:text-slate-300 focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-100"
+            className="h-[52px] w-full rounded-md border border-slate-200 bg-white pl-11 pr-4 text-base text-slate-950 outline-none transition placeholder:text-slate-300 focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-100"
             placeholder="yaokai"
             autoComplete="username"
           />
@@ -68,7 +68,7 @@ export function LoginForm({
             type={showPassword ? "text" : "password"}
             value={form.password}
             onChange={(event) => setForm({ ...form, password: event.target.value })}
-            className="h-[52px] w-full rounded-md border border-slate-200 bg-white/86 pl-11 pr-12 text-base text-slate-950 outline-none transition placeholder:text-slate-300 focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-100"
+            className="h-[52px] w-full rounded-md border border-slate-200 bg-white pl-11 pr-12 text-base text-slate-950 outline-none transition placeholder:text-slate-300 focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-100"
             placeholder="••••••••"
             autoComplete="current-password"
           />
@@ -85,7 +85,7 @@ export function LoginForm({
       <button
         type="submit"
         disabled={loading}
-        className="inline-flex h-[52px] items-center justify-center gap-2 rounded-md bg-slate-950 px-5 text-base font-semibold text-white shadow-[0_18px_50px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex h-[52px] items-center justify-center gap-2 rounded-md bg-slate-950 px-5 text-base font-semibold text-white shadow-[0_1px_2px_rgba(15,45,78,0.04)] transition hover:-translate-y-0.5 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
       >
         <LogIn className="h-4 w-4" />
         {loading ? "登录中..." : submitLabel}

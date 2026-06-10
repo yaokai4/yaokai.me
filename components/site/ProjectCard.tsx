@@ -32,7 +32,7 @@ export function ProjectCard({ project, variant = "default" }: { project: Project
           <Image src={project.coverImage} alt={project.title} fill className="object-cover brightness-[1.05] contrast-[0.96] saturate-[1.04] transition duration-500 group-hover:scale-105" sizes={isFeatured ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 768px) 100vw, 50vw"} />
         ) : null}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(255,255,255,0.42),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.12),rgba(99,102,241,0.10))]" />
-        {project.featured ? <span className="absolute left-4 top-4 rounded-full border border-indigo-200/70 bg-white/82 px-3 py-1.5 text-xs font-black text-indigo-700 shadow-sm backdrop-blur">{t.featured}</span> : null}
+        {project.featured ? <span className="absolute left-4 top-4 rounded-full border border-indigo-200/70 bg-white px-3 py-1.5 text-xs font-black text-indigo-700 shadow-sm">{t.featured}</span> : null}
       </div>
       <div className={cn("p-5", isFeatured && "flex flex-col justify-center p-6 md:p-8")}>
         <div className="mb-4 flex items-center justify-between gap-3">

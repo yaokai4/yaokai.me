@@ -37,10 +37,10 @@ export default async function NowPage() {
           </p>
         </aside>
         <div className="relative grid gap-5">
-          <div className="absolute bottom-0 left-[17px] top-0 hidden w-px bg-gradient-to-b from-indigo-300 via-sky-300 to-transparent md:block" />
+          <div className="absolute bottom-0 left-[17px] top-0 hidden w-px bg-[#DAE2EA] md:block" />
           {items.map((item, index) => (
             <article key={item.id} className="premium-glass-card relative rounded-md p-5 md:ml-12">
-              <div className="absolute -left-[52px] top-5 hidden h-9 w-9 place-items-center rounded-md border border-indigo-200/70 bg-white/82 text-indigo-700 shadow-sm backdrop-blur md:grid">
+              <div className="absolute -left-[52px] top-5 hidden h-9 w-9 place-items-center rounded-md border border-indigo-200 bg-white text-indigo-800 md:grid">
                 <Clock className="h-4 w-4" />
               </div>
               <div className="flex items-center justify-between gap-4">

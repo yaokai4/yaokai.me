@@ -27,6 +27,15 @@ const config: Config = {
           "Apple Color Emoji",
           "Segoe UI Emoji",
           "Segoe UI Symbol"
+        ],
+        serif: [
+          "Hiragino Mincho ProN",
+          "Yu Mincho",
+          "Songti SC",
+          "Noto Serif JP",
+          "Noto Serif SC",
+          "Georgia",
+          "serif"
         ]
       },
       colors: {
@@ -39,7 +48,34 @@ const config: Config = {
         accent: "hsl(var(--accent))",
         success: "hsl(var(--success))",
         warning: "hsl(var(--warning))",
-        danger: "hsl(var(--danger))"
+        danger: "hsl(var(--danger))",
+        // 简历同源色板:藏青(覆盖 indigo)+ 钢青(覆盖 sky),全站统一编辑风
+        indigo: {
+          50: "#F3F6FA",
+          100: "#E7EEF5",
+          200: "#C9D6E2",
+          300: "#9FB6CB",
+          400: "#6E8FAC",
+          500: "#4A7095",
+          600: "#2E5578",
+          700: "#1D4263",
+          800: "#14365D",
+          900: "#0F2D4E",
+          950: "#0A1F36"
+        },
+        sky: {
+          50: "#F1F6FA",
+          100: "#E2EDF5",
+          200: "#C4DAEA",
+          300: "#97BCD9",
+          400: "#6699C2",
+          500: "#3D6691",
+          600: "#335780",
+          700: "#29476B",
+          800: "#1F3A57",
+          900: "#16293D",
+          950: "#0E1C2B"
+        }
       },
       boxShadow: {
         glow: "0 0 60px rgba(78, 168, 222, 0.18)",

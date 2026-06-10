@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, ChevronDown, Menu, Search, Sparkles, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Mail, Menu, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
@@ -58,15 +58,13 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-5 pt-4 sm:px-8">
-      <nav className="mx-auto flex h-16 w-full max-w-[1180px] items-center justify-between gap-3 rounded-[18px] border border-slate-900/10 bg-white/86 px-3 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur-2xl">
-        <Link href={withLocalePath("/", locale)} className="group inline-flex min-w-0 items-center gap-2 rounded-md px-2 py-1.5 focus-ring">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-indigo-200/70 bg-gradient-to-br from-indigo-100 via-white to-sky-100 text-sm font-black text-slate-950 shadow-sm">
-            YK
-          </span>
-          <span className="hidden min-w-0 sm:block">
-            <span className="block text-sm font-black leading-4 text-slate-950">姚凯</span>
-            <span className="block text-[11px] font-semibold leading-4 text-slate-500">{copy.brandSubtitle}</span>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[#DAE2EA] bg-white">
+      <nav className="mx-auto flex h-16 w-full max-w-[1180px] items-center justify-between gap-3 px-5 sm:px-8">
+        <Link href={withLocalePath("/", locale)} className="group inline-flex min-w-0 items-center gap-3 rounded-md px-1 py-1.5 focus-ring">
+          <span className="font-serif text-lg font-semibold leading-none tracking-[0.22em] text-indigo-900">姚凱</span>
+          <span className="hidden min-w-0 border-l border-[#DAE2EA] pl-3 sm:block">
+            <span className="block text-[10px] font-bold uppercase leading-4 tracking-[0.3em] text-sky-600">Yao Kai</span>
+            <span className="block text-[10px] font-semibold leading-4 tracking-wider text-slate-500">{copy.brandSubtitle}</span>
           </span>
         </Link>
 
@@ -77,13 +75,13 @@ export function Navbar() {
               href={withLocalePath(item.href, locale)}
               onClick={() => setMoreOpen(false)}
               className={cn(
-                "relative rounded-full px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-indigo-50/80 hover:text-slate-950 focus-ring",
-                isActive(activePathname, item.href) && "bg-indigo-50 text-slate-950 shadow-sm"
+                "relative rounded-sm px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-indigo-900 focus-ring",
+                isActive(activePathname, item.href) && "font-bold text-indigo-900"
               )}
               aria-current={isActive(activePathname, item.href) ? "page" : undefined}
             >
               {item.label}
-              {isActive(activePathname, item.href) ? <span className="absolute inset-x-3 -bottom-1 h-px rounded-full bg-gradient-to-r from-indigo-500 to-sky-400" /> : null}
+              {isActive(activePathname, item.href) ? <span className="absolute inset-x-3 -bottom-[13px] h-[2px] bg-indigo-900" /> : null}
             </Link>
           ))}
 
@@ -93,8 +91,8 @@ export function Navbar() {
             trigger={
               <button
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-indigo-50/80 hover:text-slate-950 focus-ring",
-                  moreActive && "bg-indigo-50 text-slate-950 shadow-sm"
+                  "inline-flex items-center gap-1 rounded-sm px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-indigo-900 focus-ring",
+                  moreActive && "font-bold text-indigo-900"
                 )}
                 type="button"
                 aria-expanded={moreOpen}
@@ -135,19 +133,19 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
-            className="grid h-10 w-10 place-items-center rounded-full border border-slate-900/10 bg-white/70 text-slate-600 shadow-sm transition hover:bg-white hover:text-slate-950 focus-ring"
+            className="grid h-10 w-10 place-items-center rounded-full border border-indigo-200 bg-white text-slate-600 transition hover:border-indigo-400 hover:text-indigo-900 focus-ring"
             aria-label={copy.searchLabel}
           >
             <Search className="h-4 w-4" />
           </button>
           <LanguageSwitcher locale={locale} onChange={switchLocale} />
-          <Link href={withLocalePath("/contact", locale)} className="magnetic-button hidden h-10 items-center gap-2 rounded-full bg-slate-950 px-4 text-sm font-bold text-white shadow-[0_12px_30px_rgba(17,24,39,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-800 sm:inline-flex focus-ring">
-            <Sparkles className="h-4 w-4" />
+          <Link href={withLocalePath("/contact", locale)} className="magnetic-button hidden h-10 items-center gap-2 rounded-full border border-indigo-900 bg-indigo-900 px-4 text-sm font-bold text-white shadow-[0_2px_10px_rgba(15,45,78,0.2)] transition hover:-translate-y-0.5 hover:bg-indigo-800 sm:inline-flex focus-ring">
+            <Mail className="h-4 w-4" />
             {copy.contactCta}
           </Link>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-full border border-slate-900/10 bg-white/70 text-slate-700 shadow-sm transition hover:bg-white lg:hidden focus-ring"
+            className="grid h-10 w-10 place-items-center rounded-full border border-indigo-200 bg-white text-slate-700 transition hover:border-indigo-400 lg:hidden focus-ring"
             onClick={() => setOpen(true)}
             aria-label={copy.mobileTitle}
             aria-expanded={open}
@@ -171,7 +169,7 @@ export function Navbar() {
             }}
           >
             <motion.div
-              className="absolute right-3 top-3 grid w-[min(420px,calc(100%-24px))] gap-4 rounded-[22px] border border-slate-900/10 bg-white/96 p-4 shadow-[0_28px_120px_rgba(15,23,42,0.18)] backdrop-blur-2xl"
+              className="absolute right-3 top-3 grid w-[min(420px,calc(100%-24px))] gap-4 rounded-lg border border-[#DAE2EA] bg-white p-4 shadow-[0_10px_40px_rgba(15,45,78,0.14)]"
               initial={{ opacity: 0, x: 18, scale: 0.98 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 18, scale: 0.98 }}
@@ -194,7 +192,7 @@ export function Navbar() {
                     href={withLocalePath(item.href, locale)}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "min-h-11 rounded-[14px] border border-slate-900/10 bg-white/70 px-3 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-white focus-ring",
+                      "min-h-11 rounded-[14px] border border-[#DAE2EA] bg-white px-3 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-white focus-ring",
                       isActive(activePathname, item.href) && "border-indigo-200 bg-indigo-50 text-indigo-900"
                     )}
                     aria-current={isActive(activePathname, item.href) ? "page" : undefined}
@@ -208,7 +206,7 @@ export function Navbar() {
                 {moreGroups.map((group) => {
                   const expanded = mobileExpanded[group.title] ?? true;
                   return (
-                    <div key={group.title} className="rounded-[16px] border border-slate-900/10 bg-white/70 p-2">
+                    <div key={group.title} className="rounded-[16px] border border-[#DAE2EA] bg-white p-2">
                       <button
                         type="button"
                         onClick={() => setMobileExpanded((current) => ({ ...current, [group.title]: !expanded }))}
@@ -247,7 +245,7 @@ export function Navbar() {
                     type="button"
                     onClick={() => switchLocale(item)}
                     className={cn(
-                      "h-11 rounded-full border border-slate-900/10 bg-white/60 text-xs font-black text-slate-600 shadow-sm focus-ring",
+                      "h-11 rounded-full border border-[#DAE2EA] bg-white text-xs font-black text-slate-600 shadow-sm focus-ring",
                       locale === item && "border-indigo-700 bg-indigo-700 text-white"
                     )}
                   >
@@ -263,13 +261,13 @@ export function Navbar() {
                     setOpen(false);
                     window.dispatchEvent(new Event("open-command-palette"));
                   }}
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-slate-900/10 bg-white/70 text-sm font-bold text-slate-800 focus-ring"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-[#DAE2EA] bg-white text-sm font-bold text-slate-800 focus-ring"
                 >
                   <Search className="h-4 w-4" />
                   {copy.mobileSearch}
                 </button>
-                <Link href={withLocalePath("/contact", locale)} className="magnetic-button inline-flex h-12 items-center justify-center gap-2 rounded-full bg-slate-950 text-sm font-bold text-white focus-ring">
-                  <Sparkles className="h-4 w-4" />
+                <Link href={withLocalePath("/contact", locale)} className="magnetic-button inline-flex h-12 items-center justify-center gap-2 rounded-full border border-indigo-900 bg-indigo-900 text-sm font-bold text-white focus-ring">
+                  <Mail className="h-4 w-4" />
                   {copy.mobileContact}
                 </Link>
               </div>
@@ -283,7 +281,7 @@ export function Navbar() {
 
 function LanguageSwitcher({ locale, onChange }: { locale: Locale; onChange: (locale: Locale) => void }) {
   return (
-    <div className="hidden items-center gap-1 rounded-full border border-slate-900/10 bg-white/64 p-1 shadow-sm backdrop-blur sm:flex" aria-label="Language">
+    <div className="hidden items-center gap-1 rounded-full border border-indigo-200 bg-white p-1 sm:flex" aria-label="Language">
       {locales.map((item) => (
         <button
           key={item}

@@ -20,7 +20,7 @@ export function SearchInput({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="h-12 w-full rounded-md border border-slate-900/10 bg-white/76 pl-11 pr-11 text-sm font-semibold text-slate-950 shadow-sm outline-none backdrop-blur transition placeholder:text-slate-400 focus:border-indigo-300/90 focus:bg-white focus:ring-4 focus:ring-indigo-200/55"
+        className="h-12 w-full rounded-md border border-[#DAE2EA] bg-white pl-11 pr-11 text-sm font-semibold text-slate-950 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-300/90 focus:bg-white focus:ring-4 focus:ring-indigo-200/55"
       />
       {value ? (
         <button

@@ -98,12 +98,12 @@ function FeaturedArticle({ article }: { article: Article }) {
         </span>
       </div>
       <div className="relative min-h-[260px] overflow-hidden bg-[radial-gradient(circle_at_18%_8%,rgba(199,210,254,0.42),transparent_36%),radial-gradient(circle_at_86%_14%,rgba(186,230,253,0.38),transparent_38%),linear-gradient(135deg,#f8fafc,#f6fdff)] p-6">
-        <div className="absolute inset-4 rounded-md border border-white/70 bg-white/30" />
+        <div className="absolute inset-4 rounded-md border border-[#DAE2EA] bg-white" />
         <div className="relative z-10 flex h-full flex-col justify-between">
-          <div className="grid h-14 w-14 place-items-center rounded-md border border-white/80 bg-white/78 text-indigo-700 shadow-sm backdrop-blur">
+          <div className="grid h-14 w-14 place-items-center rounded-md border border-[#DAE2EA] bg-white text-indigo-700 shadow-sm">
             <PenLine className="h-6 w-6" />
           </div>
-          <div className="rounded-md border border-white/78 bg-white/72 p-4 shadow-sm backdrop-blur">
+          <div className="rounded-md border border-[#DAE2EA] bg-white p-4 shadow-sm">
             <FileText className="h-5 w-5 text-indigo-700" />
             <p className="mt-3 text-xs font-black uppercase text-slate-500">{t.featureKicker}</p>
             <p className="mt-1 text-sm font-bold text-slate-950">{t.featureLead}</p>

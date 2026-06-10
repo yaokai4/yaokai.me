@@ -29,7 +29,7 @@ export default async function ManifestoPage() {
         description="这些原则解释我为什么重视工程可靠性、产品判断、设计审美、AI 协作、真实证据和长期可维护系统。"
       />
       <section className="section-container py-16">
-        <div className="liquid-panel rounded-md border border-white/72 bg-white/72 p-6 shadow-[0_34px_120px_rgba(71,85,105,0.14)] backdrop-blur-2xl md:p-10">
+        <div className="liquid-panel rounded-md border border-[#DAE2EA] bg-white p-6 shadow-[0_1px_2px_rgba(15,45,78,0.04)] md:p-10">
           <div className="relative z-10 grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
             <div>
               <Badge>Principles Wall</Badge>
@@ -41,7 +41,7 @@ export default async function ManifestoPage() {
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               {items.map((item, index) => (
-                <article key={item.id} className="rounded-md border border-white/72 bg-white/68 p-5 shadow-sm backdrop-blur">
+                <article key={item.id} className="rounded-md border border-[#DAE2EA] bg-white p-5 shadow-sm">
                   <div className="flex items-start justify-between gap-4">
                     <span className="text-sm font-black text-indigo-700">{String(index + 1).padStart(2, "0")}</span>
                     <Quote className="h-5 w-5 text-indigo-300" />

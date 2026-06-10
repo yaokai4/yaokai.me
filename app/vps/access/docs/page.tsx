@@ -44,7 +44,7 @@ export default function VpsAccessDocsPage() {
           <Badge>申请流程</Badge>
           <div className="mt-5 grid gap-4">
             {steps.map(([title, body], index) => (
-              <article key={title} className="rounded-md border border-white/70 bg-white/64 p-4">
+              <article key={title} className="rounded-md border border-[#DAE2EA] bg-white p-4">
                 <p className="text-xs font-black text-indigo-700">{String(index + 1).padStart(2, "0")}</p>
                 <h2 className="mt-2 font-black text-slate-950">{title}</h2>
                 <p className="mt-2 text-sm leading-6 text-slate-600">{body}</p>
@@ -65,7 +65,7 @@ export default function VpsAccessDocsPage() {
       </section>
 
       <section className="section-container pb-20">
-        <div className="rounded-md border border-slate-200/80 bg-white/76 p-5 text-sm leading-7 text-slate-700 shadow-sm backdrop-blur">
+        <div className="rounded-md border border-slate-200/80 bg-white p-5 text-sm leading-7 text-slate-700 shadow-sm">
           <div className="flex gap-3">
             <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-indigo-700" />
             <div>

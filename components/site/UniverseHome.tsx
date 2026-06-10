@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BookOpen, BrainCircuit, CheckCircle2, Code2, Compass, Mail, PenLine, Rocket, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, BrainCircuit, CheckCircle2, Code2, Compass, Mail, PenLine, Rocket } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
@@ -361,7 +361,7 @@ const articleTranslations: Record<string, Partial<Record<Locale, Pick<Article, "
   }
 };
 
-export function UniverseHome({ locale, siteName, avatarUrl, projects, articles, guides, nowItems }: UniverseHomeProps) {
+export function UniverseHome({ locale, siteName, projects, articles, guides, nowItems }: UniverseHomeProps) {
   const t = copy[locale];
   const selectedProjects = preferFeatured(projects).slice(0, 3).map((project) => localizeProject(project, locale));
   const selectedArticles = preferFeatured(articles).slice(0, 2).map((article) => localizeArticle(article, locale));
@@ -380,17 +380,18 @@ export function UniverseHome({ locale, siteName, avatarUrl, projects, articles, 
     <div className="relative overflow-hidden pb-8">
       <section className="wide-container relative grid gap-10 pb-14 pt-32 md:pb-20 md:pt-36 lg:min-h-[74svh] lg:grid-cols-[1.04fr_0.96fr] lg:items-center">
         <div className="min-w-0">
-          <Badge className="mb-5">{t.heroBadge}</Badge>
-          <h1 className="hero-copy text-5xl font-black leading-none text-slate-950 sm:text-6xl md:text-7xl lg:text-8xl">
+          <p className="editorial-label mb-5">{t.heroBadge}</p>
+          <h1 className="hero-copy font-serif text-5xl font-semibold leading-[1.05] tracking-[0.06em] text-indigo-950 sm:text-6xl md:text-7xl">
             {t.heroTitle}
           </h1>
-          <p className="mt-5 max-w-full text-lg font-bold leading-8 text-slate-800 sm:text-xl md:text-2xl">
+          <p className="mt-6 max-w-full text-lg font-bold leading-8 text-slate-800 sm:text-xl md:text-2xl">
             <RoleSubtitle text={t.heroSubtitle} />
           </p>
-          <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600 md:text-lg md:leading-9">{t.heroLead}</p>
+          <div className="editorial-bar mt-6 w-full max-w-xl" />
+          <p className="mt-6 max-w-3xl text-base leading-8 text-slate-600 md:text-lg md:leading-9">{t.heroLead}</p>
           <div className="mt-7 flex flex-wrap gap-2">
             {t.tags.map((tag) => (
-              <span key={tag} className="max-w-full rounded-full border border-indigo-200/70 bg-white/76 px-3 py-1.5 text-xs font-bold text-slate-700 shadow-sm backdrop-blur">
+              <span key={tag} className="max-w-full rounded-full border border-indigo-200 bg-white px-3 py-1.5 text-xs font-semibold tracking-wide text-indigo-800">
                 {tag}
               </span>
             ))}
@@ -407,10 +408,10 @@ export function UniverseHome({ locale, siteName, avatarUrl, projects, articles, 
           </div>
         </div>
 
-        <aside className="relative mx-auto w-full max-w-xl rounded-lg border border-slate-900/10 bg-white/80 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.09)] backdrop-blur-xl md:p-6">
+        <aside className="relative mx-auto w-full max-w-xl rounded-lg border border-[#DAE2EA] bg-white p-5 shadow-[0_1px_2px_rgba(15,45,78,0.04)] md:p-6">
           <div className="flex items-center gap-4">
-            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-indigo-100 bg-gradient-to-br from-indigo-50 via-white to-sky-50">
-              <Image src={avatarUrl} alt={siteName} fill className="object-cover p-4" sizes="96px" priority />
+            <div className="relative h-20 w-[60px] shrink-0 overflow-hidden rounded-md border border-indigo-200 bg-indigo-50/60 shadow-[0_2px_8px_rgba(15,45,78,0.12)]">
+              <Image src="/images/yaokai-portrait.jpg" alt={siteName} fill className="object-cover" sizes="60px" priority />
             </div>
             <div className="min-w-0">
               <p className="text-sm font-black text-slate-950">{siteName}</p>
@@ -432,7 +433,7 @@ export function UniverseHome({ locale, siteName, avatarUrl, projects, articles, 
               </div>
             ))}
           </div>
-          <div className="mt-7 border-t border-slate-900/10 pt-5">
+          <div className="mt-7 border-t border-[#DAE2EA] pt-5">
             <p className="text-xs font-black uppercase tracking-wide text-slate-400">{t.workflowLabel}</p>
             <p className="mt-2 text-sm font-bold leading-6 text-slate-700">{t.workflowLine}</p>
           </div>
@@ -498,13 +499,10 @@ export function UniverseHome({ locale, siteName, avatarUrl, projects, articles, 
         </div>
       </section>
 
-      <section className="border-y border-slate-900/10 bg-white/72 py-16 backdrop-blur md:py-20">
+      <section className="border-y border-[#DAE2EA] bg-white py-16 md:py-20">
         <div className="section-container grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-200/70 bg-indigo-50 px-3 py-2 text-xs font-black text-indigo-700">
-              <Sparkles className="h-4 w-4" />
-              Contact
-            </div>
+            <p className="editorial-label">Contact</p>
             <h2 className="mt-5 max-w-4xl text-4xl font-black leading-tight text-slate-950 md:text-6xl">{t.finalTitle}</h2>
             <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600">{t.finalLead}</p>
           </div>
@@ -535,8 +533,9 @@ function localizeArticle(article: Article, locale: Locale): Article {
 function SectionIntro({ eyebrow, title, description }: { eyebrow: string; title: string; description?: string }) {
   return (
     <div className="mb-9 max-w-3xl">
-      <Badge className="mb-4">{eyebrow}</Badge>
-      <h2 className="text-3xl font-black leading-tight text-slate-950 md:text-5xl">{title}</h2>
+      <p className="editorial-label mb-3">{eyebrow}</p>
+      <h2 className="text-2xl font-black leading-tight tracking-tight text-indigo-950 md:text-4xl">{title}</h2>
+      <div className="editorial-bar mt-4 w-full" />
       {description ? <p className="mt-4 text-base leading-8 text-slate-600 md:text-lg">{description}</p> : null}
     </div>
   );
@@ -580,7 +579,7 @@ function ProjectTile({
   const result = locale === "zh" ? project.result || labels.defaultResult : labels.defaultResult;
 
   return (
-    <Link href={withLocalePath(`/projects/${project.slug}`, locale)} className="group grid h-full overflow-hidden rounded-lg border border-slate-900/10 bg-white/82 shadow-[0_16px_44px_rgba(15,23,42,0.07)] backdrop-blur transition hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_22px_58px_rgba(15,23,42,0.11)] focus-ring">
+    <Link href={withLocalePath(`/projects/${project.slug}`, locale)} className="group grid h-full overflow-hidden rounded-lg border border-[#DAE2EA] bg-white shadow-[0_1px_2px_rgba(15,45,78,0.04)] transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-[0_6px_20px_rgba(15,45,78,0.08)] focus-ring">
       <div className="relative aspect-[16/10] bg-indigo-50">
         {project.coverImage ? (
           <Image src={project.coverImage} alt={project.title} fill className="object-cover transition duration-500 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 33vw" />
@@ -616,7 +615,7 @@ function DetailLine({ label, value }: { label: string; value: string }) {
 
 function CapabilityCard({ title, description, icon }: { title: string; description: string; icon: React.ReactNode }) {
   return (
-    <article className="rounded-lg border border-slate-900/10 bg-white/80 p-5 shadow-[0_16px_44px_rgba(15,23,42,0.07)] backdrop-blur">
+    <article className="rounded-lg border border-[#DAE2EA] bg-white p-5 shadow-[0_1px_2px_rgba(15,45,78,0.04)]">
       <div className="grid h-11 w-11 place-items-center rounded-lg bg-indigo-50 text-indigo-700">{icon}</div>
       <h3 className="mt-6 text-xl font-black leading-tight text-slate-950">{title}</h3>
       <p className="mt-3 text-sm leading-7 text-slate-600">{description}</p>
@@ -626,7 +625,7 @@ function CapabilityCard({ title, description, icon }: { title: string; descripti
 
 function ArticleTile({ article, locale, label, featuredLabel }: { article: Article; locale: Locale; label: string; featuredLabel: string }) {
   return (
-    <Link href={withLocalePath(`/blog/${article.slug}`, locale)} className="group block h-full rounded-lg border border-slate-900/10 bg-white/82 p-5 shadow-[0_16px_44px_rgba(15,23,42,0.07)] backdrop-blur transition hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_22px_58px_rgba(15,23,42,0.11)] focus-ring">
+    <Link href={withLocalePath(`/blog/${article.slug}`, locale)} className="group block h-full rounded-lg border border-[#DAE2EA] bg-white p-5 shadow-[0_1px_2px_rgba(15,45,78,0.04)] transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-[0_6px_20px_rgba(15,45,78,0.08)] focus-ring">
       <div className="flex flex-wrap items-center gap-2">
         <Badge>{article.category}</Badge>
         {article.featured ? <span className="rounded-full bg-slate-950 px-2.5 py-1 text-xs font-black leading-none text-white">{featuredLabel}</span> : null}
@@ -657,7 +656,7 @@ function GuideHubTile({
   action: string;
 }) {
   return (
-    <Link href={withLocalePath("/guide", locale)} className="group block h-full rounded-lg border border-indigo-200/70 bg-indigo-50/80 p-5 text-slate-950 shadow-[0_16px_44px_rgba(15,23,42,0.07)] transition hover:-translate-y-1 hover:border-indigo-300 hover:bg-white focus-ring">
+    <Link href={withLocalePath("/guide", locale)} className="group block h-full rounded-lg border border-indigo-200 bg-indigo-50/60 p-5 text-slate-950 shadow-[0_1px_2px_rgba(15,45,78,0.04)] transition hover:-translate-y-0.5 hover:border-indigo-400 hover:bg-white focus-ring">
       <div className="grid h-11 w-11 place-items-center rounded-lg bg-white text-indigo-700 shadow-sm">
         <BookOpen className="h-5 w-5" />
       </div>
@@ -678,7 +677,7 @@ function NowTile({ item }: { item: NowItem }) {
   const progress = Math.max(0, Math.min(100, item.progress));
 
   return (
-    <article className="rounded-lg border border-slate-900/10 bg-white/82 p-5 shadow-[0_16px_44px_rgba(15,23,42,0.07)] backdrop-blur">
+    <article className="rounded-lg border border-[#DAE2EA] bg-white p-5 shadow-[0_1px_2px_rgba(15,45,78,0.04)]">
       <div className="flex items-center justify-between gap-3">
         <Badge>{item.type}</Badge>
         <span className="text-xs font-black text-indigo-700">{item.status}</span>
@@ -686,7 +685,7 @@ function NowTile({ item }: { item: NowItem }) {
       <h3 className="mt-5 text-2xl font-black leading-tight text-slate-950">{item.title}</h3>
       <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
       <div className="mt-5 h-2 overflow-hidden rounded-full bg-slate-100">
-        <div className="h-full rounded-full bg-gradient-to-r from-indigo-600 to-sky-500" style={{ width: `${progress}%` }} />
+        <div className="h-full rounded-full bg-indigo-800" style={{ width: `${progress}%` }} />
       </div>
     </article>
   );

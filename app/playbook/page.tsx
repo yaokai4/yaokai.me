@@ -45,7 +45,7 @@ export default async function PlaybookPage() {
               ["Build", "把模型、接口、界面接起来", BrainCircuit],
               ["Verify", "用构建、浏览器和复盘验收", Sparkles]
             ] as const).map(([title, detail, Icon]) => (
-              <div key={String(title)} className="rounded-md border border-white/75 bg-white/66 p-4 shadow-sm backdrop-blur">
+              <div key={String(title)} className="rounded-md border border-[#DAE2EA] bg-white p-4 shadow-sm">
                 <Icon className="h-5 w-5 text-indigo-700" />
                 <h3 className="mt-5 text-xl font-black text-slate-950">{title}</h3>
                 <p className="mt-2 text-sm leading-6 text-slate-600">{detail}</p>
@@ -67,7 +67,7 @@ export default async function PlaybookPage() {
               <ListBlock title="原则" items={playbook.principles} />
               <ListBlock title="步骤" items={playbook.steps} />
             </div>
-            <p className="mt-5 rounded-md border border-slate-200/70 bg-white/60 p-3 text-sm leading-7 text-slate-600">{playbook.example}</p>
+            <p className="mt-5 rounded-md border border-slate-200/70 bg-white p-3 text-sm leading-7 text-slate-600">{playbook.example}</p>
             <Link href={withLocalePath("/guide", locale)} className="mt-5 inline-flex items-center gap-2 text-sm font-black text-indigo-700 focus-ring">
               连接到指南
               <ArrowRight className="h-4 w-4" />

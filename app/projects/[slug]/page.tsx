@@ -117,7 +117,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 </Link>
               ) : null}
               {!project.demoUrl && !project.githubUrl ? (
-                <span className="rounded-md border border-slate-200/80 bg-white/72 px-4 py-2.5 text-sm font-bold text-slate-600">
+                <span className="rounded-md border border-slate-200/80 bg-white px-4 py-2.5 text-sm font-bold text-slate-600">
                   {t.privateProject}
                 </span>
               ) : null}
@@ -174,7 +174,7 @@ export default async function ProjectDetailPage({ params }: Props) {
             {section.items?.length ? (
               <ul className="mt-4 grid gap-2">
                 {section.items.map((item) => (
-                  <li key={item} className="rounded-md border border-white/70 bg-white/64 px-3 py-2 text-sm leading-6 text-slate-600">
+                  <li key={item} className="rounded-md border border-[#DAE2EA] bg-white px-3 py-2 text-sm leading-6 text-slate-600">
                     {item}
                   </li>
                 ))}

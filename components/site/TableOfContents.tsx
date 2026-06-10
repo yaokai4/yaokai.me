@@ -35,7 +35,7 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
   if (!items.length) return null;
 
   return (
-    <aside className="sticky top-28 hidden max-h-[calc(100vh-8rem)] overflow-auto rounded-md border border-slate-900/10 bg-white/76 p-4 shadow-sm backdrop-blur lg:block">
+    <aside className="sticky top-28 hidden max-h-[calc(100vh-8rem)] overflow-auto rounded-md border border-[#DAE2EA] bg-white p-4 shadow-[0_1px_2px_rgba(15,45,78,0.04)] lg:block">
       <p className="text-sm font-semibold text-slate-950">{t.tableOfContents}</p>
       <nav className="mt-4 grid gap-2" aria-label={t.tableOfContentsAria}>
         {items.map((item) => (

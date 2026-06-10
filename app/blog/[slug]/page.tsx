@@ -78,8 +78,8 @@ export default async function ArticlePage({ params }: Props) {
           <h1 className="mt-6 text-balance text-5xl font-black leading-tight text-slate-950 md:text-7xl">{article.title}</h1>
           <p className="mt-6 text-lg leading-8 text-slate-600">{article.excerpt}</p>
           <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
-            <span className="rounded-md border border-slate-200/80 bg-white/70 px-3 py-1.5 font-semibold">{formatDate(article.publishedAt, locale)}</span>
-            <span className="rounded-md border border-slate-200/80 bg-white/70 px-3 py-1.5 font-semibold">{getReadingTime(article.content, locale)}</span>
+            <span className="rounded-md border border-slate-200/80 bg-white px-3 py-1.5 font-semibold">{formatDate(article.publishedAt, locale)}</span>
+            <span className="rounded-md border border-slate-200/80 bg-white px-3 py-1.5 font-semibold">{getReadingTime(article.content, locale)}</span>
             {article.tags.map((tag) => (
               <Badge key={tag}>{tag}</Badge>
             ))}

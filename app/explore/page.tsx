@@ -80,14 +80,14 @@ export default async function ExplorePage() {
 
       <section className="wide-container relative pt-14">
         <div className="premium-glass-card relative overflow-hidden rounded-md p-4 md:p-6">
-          <div className="absolute inset-x-8 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-indigo-300/70 to-transparent lg:block" />
+          <div className="absolute inset-x-8 top-1/2 hidden h-px -translate-y-1/2 bg-[#DAE2EA] lg:block" />
           <div className="relative grid gap-3 md:grid-cols-2 lg:grid-cols-6">
             {recommendedPaths.map((path, index) => {
               const Icon = path.icon;
               return (
-                <Link key={path.href} href={withLocalePath(path.href, locale)} className="group rounded-md border border-white/70 bg-white/66 p-4 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:bg-white/86 focus-ring">
+                <Link key={path.href} href={withLocalePath(path.href, locale)} className="group rounded-md border border-[#DAE2EA] bg-white p-4 shadow-[0_1px_2px_rgba(15,45,78,0.04)] transition hover:-translate-y-0.5 hover:border-indigo-300 focus-ring">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="grid h-10 w-10 place-items-center rounded-md bg-gradient-to-br from-indigo-100 via-white to-sky-100 text-indigo-800">
+                    <span className="grid h-10 w-10 place-items-center rounded-md border border-indigo-100 bg-indigo-50/60 text-indigo-800">
                       <Icon className="h-5 w-5" />
                     </span>
                     <span className="text-xs font-black text-indigo-700">{String(index + 1).padStart(2, "0")}</span>
@@ -112,7 +112,7 @@ export default async function ExplorePage() {
             const Icon = path.icon;
             return (
               <Link key={path.href} href={withLocalePath(path.href, locale)} className="premium-glass-card group block rounded-md p-5">
-                <div className="grid h-12 w-12 place-items-center rounded-md bg-gradient-to-br from-indigo-100 via-white to-sky-100 text-indigo-800">
+                <div className="grid h-12 w-12 place-items-center rounded-md border border-indigo-100 bg-indigo-50/60 text-indigo-800">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h2 className="mt-7 text-2xl font-black text-slate-950">{path.title}</h2>
@@ -172,7 +172,7 @@ export default async function ExplorePage() {
           <SectionHeader eyebrow="技能地图" title="能力结构不靠堆词，而靠真实项目支撑。" />
           <div className="grid gap-3">
             {skills.slice(0, 8).map((skill) => (
-              <div key={skill.id} className="rounded-md border border-white/70 bg-white/62 p-4 shadow-sm backdrop-blur">
+              <div key={skill.id} className="rounded-md border border-[#DAE2EA] bg-white p-4 shadow-sm">
                 <div className="flex items-center justify-between gap-4">
                   <span className="font-bold text-slate-950">{skill.name}</span>
                   <span className="text-xs font-bold text-indigo-700">{skill.category} · {skill.level}%</span>
@@ -235,7 +235,7 @@ export default async function ExplorePage() {
       </section>
 
       <section className="section-container pb-24 pt-10">
-        <div className="liquid-panel rounded-md border border-slate-900/10 bg-white/76 p-6 shadow-[0_24px_70px_rgba(15,23,42,0.10)] backdrop-blur-2xl md:p-10">
+        <div className="liquid-panel rounded-md border border-[#DAE2EA] bg-white p-6 shadow-[0_1px_2px_rgba(15,45,78,0.04)] md:p-10">
           <div className="relative z-10 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <Badge>Contact</Badge>
@@ -246,7 +246,7 @@ export default async function ExplorePage() {
                 我适合参与需要工程实现、AI 工作流、产品判断和高级前台体验同时在线的项目。
               </p>
             </div>
-            <Link href={withLocalePath("/contact", locale)} className="magnetic-button inline-flex h-12 items-center justify-center gap-2 rounded-full bg-slate-950 px-5 text-sm font-bold text-white shadow-[0_12px_30px_rgba(17,24,39,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-800 focus-ring">
+            <Link href={withLocalePath("/contact", locale)} className="magnetic-button inline-flex h-12 items-center justify-center gap-2 rounded-full bg-slate-950 px-5 text-sm font-bold text-white shadow-[0_1px_2px_rgba(15,45,78,0.04)] transition hover:-translate-y-0.5 hover:bg-slate-800 focus-ring">
               开始联系
               <Sparkles className="h-4 w-4" />
             </Link>

@@ -30,9 +30,9 @@ export function MagneticButton({
 
   const buttonClassName = cn(
     "magnetic-button inline-flex h-12 items-center justify-center gap-2 rounded-full border px-5 text-base font-bold transition focus-ring",
-    variant === "primary" && "border-slate-900 bg-slate-950 text-white shadow-[0_12px_30px_rgba(17,24,39,0.18)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[0_16px_38px_rgba(17,24,39,0.22)]",
-    variant === "secondary" && "border-slate-900/10 bg-white/76 text-slate-900 shadow-sm backdrop-blur hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-white",
-    variant === "ghost" && "border-transparent bg-white/0 text-slate-700 hover:bg-white/72",
+    variant === "primary" && "border-indigo-900 bg-indigo-900 text-white shadow-[0_2px_10px_rgba(15,45,78,0.2)] hover:-translate-y-0.5 hover:bg-indigo-800 hover:shadow-[0_6px_18px_rgba(15,45,78,0.24)]",
+    variant === "secondary" && "border-indigo-200 bg-white text-slate-900 hover:-translate-y-0.5 hover:border-indigo-400",
+    variant === "ghost" && "border-transparent bg-white/0 text-slate-700 hover:bg-indigo-50/60",
     inactive && "pointer-events-none cursor-not-allowed opacity-55 hover:translate-y-0",
     className
   );

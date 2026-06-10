@@ -41,7 +41,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 initial={{ opacity: 0, y: -12, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -12, scale: 0.98 }}
-                className="rounded-md border border-white/70 bg-white/92 p-4 text-slate-950 shadow-[0_24px_80px_rgba(78,89,132,0.18)] backdrop-blur-xl"
+                className="rounded-md border border-[#DAE2EA] bg-white p-4 text-slate-950 shadow-[0_10px_32px_rgba(15,45,78,0.12)]"
               >
                 <div className="flex gap-3">
                   <Icon className="mt-0.5 h-5 w-5 text-indigo-600" />

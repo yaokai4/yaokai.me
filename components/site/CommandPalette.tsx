@@ -110,7 +110,7 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
             setActiveIndex(0);
             setOpen(true);
           }}
-          className="hidden h-10 items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-3 text-sm text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-slate-950 focus-ring lg:inline-flex"
+          className="hidden h-10 items-center gap-2 rounded-full border border-indigo-200 bg-white px-3 text-sm text-slate-600 transition hover:border-indigo-400 hover:text-indigo-900 focus-ring lg:inline-flex"
         >
           <Search className="h-4 w-4" />
           {copy.searchShort}
@@ -132,7 +132,7 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
             }}
           >
             <motion.div
-              className="mx-auto w-full max-w-2xl overflow-hidden rounded-md border border-white/82 bg-white/94 shadow-[0_32px_120px_rgba(96,110,170,0.28)] backdrop-blur-2xl"
+              className="mx-auto w-full max-w-2xl overflow-hidden rounded-md border border-[#DAE2EA] bg-white shadow-[0_10px_40px_rgba(15,45,78,0.16)]"
               initial={{ opacity: 0, y: 12, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
@@ -187,7 +187,7 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
                       <>
                         <div className="flex items-center justify-between gap-4">
                           <span className="text-sm font-semibold text-slate-950">{item.title}</span>
-                          <span className="rounded-full border border-indigo-200/70 bg-white/70 px-2 py-0.5 text-[11px] font-medium text-indigo-700">{item.type}</span>
+                          <span className="rounded-full border border-indigo-200/70 bg-white px-2 py-0.5 text-[11px] font-medium text-indigo-700">{item.type}</span>
                         </div>
                         <p className="line-clamp-2 text-sm leading-6 text-slate-600">{item.description}</p>
                       </>

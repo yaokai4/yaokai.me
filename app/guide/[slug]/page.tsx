@@ -72,9 +72,9 @@ export default async function GuideDetailPage({ params }: Props) {
           <h1 className="mt-6 text-balance text-5xl font-black leading-tight text-slate-950 md:text-7xl">{guide.title}</h1>
           <p className="mt-6 text-lg leading-8 text-slate-600">{guide.excerpt}</p>
           <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
-            <span className="rounded-md border border-slate-200/80 bg-white/70 px-3 py-1.5 font-semibold">{guide.difficulty}</span>
-            <span className="rounded-md border border-slate-200/80 bg-white/70 px-3 py-1.5 font-semibold">{formatStoredReadingTime(guide.readingTime, locale)}</span>
-            <span className="rounded-md border border-slate-200/80 bg-white/70 px-3 py-1.5 font-semibold">{formatDate(guide.publishedAt, locale)}</span>
+            <span className="rounded-md border border-slate-200/80 bg-white px-3 py-1.5 font-semibold">{guide.difficulty}</span>
+            <span className="rounded-md border border-slate-200/80 bg-white px-3 py-1.5 font-semibold">{formatStoredReadingTime(guide.readingTime, locale)}</span>
+            <span className="rounded-md border border-slate-200/80 bg-white px-3 py-1.5 font-semibold">{formatDate(guide.publishedAt, locale)}</span>
             {guide.tags.map((tag) => (
               <Badge key={tag}>{tag}</Badge>
             ))}

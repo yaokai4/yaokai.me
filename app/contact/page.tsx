@@ -113,7 +113,7 @@ export default async function ContactPage() {
             <p className="mt-5 text-sm font-bold text-slate-500">{t.socials}</p>
             <div className="mt-4 flex flex-wrap gap-3">
               {socials.length ? socials.map((social) => (
-                <Link key={social.href} href={social.href} target="_blank" className="rounded-md border border-indigo-200/70 bg-white/76 px-3 py-2 text-sm font-bold text-indigo-700 shadow-sm transition hover:bg-white hover:text-slate-950 focus-ring">
+                <Link key={social.href} href={social.href} target="_blank" className="rounded-md border border-indigo-200/70 bg-white px-3 py-2 text-sm font-bold text-indigo-700 shadow-sm transition hover:bg-white hover:text-slate-950 focus-ring">
                   {social.label}
                 </Link>
               )) : <p className="text-sm leading-7 text-slate-600">{t.socialsMissing}</p>}

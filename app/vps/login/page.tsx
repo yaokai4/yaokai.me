@@ -25,7 +25,7 @@ export default async function VpsLoginPage() {
   return (
     <section className="section-container grid min-h-[72vh] place-items-center py-12">
       <div className="w-full max-w-md">
-        <div className="mb-6 rounded-md border border-indigo-100 bg-white/76 p-5 shadow-sm backdrop-blur">
+        <div className="mb-6 rounded-md border border-indigo-100 bg-white p-5 shadow-sm">
           <LockKeyhole className="h-7 w-7 text-indigo-700" />
           <p className="mt-4 text-sm font-bold uppercase tracking-[0.18em] text-indigo-700">Secure Access</p>
           <h1 className="mt-2 text-3xl font-black text-slate-950">登录私有访问配置中心</h1>

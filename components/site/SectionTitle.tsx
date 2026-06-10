@@ -1,5 +1,3 @@
-import { Badge } from "@/components/ui/Badge";
-
 export function SectionTitle({
   eyebrow,
   title,
@@ -11,8 +9,9 @@ export function SectionTitle({
 }) {
   return (
     <div className="mb-8 max-w-3xl">
-      {eyebrow ? <Badge className="mb-4">{eyebrow}</Badge> : null}
-      <h2 className="text-balance text-3xl font-black text-slate-950 md:text-5xl">{title}</h2>
+      {eyebrow ? <p className="editorial-label mb-3">{eyebrow}</p> : null}
+      <h2 className="text-balance text-2xl font-black tracking-tight text-indigo-950 md:text-4xl">{title}</h2>
+      <div className="editorial-bar mt-4 w-full" />
       {description ? <p className="mt-4 text-base leading-8 text-slate-600 md:text-lg">{description}</p> : null}
     </div>
   );

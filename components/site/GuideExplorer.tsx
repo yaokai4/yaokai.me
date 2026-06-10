@@ -79,9 +79,9 @@ function FeaturedGuide({ guide }: { guide: Guide }) {
   return (
     <Link href={withLocalePath(`/guide/${guide.slug}`, locale)} className="gradient-border-card group grid overflow-hidden rounded-md p-0 lg:grid-cols-[0.82fr_1.18fr]">
       <div className="relative min-h-[260px] overflow-hidden bg-[radial-gradient(circle_at_20%_10%,rgba(199,210,254,0.42),transparent_38%),radial-gradient(circle_at_88%_18%,rgba(186,230,253,0.36),transparent_36%),linear-gradient(135deg,#f8fafc,#f6fdff)] p-6">
-        <div className="absolute inset-4 rounded-md border border-white/70 bg-white/30" />
+        <div className="absolute inset-4 rounded-md border border-[#DAE2EA] bg-white" />
         <div className="relative z-10 flex h-full flex-col justify-between">
-          <div className="grid h-14 w-14 place-items-center rounded-md border border-white/80 bg-white/78 text-indigo-700 shadow-sm backdrop-blur">
+          <div className="grid h-14 w-14 place-items-center rounded-md border border-[#DAE2EA] bg-white text-indigo-700 shadow-sm">
             <BookOpen className="h-6 w-6" />
           </div>
           <div>
@@ -97,7 +97,7 @@ function FeaturedGuide({ guide }: { guide: Guide }) {
         </div>
         <h3 className="mt-6 text-balance text-3xl font-black leading-tight text-slate-950 md:text-4xl">{guide.title}</h3>
         <p className="mt-4 text-base leading-8 text-slate-600">{guide.excerpt}</p>
-        <p className="mt-5 rounded-md border border-slate-900/10 bg-white/72 p-3 text-sm leading-6 text-slate-600">{t.audiencePrefix}{guide.audience}</p>
+        <p className="mt-5 rounded-md border border-[#DAE2EA] bg-white p-3 text-sm leading-6 text-slate-600">{t.audiencePrefix}{guide.audience}</p>
         <span className="mt-6 inline-flex items-center gap-2 text-sm font-black text-indigo-700">
           {t.enter}
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />

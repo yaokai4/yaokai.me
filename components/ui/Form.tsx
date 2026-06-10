@@ -7,7 +7,7 @@ export function Input({ className, ...props }: React.InputHTMLAttributes<HTMLInp
   return (
     <input
       className={cn(
-        "h-11 w-full rounded-md border border-slate-900/10 bg-white/76 px-3 text-sm text-slate-950 shadow-sm outline-none backdrop-blur transition placeholder:text-slate-400 focus:border-indigo-300/90 focus:bg-white focus:ring-4 focus:ring-indigo-200/55 disabled:cursor-not-allowed disabled:opacity-60",
+        "h-11 w-full rounded-md border border-[#C9D6E2] bg-white px-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:opacity-60",
         className
       )}
       {...props}
@@ -19,7 +19,7 @@ export function Textarea({ className, ...props }: React.TextareaHTMLAttributes<H
   return (
     <textarea
       className={cn(
-        "min-h-32 w-full resize-y rounded-md border border-slate-900/10 bg-white/76 px-3 py-3 text-sm text-slate-950 shadow-sm outline-none backdrop-blur transition placeholder:text-slate-400 focus:border-indigo-300/90 focus:bg-white focus:ring-4 focus:ring-indigo-200/55 disabled:cursor-not-allowed disabled:opacity-60",
+        "min-h-32 w-full resize-y rounded-md border border-[#C9D6E2] bg-white px-3 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:opacity-60",
         className
       )}
       {...props}
@@ -31,7 +31,7 @@ export function Select({ className, ...props }: React.SelectHTMLAttributes<HTMLS
   return (
     <select
       className={cn(
-        "h-11 w-full rounded-md border border-slate-900/10 bg-white/76 px-3 text-sm text-slate-950 shadow-sm outline-none backdrop-blur transition focus:border-indigo-300/90 focus:bg-white focus:ring-4 focus:ring-indigo-200/55",
+        "h-11 w-full rounded-md border border-[#C9D6E2] bg-white px-3 text-sm text-slate-950 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100",
         className
       )}
       {...props}

@@ -24,7 +24,7 @@ export function SoftParticleLayer() {
       {particles.map((particle) => (
         <motion.span
           key={particle.id}
-          className="absolute rounded-full bg-white/80 blur-[0.5px]"
+          className="absolute rounded-full bg-white blur-[0.5px]"
           style={{
             left: particle.left,
             top: particle.top,

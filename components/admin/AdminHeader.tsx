@@ -9,7 +9,7 @@ export function AdminHeader({ title, description }: { title: string; description
   const [open, setOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white">
       <div className="flex min-h-16 items-center justify-between gap-4 px-4 lg:px-8">
         <div>
           <h1 className="text-lg font-semibold text-slate-950">{title}</h1>
