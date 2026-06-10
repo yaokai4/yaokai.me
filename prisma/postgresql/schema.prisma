@@ -8,56 +8,88 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  name         String
-  email        String   @unique
-  passwordHash String
-  role         String   @default("ADMIN")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  passwordHash   String
+  role           String    @default("ADMIN")
+  mfaEnabled     Boolean   @default(false)
+  failedLoginCnt Int       @default(0)
+  lastLoginAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model Article {
-  id             String    @id @default(cuid())
-  title          String
-  slug           String    @unique
-  excerpt        String
-  content        String
-  coverImage     String?
-  category       String
-  tags           String    @default("[]")
-  status         String    @default("DRAFT")
-  featured       Boolean   @default(false)
-  pinned         Boolean   @default(false)
-  seoTitle       String?
-  seoDescription String?
-  publishedAt    DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  subtitle        String?
+  excerpt         String
+  content         String
+  coverImage      String?
+  category        String
+  tags            String    @default("[]")
+  readingTime     String    @default("5 min")
+  status          String    @default("DRAFT")
+  featured        Boolean   @default(false)
+  pinned          Boolean   @default(false)
+  seoTitle        String?
+  seoDescription  String?
+  ogImage         String?
+  relatedProjects String    @default("[]")
+  relatedGuides   String    @default("[]")
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   @@index([status, publishedAt])
   @@index([featured])
 }
 
 model Project {
-  id         String   @id @default(cuid())
-  title      String
-  slug       String   @unique
-  excerpt    String
-  content    String
-  coverImage String?
-  category   String
-  techStack  String   @default("[]")
-  demoUrl    String?
-  githubUrl  String?
-  role       String
-  challenge  String
-  solution   String
-  result     String
-  featured   Boolean  @default(false)
-  sortOrder  Int      @default(0)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                  String    @id @default(cuid())
+  title               String
+  slug                String    @unique
+  subtitle            String?
+  excerpt             String
+  longDescription     String?
+  content             String
+  coverImage          String?
+  gallery             String    @default("[]")
+  screenshots         String    @default("[]")
+  category            String
+  tags                String    @default("[]")
+  status              String    @default("Case Study")
+  techStack           String    @default("[]")
+  demoUrl             String?
+  githubUrl           String?
+  architectureNotes   String?
+  role                String
+  background          String?
+  responsibilities    String    @default("[]")
+  challenge           String
+  keyChallenges       String    @default("[]")
+  solution            String
+  solutions           String    @default("[]")
+  features            String    @default("[]")
+  architecture        String?
+  technicalHighlights String    @default("[]")
+  result              String
+  metrics             String    @default("[]")
+  measurableResults   String    @default("[]")
+  lessons             String    @default("[]")
+  nextSteps           String    @default("[]")
+  startDate           String?
+  endDate             String?
+  publishedAt         DateTime?
+  seoTitle            String?
+  seoDescription      String?
+  ogImage             String?
+  featured            Boolean   @default(false)
+  sortOrder           Int       @default(0)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
   @@index([featured, sortOrder])
 }
@@ -79,27 +111,35 @@ model Message {
   email     String
   content   String
   read      Boolean  @default(false)
+  status    String   @default("UNREAD")
+  source    String   @default("contact")
   ipHash    String?
-  createdAt DateTime @default(now())
-}
-
-model SiteSetting {
-  id        String   @id @default(cuid())
-  key       String   @unique
-  value     String
+  userAgent String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Skill {
+model SiteSetting {
   id          String   @id @default(cuid())
-  name        String
-  category    String
-  level       Int
-  description String
-  sortOrder   Int      @default(0)
+  key         String   @unique
+  value       String
+  description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Skill {
+  id              String   @id @default(cuid())
+  name            String
+  category        String
+  level           Int
+  description     String
+  relatedProjects String   @default("[]")
+  relatedArticles String   @default("[]")
+  relatedGuides   String   @default("[]")
+  sortOrder       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   @@index([category, sortOrder])
 }
@@ -116,22 +156,28 @@ model TimelineItem {
 }
 
 model Guide {
-  id          String    @id @default(cuid())
-  title       String
-  slug        String    @unique
-  excerpt     String
-  content     String
-  coverImage  String?
-  category    String
-  tags        String    @default("[]")
-  difficulty  String
-  audience    String
-  readingTime String
-  featured    Boolean   @default(false)
-  status      String    @default("DRAFT")
-  publishedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  excerpt        String
+  content        String
+  coverImage     String?
+  category       String
+  tags           String    @default("[]")
+  level          String    @default("beginner")
+  difficulty     String
+  audience       String
+  readingTime    String
+  steps          String    @default("[]")
+  checklist      String    @default("[]")
+  seoTitle       String?
+  seoDescription String?
+  ogImage        String?
+  featured       Boolean   @default(false)
+  status         String    @default("DRAFT")
+  publishedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   @@index([status, publishedAt])
   @@index([featured, category])
@@ -142,6 +188,7 @@ model Resource {
   title       String
   url         String
   description String
+  type        String   @default("link")
   category    String
   tags        String   @default("[]")
   reason      String
@@ -159,6 +206,7 @@ model NowItem {
   description String
   type        String
   status      String
+  progress    Int      @default(0)
   sortOrder   Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -206,4 +254,352 @@ model ContentCollection {
   updatedAt   DateTime @updatedAt
 
   @@index([type, featured])
+}
+
+model VpsNode {
+  id             String    @id @default(cuid())
+  name           String
+  provider       String
+  region         String
+  hostname       String
+  publicIp       String?
+  privateIp      String?
+  os             String
+  cpuCores       Int       @default(1)
+  memoryMb       Int       @default(1024)
+  diskGb         Int       @default(20)
+  bandwidthMb    Int       @default(100)
+  purpose        String?
+  ownerName      String?
+  status         String    @default("active")
+  cpuUsage       Float     @default(0)
+  memoryUsage    Float     @default(0)
+  diskUsage      Float     @default(0)
+  bandwidthUsage Float     @default(0)
+  tags           String    @default("[]")
+  expiresAt      DateTime?
+  monthlyCost    Float     @default(0)
+  notes          String?
+  lastCheckedAt  DateTime?
+  archivedAt     DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  services VpsService[]
+  alerts   VpsAlert[]
+  backups  VpsBackup[]
+
+  @@index([status, provider])
+  @@index([expiresAt])
+}
+
+model VpsService {
+  id                   String    @id @default(cuid())
+  nodeId               String?
+  name                 String
+  type                 String    @default("website")
+  domain               String?
+  port                 Int?
+  healthCheckUrl       String?
+  publicStatus         String    @default("operational")
+  internalStatus       String    @default("operational")
+  ownerName            String?
+  deployMethod         String?
+  runtime              String?
+  version              String?
+  repositoryUrl        String?
+  lastDeployedAt       DateTime?
+  certificateExp       DateTime?
+  lastCheckedAt        DateTime?
+  responseTimeMs       Int?
+  consecutiveFailures  Int       @default(0)
+  consecutiveSuccesses Int       @default(0)
+  notes                String?
+  disabledAt           DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  node         VpsNode?          @relation(fields: [nodeId], references: [id], onDelete: SetNull)
+  policies     VpsAccessPolicy[]
+  alerts       VpsAlert[]
+  backups      VpsBackup[]
+  healthChecks VpsHealthCheck[]
+
+  @@index([publicStatus, internalStatus])
+  @@index([nodeId])
+  @@index([certificateExp])
+}
+
+model VpsUser {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  role           String    @default("viewer")
+  status         String    @default("active")
+  mfaEnabled     Boolean   @default(false)
+  lastLoginAt    DateTime?
+  failedLoginCnt Int       @default(0)
+  notes          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  policies       VpsAccessPolicy[]
+  accessProfiles VpsAccessProfile[]
+
+  @@index([role, status])
+}
+
+model VpsEndpoint {
+  id                        String    @id @default(cuid())
+  name                      String
+  hostname                  String
+  publicHost                String?
+  publicIp                  String?
+  region                    String?
+  status                    String    @default("needs_initialization")
+  configType                String    @default("wireguard")
+  serverPublicKey           String?
+  encryptedServerPrivateKey String?
+  listenPort                Int       @default(51820)
+  dns                       String    @default("1.1.1.1")
+  mtu                       Int?
+  allowedIpTemplate         String    @default("10.66.0.0/24")
+  clientAllowedIps          String    @default("0.0.0.0/0")
+  operatingSystem           String?
+  architecture              String?
+  defaultProfileExpireDays  Int       @default(90)
+  dryRun                    Boolean   @default(true)
+  allowSystemApply          Boolean   @default(false)
+  serviceConfigReady        Boolean   @default(false)
+  serviceApplied            Boolean   @default(false)
+  serviceRunning            Boolean   @default(false)
+  wireGuardQuickInstalled   Boolean   @default(false)
+  wgInterfacePresent        Boolean   @default(false)
+  portListening             Boolean   @default(false)
+  ipForwardingEnabled       Boolean   @default(false)
+  publicHostResolved        Boolean   @default(false)
+  publicHostResolvedIp      String?
+  systemApplyError          String?
+  serviceAppliedAt          DateTime?
+  systemInfo                String    @default("{}")
+  availablePorts            String    @default("[]")
+  serviceStatus             String    @default("unknown")
+  wireGuardInstalled        Boolean   @default(false)
+  lastHealthCheckAt         DateTime?
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+
+  accessProfiles VpsAccessProfile[]
+
+  @@index([status, configType])
+  @@index([lastHealthCheckAt])
+}
+
+model VpsAccessPolicy {
+  id         String    @id @default(cuid())
+  name       String
+  userId     String?
+  serviceId  String?
+  permission String    @default("view")
+  startsAt   DateTime?
+  expiresAt  DateTime?
+  enabled    Boolean   @default(true)
+  approvedBy String?
+  notes      String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  user    VpsUser?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  service VpsService? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+
+  @@index([enabled, expiresAt])
+  @@index([userId, serviceId])
+}
+
+model VpsAuditLog {
+  id           String   @id @default(cuid())
+  actorId      String?
+  actorEmail   String?
+  action       String
+  targetType   String
+  targetId     String?
+  beforeJson   String?
+  afterJson    String?
+  metadata     String   @default("{}")
+  ipHash       String?
+  userAgent    String?
+  requestId    String?
+  result       String   @default("success")
+  errorMessage String?
+  createdAt    DateTime @default(now())
+
+  @@index([action, createdAt])
+  @@index([targetType, targetId])
+}
+
+model VpsAlert {
+  id              String    @id @default(cuid())
+  title           String
+  level           String    @default("warning")
+  status          String    @default("open")
+  source          String
+  nodeId          String?
+  serviceId       String?
+  accessProfileId String?
+  condition       String
+  triggeredAt     DateTime  @default(now())
+  resolvedAt      DateTime?
+  acknowledgedBy  String?
+  acknowledgedAt  DateTime?
+  notes           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  node          VpsNode?          @relation(fields: [nodeId], references: [id], onDelete: SetNull)
+  service       VpsService?       @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  accessProfile VpsAccessProfile? @relation(fields: [accessProfileId], references: [id], onDelete: SetNull)
+
+  @@index([status, level])
+  @@index([nodeId, serviceId])
+  @@index([accessProfileId])
+}
+
+model VpsBackup {
+  id                String    @id @default(cuid())
+  name              String
+  nodeId            String?
+  serviceId         String?
+  type              String    @default("manual")
+  location          String
+  frequency         String
+  lastBackupAt      DateTime?
+  lastStatus        String    @default("unknown")
+  lastRestoreTestAt DateTime?
+  retentionDays     Int       @default(30)
+  encrypted         Boolean   @default(true)
+  notes             String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  node    VpsNode?    @relation(fields: [nodeId], references: [id], onDelete: SetNull)
+  service VpsService? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+
+  @@index([lastStatus, lastBackupAt])
+}
+
+model VpsCost {
+  id           String    @id @default(cuid())
+  provider     String
+  nodeName     String
+  billingCycle String
+  amount       Float
+  currency     String    @default("USD")
+  renewAt      DateTime?
+  autoRenew    Boolean   @default(false)
+  invoiceUrl   String?
+  project      String?
+  notes        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([provider, renewAt])
+}
+
+model VpsHealthCheck {
+  id             String   @id @default(cuid())
+  serviceId      String?
+  url            String
+  statusCode     Int?
+  responseTimeMs Int?
+  result         String   @default("unknown")
+  errorMessage   String?
+  checkedAt      DateTime @default(now())
+
+  service VpsService? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+
+  @@index([serviceId, checkedAt])
+  @@index([result, checkedAt])
+}
+
+model VpsNotificationSetting {
+  id                String    @id @default(cuid())
+  channel           String
+  enabled           Boolean   @default(false)
+  destinationLabel  String?
+  events            String    @default("[]")
+  maintenanceWindow String?
+  lastTestedAt      DateTime?
+  notes             String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([channel, enabled])
+}
+
+model VpsSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}
+
+model VpsAccessProfile {
+  id                       String    @id @default(cuid())
+  endpointId               String
+  name                     String
+  userId                   String
+  deviceName               String
+  deviceType               String?
+  status                   String    @default("active")
+  allowedServices          String    @default("[]")
+  allowedNodeIds           String    @default("[]")
+  allowedCidrs             String    @default("[]")
+  configType               String    @default("wireguard")
+  publicKey                String?
+  encryptedPrivateKey      String?
+  encryptedConfig          String?
+  assignedAddress          String?
+  serverPeerStatus         String    @default("pending")
+  serverAppliedAt          DateTime?
+  peerApplied              Boolean   @default(false)
+  serviceReloadedAfterPeer Boolean   @default(false)
+  serverSyncError          String?
+  configVersion            Int       @default(1)
+  maxDevices               Int       @default(1)
+  expiresAt                DateTime
+  lastUsedAt               DateTime?
+  lastViewedAt             DateTime?
+  lastDownloadedAt         DateTime?
+  revokedAt                DateTime?
+  revokedBy                String?
+  notes                    String?
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+
+  endpoint  VpsEndpoint                @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+  user      VpsUser                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  downloads VpsAccessProfileDownload[]
+  alerts    VpsAlert[]
+
+  @@index([endpointId, status])
+  @@index([userId, status])
+  @@index([expiresAt, status])
+}
+
+model VpsAccessProfileDownload {
+  id          String    @id @default(cuid())
+  profileId   String
+  requestedBy String
+  tokenHash   String    @unique
+  expiresAt   DateTime
+  usedAt      DateTime?
+  ipHash      String?
+  userAgent   String?
+  createdAt   DateTime  @default(now())
+
+  profile VpsAccessProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId, createdAt])
+  @@index([expiresAt, usedAt])
 }

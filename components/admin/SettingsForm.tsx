@@ -46,8 +46,8 @@ export function SettingsForm({ settings }: { settings: Record<string, string> })
 
   return (
     <div className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="mb-6 flex flex-col gap-4 rounded-md border border-amber-100 bg-amber-50/50 p-4 md:flex-row md:items-center">
-        <div className="h-20 w-20 overflow-hidden rounded-full border border-amber-200 bg-white shadow-sm">
+      <div className="mb-6 flex flex-col gap-4 rounded-md border border-indigo-100 bg-indigo-50/45 p-4 md:flex-row md:items-center">
+        <div className="h-20 w-20 overflow-hidden rounded-full border border-indigo-200 bg-white shadow-sm">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={form.avatarUrl || "/images/avatar-yaokai.svg"} alt="头像预览" className="h-full w-full object-cover" />
         </div>

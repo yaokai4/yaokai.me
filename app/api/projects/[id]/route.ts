@@ -13,10 +13,33 @@ function projectPayload(input: unknown) {
   const data = projectSchema.parse(input);
   return {
     ...data,
+    tags: stringifyArray(data.tags),
     techStack: stringifyArray(data.techStack),
+    gallery: stringifyArray(data.gallery),
+    screenshots: stringifyArray(data.screenshots),
+    responsibilities: stringifyArray(data.responsibilities),
+    keyChallenges: stringifyArray(data.keyChallenges),
+    solutions: stringifyArray(data.solutions),
+    features: stringifyArray(data.features),
+    technicalHighlights: stringifyArray(data.technicalHighlights),
+    metrics: stringifyArray(data.metrics),
+    measurableResults: stringifyArray(data.measurableResults),
+    lessons: stringifyArray(data.lessons),
+    nextSteps: stringifyArray(data.nextSteps),
+    subtitle: data.subtitle || null,
     coverImage: data.coverImage || null,
+    longDescription: data.longDescription || null,
+    background: data.background || null,
+    architecture: data.architecture || null,
+    architectureNotes: data.architectureNotes || null,
     demoUrl: data.demoUrl || null,
-    githubUrl: data.githubUrl || null
+    githubUrl: data.githubUrl || null,
+    startDate: data.startDate || null,
+    endDate: data.endDate || null,
+    publishedAt: data.publishedAt ? new Date(data.publishedAt) : null,
+    seoTitle: data.seoTitle || null,
+    seoDescription: data.seoDescription || null,
+    ogImage: data.ogImage || null
   };
 }
 

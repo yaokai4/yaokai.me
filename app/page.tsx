@@ -1,31 +1,23 @@
 import { UniverseHome } from "@/components/site/UniverseHome";
 import {
-  getManifestoItems,
   getNowRecords,
-  getPlaybooks,
   getPublicArticles,
   getPublicGuides,
   getPublicProjects,
-  getResources,
-  getSettings,
-  getSkills
+  getSettings
 } from "@/lib/data";
 import { getRequestLocale } from "@/lib/server-locale";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [locale, settings, projects, articles, guides, resources, playbooks, nowItems, manifestoItems, skills] = await Promise.all([
+  const [locale, settings, projects, articles, guides, nowItems] = await Promise.all([
     getRequestLocale(),
     getSettings(),
     getPublicProjects(),
     getPublicArticles(),
     getPublicGuides(),
-    getResources(),
-    getPlaybooks(),
-    getNowRecords(),
-    getManifestoItems(),
-    getSkills()
+    getNowRecords()
   ]);
 
   return (
@@ -36,11 +28,7 @@ export default async function HomePage() {
       projects={projects}
       articles={articles}
       guides={guides}
-      resources={resources}
-      playbooks={playbooks}
       nowItems={nowItems}
-      manifestoItems={manifestoItems}
-      skills={skills}
     />
   );
 }

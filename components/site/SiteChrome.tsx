@@ -26,9 +26,12 @@ export function SiteChrome({ children, locale }: { children: React.ReactNode; lo
   return (
     <LocaleProvider initialLocale={locale}>
       <div className="site-shell">
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <FluidGradientBackground />
         <Navbar />
-        <main className="relative z-20">
+        <main id="main-content" className="relative z-20">
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />

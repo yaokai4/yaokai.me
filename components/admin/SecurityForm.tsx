@@ -47,8 +47,8 @@ export function SecurityForm() {
 
   return (
     <form onSubmit={submit} className="max-w-2xl rounded-md border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="mb-5 flex items-start gap-3 rounded-md border border-cyan-100 bg-cyan-50/60 p-4">
-        <KeyRound className="mt-1 h-5 w-5 text-cyan-700" />
+      <div className="mb-5 flex items-start gap-3 rounded-md border border-indigo-100 bg-indigo-50/55 p-4">
+        <KeyRound className="mt-1 h-5 w-5 text-indigo-700" />
         <div>
           <p className="font-semibold text-slate-950">修改后台登录密码</p>
           <p className="mt-1 text-sm leading-6 text-slate-500">为了安全，需要先输入当前密码。新密码至少 10 个字符。</p>
@@ -108,7 +108,7 @@ function PasswordField({
         type={type}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-12 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm text-slate-950 outline-none transition focus:border-cyan-300 focus:bg-white focus:ring-4 focus:ring-cyan-100"
+        className="h-12 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm text-slate-950 outline-none transition focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-100"
         autoComplete="new-password"
       />
     </label>

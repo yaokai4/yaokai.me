@@ -12,7 +12,7 @@ export function EmptyState({
 }) {
   return (
     <div className={cn("premium-glass-card grid justify-items-center rounded-md p-8 text-center", className)}>
-      <div className="liquid-panel grid h-14 w-14 place-items-center rounded-md border border-white/70 bg-white/70 text-cyan-700 shadow-sm">
+      <div className="liquid-panel grid h-14 w-14 place-items-center rounded-md border border-indigo-200/70 bg-white/76 text-indigo-700 shadow-sm">
         <Sparkles className="h-5 w-5" />
       </div>
       <p className="mt-4 text-base font-black text-slate-950">{title}</p>
@@ -21,12 +21,13 @@ export function EmptyState({
   );
 }
 
-export function LoadingState({ label = "加载中" }: { label?: string }) {
+export function LoadingState({ label = "Loading" }: { label?: string }) {
   return (
-    <div className="grid w-full max-w-md gap-4 rounded-md border border-white/70 bg-white/68 p-6 shadow-[0_22px_70px_rgba(78,89,132,0.12)] backdrop-blur-xl">
+    <div className="grid w-full max-w-md gap-4 rounded-md border border-white/70 bg-white/68 p-6 shadow-[0_22px_70px_rgba(78,89,132,0.12)] backdrop-blur-xl" role="status" aria-live="polite" aria-label={label}>
       <div className="h-3 rounded-md bg-[linear-gradient(90deg,rgba(226,232,240,.7),rgba(255,255,255,.95),rgba(226,232,240,.7))] bg-[length:220%_100%] [animation:skeletonShimmer_1.4s_ease-in-out_infinite]" />
       <div className="h-3 w-3/4 rounded-md bg-[linear-gradient(90deg,rgba(226,232,240,.7),rgba(255,255,255,.95),rgba(226,232,240,.7))] bg-[length:220%_100%] [animation:skeletonShimmer_1.4s_ease-in-out_infinite]" />
-      <p className="text-sm font-semibold text-slate-500">{label}</p>
+      <div className="h-3 w-1/2 rounded-md bg-[linear-gradient(90deg,rgba(226,232,240,.7),rgba(255,255,255,.95),rgba(226,232,240,.7))] bg-[length:220%_100%] [animation:skeletonShimmer_1.4s_ease-in-out_infinite]" />
+      <span className="sr-only">{label}</span>
     </div>
   );
 }

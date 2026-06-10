@@ -14,7 +14,12 @@ function guidePayload(input: unknown) {
   return {
     ...data,
     tags: stringifyArray(data.tags),
+    steps: stringifyArray(data.steps),
+    checklist: stringifyArray(data.checklist),
     coverImage: data.coverImage || null,
+    seoTitle: data.seoTitle || null,
+    seoDescription: data.seoDescription || null,
+    ogImage: data.ogImage || null,
     publishedAt: data.status === "PUBLISHED" ? (data.publishedAt ? new Date(data.publishedAt) : new Date()) : data.publishedAt ? new Date(data.publishedAt) : null
   };
 }

@@ -19,11 +19,11 @@ export function Button({
     <button
       type={type}
       className={cn(
-        "magnetic-button inline-flex items-center justify-center gap-2 rounded-md border font-bold transition duration-200 focus-ring disabled:pointer-events-none disabled:opacity-50",
+        "magnetic-button inline-flex items-center justify-center gap-2 rounded-full border font-bold transition duration-200 focus-ring disabled:pointer-events-none disabled:opacity-50",
         variant === "primary" &&
-          "border-white/50 bg-gradient-to-r from-slate-950 via-cyan-950 to-violet-950 text-white shadow-[0_20px_60px_rgba(15,23,42,0.22)] hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(14,116,144,0.24)] active:scale-[0.98]",
+          "border-slate-900 bg-slate-950 text-white shadow-[0_12px_30px_rgba(17,24,39,0.18)] hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-[0_16px_38px_rgba(17,24,39,0.22)] active:scale-[0.98]",
         variant === "secondary" &&
-          "border-white/75 bg-white/72 text-slate-800 shadow-sm backdrop-blur hover:-translate-y-0.5 hover:border-cyan-200 hover:bg-white active:scale-[0.98]",
+          "border-slate-900/10 bg-white/72 text-slate-900 shadow-sm backdrop-blur hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-white active:scale-[0.98]",
         variant === "ghost" &&
           "border-transparent bg-transparent text-slate-700 hover:bg-white/70 active:scale-[0.98]",
         variant === "danger" &&

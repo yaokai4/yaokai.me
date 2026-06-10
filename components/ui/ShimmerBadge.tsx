@@ -7,7 +7,7 @@ export function ShimmerBadge(props: ComponentProps<typeof Badge>) {
     <Badge
       {...props}
       className={cn(
-        "relative overflow-hidden bg-gradient-to-r from-white/78 via-cyan-50/88 to-fuchsia-50/78 before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/70 before:to-transparent before:transition-transform before:duration-700 hover:before:translate-x-full",
+        "relative overflow-hidden bg-gradient-to-r from-white/78 via-indigo-50/88 to-sky-50/78 before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/70 before:to-transparent before:transition-transform before:duration-700 hover:before:translate-x-full",
         props.className
       )}
     />

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useLocale } from "@/components/site/LocaleProvider";
-import { shellCopy } from "@/lib/i18n";
+import { shellCopy, withLocalePath } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 type SearchItem = {
@@ -89,7 +89,7 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
       window.open(item.href, "_blank", "noopener,noreferrer");
       return;
     }
-    router.push(item.href);
+    router.push(withLocalePath(item.href, locale));
   }
 
   const grouped = React.useMemo(() => {
@@ -110,7 +110,7 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
             setActiveIndex(0);
             setOpen(true);
           }}
-          className="hidden h-10 items-center gap-2 rounded-md border border-white/70 bg-white/70 px-3 text-sm text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-slate-950 lg:inline-flex"
+          className="hidden h-10 items-center gap-2 rounded-full border border-slate-900/10 bg-white/70 px-3 text-sm text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-slate-950 focus-ring lg:inline-flex"
         >
           <Search className="h-4 w-4" />
           {copy.searchShort}
@@ -123,7 +123,7 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
       <AnimatePresence>
         {open ? (
           <motion.div
-            className="fixed inset-0 z-[90] grid place-items-start bg-slate-950/18 px-4 pt-24 backdrop-blur-sm md:pt-28"
+            className="fixed inset-0 z-[90] grid place-items-start bg-slate-950/10 px-4 pt-24 backdrop-blur-sm md:pt-28"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -132,14 +132,14 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
             }}
           >
             <motion.div
-              className="mx-auto w-full max-w-2xl overflow-hidden rounded-md border border-white/75 bg-white/88 shadow-[0_32px_120px_rgba(96,110,170,0.28)] backdrop-blur-2xl"
+              className="mx-auto w-full max-w-2xl overflow-hidden rounded-md border border-white/82 bg-white/94 shadow-[0_32px_120px_rgba(96,110,170,0.28)] backdrop-blur-2xl"
               initial={{ opacity: 0, y: 12, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.18 }}
             >
               <div className="flex items-center gap-3 border-b border-slate-200/70 px-4 py-3">
-                <Search className="h-5 w-5 text-cyan-600" />
+                <Search className="h-5 w-5 text-indigo-600" />
                 <input
                   ref={inputRef}
                   value={query}
@@ -164,7 +164,7 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
                   placeholder={copy.searchPlaceholder}
                   className="h-11 min-w-0 flex-1 bg-transparent text-base text-slate-950 outline-none placeholder:text-slate-400"
                 />
-                <button type="button" aria-label="Close search" onClick={() => setOpen(false)} className="grid h-9 w-9 place-items-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-950">
+                <button type="button" aria-label="Close search" onClick={() => setOpen(false)} className="grid h-9 w-9 place-items-center rounded-md text-slate-500 transition hover:bg-indigo-50 hover:text-slate-950 focus-ring">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -179,15 +179,15 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
                       {groupItems.map((item) => {
                         const itemIndex = filtered.findIndex((candidate) => candidate.type === item.type && candidate.title === item.title && candidate.href === item.href);
                         const className = cn(
-                          "group relative grid gap-1 rounded-md px-3 py-3 transition hover:bg-cyan-50/80",
+                          "group relative grid gap-1 rounded-md px-3 py-3 transition hover:bg-indigo-50/80 focus-ring",
                           item.external && "pr-10",
-                          activeIndex === itemIndex && "bg-cyan-50/90 ring-1 ring-cyan-200/70"
+                          activeIndex === itemIndex && "bg-indigo-50/90 ring-1 ring-indigo-200/70"
                         );
                     const content = (
                       <>
                         <div className="flex items-center justify-between gap-4">
                           <span className="text-sm font-semibold text-slate-950">{item.title}</span>
-                          <span className="rounded-md border border-cyan-200/70 bg-white/70 px-2 py-0.5 text-[11px] font-medium text-cyan-700">{item.type}</span>
+                          <span className="rounded-full border border-indigo-200/70 bg-white/70 px-2 py-0.5 text-[11px] font-medium text-indigo-700">{item.type}</span>
                         </div>
                         <p className="line-clamp-2 text-sm leading-6 text-slate-600">{item.description}</p>
                       </>
@@ -199,7 +199,7 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
                         <ArrowUpRight className="absolute right-3 top-3 h-4 w-4 text-slate-400" />
                       </a>
                     ) : (
-                      <Link key={`${item.type}-${item.title}`} href={item.href} className={className} onClick={() => setOpen(false)}>
+                      <Link key={`${item.type}-${item.title}`} href={withLocalePath(item.href, locale)} className={className} onClick={() => setOpen(false)}>
                         {content}
                       </Link>
                     );

@@ -1,4 +1,5 @@
 import { readingTime, slugify } from "@/lib/utils";
+import type { Locale } from "@/lib/i18n";
 
 export type TocItem = {
   id: string;
@@ -29,6 +30,6 @@ export function extractToc(markdown: string): TocItem[] {
     .filter((item): item is TocItem => Boolean(item));
 }
 
-export function getReadingTime(markdown: string) {
-  return readingTime(markdown);
+export function getReadingTime(markdown: string, locale: Locale = "zh") {
+  return readingTime(markdown, locale);
 }

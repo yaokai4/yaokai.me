@@ -29,5 +29,5 @@ export function ReadingProgress() {
     };
   }, []);
 
-  return <div className="fixed left-0 top-0 z-[60] h-1 w-full origin-left bg-cyan-300 transition-transform" style={{ transform: `scaleX(${progress / 100})` }} />;
+  return <div className="fixed left-0 top-0 z-[60] h-1 w-full origin-left bg-gradient-to-r from-indigo-600 to-sky-500 transition-transform" style={{ transform: `scaleX(${progress / 100})` }} />;
 }

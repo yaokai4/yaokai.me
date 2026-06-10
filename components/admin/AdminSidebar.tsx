@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, BarChart3, BookOpen, FileText, FolderKanban, Home, Inbox, Library, ListChecks, LogOut, MessageSquare, ScrollText, Settings, ShieldCheck } from "lucide-react";
+import { Activity, BarChart3, BookOpen, FileText, FolderKanban, Home, Inbox, Library, ListChecks, LogOut, MessageSquare, ScrollText, Server, Settings, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,7 @@ const navItems = [
   { href: "/admin/manifesto", label: "宣言", icon: ScrollText },
   { href: "/admin/posts", label: "动态", icon: MessageSquare },
   { href: "/admin/messages", label: "留言", icon: Inbox },
+  { href: "/admin/vps", label: "Secure Access", icon: Server },
   { href: "/admin/settings", label: "设置", icon: Settings },
   { href: "/admin/security", label: "账号安全", icon: ShieldCheck }
 ];
@@ -31,7 +32,7 @@ export function AdminSidebar({ mobile = false }: { mobile?: boolean }) {
   }
 
   return (
-    <aside className={cn("w-64 border-r border-slate-200 bg-white px-4 py-5", mobile ? "relative min-h-screen" : "fixed inset-y-0 left-0 hidden lg:block")}>
+    <aside className={cn("flex w-64 flex-col border-r border-slate-200 bg-white px-4 py-5", mobile ? "relative min-h-screen" : "fixed inset-y-0 left-0 hidden lg:flex")}>
       <Link href="/" className="flex items-center gap-3 rounded-md px-2 py-2">
         <span className="grid h-9 w-9 place-items-center rounded-md bg-slate-950 text-sm font-bold text-white">YK</span>
         <div>
@@ -40,7 +41,7 @@ export function AdminSidebar({ mobile = false }: { mobile?: boolean }) {
         </div>
       </Link>
 
-      <nav className="mt-8 grid gap-1">
+      <nav className="mt-8 grid gap-1 overflow-y-auto pb-4">
         {navItems.map((item) => {
           const Icon = item.icon;
           const active = item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href);
@@ -60,7 +61,7 @@ export function AdminSidebar({ mobile = false }: { mobile?: boolean }) {
         })}
       </nav>
 
-      <div className="absolute inset-x-4 bottom-5 grid gap-2">
+      <div className="mt-auto grid gap-2 border-t border-slate-100 pt-4">
         <Link href="/" className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100">
           <Home className="h-4 w-4" />
           查看网站

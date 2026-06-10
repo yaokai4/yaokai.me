@@ -11,6 +11,25 @@ if [[ "$(id -u)" -ne 0 ]]; then
   exit 1
 fi
 
+ensure_swap() {
+  local swap_mb
+  swap_mb="$(free -m | awk '/^Swap:/ {print $2}')"
+  if [[ -n "$swap_mb" && "$swap_mb" -ge 1024 ]]; then
+    return
+  fi
+
+  echo "正在配置 2GB swap..."
+  if [[ ! -f /swapfile ]]; then
+    fallocate -l 2G /swapfile 2>/dev/null || dd if=/dev/zero of=/swapfile bs=1M count=2048
+    chmod 600 /swapfile
+    mkswap /swapfile
+  fi
+  swapon /swapfile 2>/dev/null || true
+  if ! grep -qE '^/swapfile\s' /etc/fstab; then
+    echo "/swapfile none swap sw 0 0" >> /etc/fstab
+  fi
+}
+
 echo "正在更新 Amazon Linux 2023 软件包..."
 dnf update -y
 dnf install -y git nginx tar gzip sqlite
@@ -24,10 +43,10 @@ if ! command -v node >/dev/null 2>&1; then
   dnf install -y nodejs
 fi
 
-echo "正在启用 pnpm 并安装 PM2..."
+echo "正在启用 pnpm..."
 corepack enable
 corepack prepare pnpm@latest --activate
-npm install -g pm2
+ensure_swap
 
 mkdir -p "$APP_DIR"
 chown -R ec2-user:ec2-user "$APP_DIR" || true
@@ -38,6 +57,16 @@ server {
     server_name ${DOMAIN};
 
     client_max_body_size 20m;
+
+    location ~ ^/api/(vps/access/(download|shadowrocket)|admin/vps/access-profiles/download)/ {
+        access_log off;
+        proxy_pass http://127.0.0.1:${PORT};
+        proxy_http_version 1.1;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
 
     location / {
         proxy_pass http://127.0.0.1:${PORT};
@@ -55,12 +84,6 @@ EOF
 systemctl enable nginx
 nginx -t
 systemctl restart nginx
-
-echo "正在配置 PM2 开机自启动..."
-PM2_CMD="$(pm2 startup systemd -u ec2-user --hp /home/ec2-user | tail -n 1 || true)"
-if [[ "$PM2_CMD" == sudo* ]]; then
-  eval "${PM2_CMD#sudo }"
-fi
 
 echo
 echo "服务器初始化完成。"

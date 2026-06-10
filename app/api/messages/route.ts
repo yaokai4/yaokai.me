@@ -1,21 +1,14 @@
-import crypto from "node:crypto";
 import { NextRequest } from "next/server";
 import { fail, normalizeError, ok } from "@/lib/api-response";
 import { requireAdmin } from "@/lib/auth";
+import { sendContactNotification } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
+import { assertSameOrigin, getClientIp, hashValue } from "@/lib/security";
 import { messageSchema } from "@/lib/validations";
 
 export const dynamic = "force-dynamic";
 
 const rateLimit = new Map<string, { count: number; resetAt: number }>();
-
-function getIp(request: NextRequest) {
-  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "local";
-}
-
-function hash(value: string) {
-  return crypto.createHash("sha256").update(value).digest("hex");
-}
 
 function checkRateLimit(ip: string) {
   const now = Date.now();
@@ -43,20 +36,39 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const ip = getIp(request);
+    assertSameOrigin(request);
+    const ip = getClientIp(request);
     if (!checkRateLimit(ip)) {
       return fail("请稍等片刻后再发送留言。", "RATE_LIMITED", 429);
     }
 
-    const data = messageSchema.parse(await request.json());
+    const payload = await request.json();
+    if (typeof payload.company === "string" && payload.company.trim()) {
+      return ok({ accepted: true }, { status: 202 });
+    }
+
+    const data = messageSchema.parse(payload);
     const message = await prisma.message.create({
       data: {
         ...data,
-        ipHash: hash(ip)
+        status: "UNREAD",
+        read: false,
+        ipHash: hashValue(ip),
+        userAgent: request.headers.get("user-agent") || null
       }
     });
+
+    try {
+      await sendContactNotification(data);
+    } catch (error) {
+      console.error("Contact notification failed", error);
+    }
+
     return ok({ id: message.id, createdAt: message.createdAt }, { status: 201 });
   } catch (error) {
+    if (error instanceof Error && error.message === "CSRF_CHECK_FAILED") {
+      return fail("请求来源无效。", "FORBIDDEN", 403);
+    }
     return fail(normalizeError(error), "BAD_REQUEST", 400);
   }
 }

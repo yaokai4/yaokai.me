@@ -4,8 +4,10 @@ import * as React from "react";
 import { FilterTabs } from "@/components/site/FilterTabs";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { SearchInput } from "@/components/site/SearchInput";
+import { useLocale } from "@/components/site/LocaleProvider";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/State";
+import { siteCopy } from "@/lib/public-copy";
 
 type Project = {
   id: string;
@@ -19,14 +21,19 @@ type Project = {
 };
 
 export function ProjectExplorer({ projects }: { projects: Project[] }) {
+  const { locale } = useLocale();
+  const copy = siteCopy[locale];
+  const t = copy.explorers.projects;
+  const allLabel = copy.common.all;
   const [query, setQuery] = React.useState("");
-  const [category, setCategory] = React.useState("全部");
-  const categories = React.useMemo(() => ["全部", ...Array.from(new Set(projects.map((project) => project.category)))], [projects]);
+  const [category, setCategory] = React.useState<string>(allLabel);
+  const categories = React.useMemo(() => [allLabel, ...Array.from(new Set(projects.map((project) => project.category)))], [allLabel, projects]);
+  const activeCategory = categories.includes(category) ? category : allLabel;
 
   const filtered = projects.filter((project) => {
     const haystack = `${project.title} ${project.excerpt} ${project.category} ${project.techStack.join(" ")}`.toLowerCase();
     const matchesQuery = haystack.includes(query.toLowerCase());
-    const matchesCategory = category === "全部" || project.category === category;
+    const matchesCategory = activeCategory === allLabel || project.category === activeCategory;
     return matchesQuery && matchesCategory;
   });
   const featuredProject = filtered.find((project) => project.featured) || filtered[0];
@@ -37,13 +44,13 @@ export function ProjectExplorer({ projects }: { projects: Project[] }) {
       <div className="premium-glass-card grid gap-4 rounded-md p-4 lg:grid-cols-[minmax(280px,0.85fr)_1fr] lg:items-center">
         <div>
           <div className="mb-3 flex flex-wrap items-center gap-2">
-            <Badge>{filtered.length} 个案例</Badge>
-            <span className="text-xs font-bold text-slate-500">按技术、主题和产品类型筛选</span>
+            <Badge>{t.count(filtered.length)}</Badge>
+            <span className="text-xs font-bold text-slate-500">{t.filterHint}</span>
           </div>
-          <SearchInput value={query} onChange={setQuery} placeholder="搜索项目、技术栈或分类" />
+          <SearchInput value={query} onChange={setQuery} placeholder={t.placeholder} clearLabel={copy.common.clearSearch} />
         </div>
         <div className="lg:justify-self-end">
-          <FilterTabs items={categories} value={category} onChange={setCategory} />
+          <FilterTabs items={categories} value={activeCategory} onChange={setCategory} ariaLabel={copy.common.filterAria} />
         </div>
       </div>
       {filtered.length ? (
@@ -56,7 +63,7 @@ export function ProjectExplorer({ projects }: { projects: Project[] }) {
           </div>
         </div>
       ) : (
-        <EmptyState title="没有找到项目" description="换一个关键词或分类试试。" />
+        <EmptyState title={t.emptyTitle} description={t.emptyDescription} />
       )}
     </div>
   );

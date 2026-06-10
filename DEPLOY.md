@@ -2,18 +2,18 @@
 
 最后更新：2026-06-04
 
-这份文档记录 `yaokai.me` 的生产部署、验证、回滚和日常维护流程。当前部署方式是本地打包项目，通过 SSH 上传到 Amazon Linux 2023 服务器，并在远端使用 pnpm、Prisma、PM2 和 Nginx 运行 Next.js 应用。
+这份文档记录 `yaokai.me` 的生产部署、验证、回滚和日常维护流程。当前部署方式是本地打包项目，通过 SSH 上传到 Amazon Linux 2023 服务器，并在远端使用 pnpm、Prisma、systemd 和 Nginx 运行 Next.js 应用。
 
 ## 1. 当前生产配置
 
 ```txt
 域名：yaokai.me
 备用域名：www.yaokai.me
-服务器公网 IP：52.194.191.244
+服务器公网 IP：57.180.83.160
 SSH 用户：ec2-user
-默认 SSH 私钥：/Users/yaokai/Desktop/it/ios/Machi2.pem
+默认 SSH 私钥：/Users/yaokai/Desktop/it/ios/machiL.pem
 远端目录：/var/www/yaokai.me
-PM2 应用名：yaokai-me
+systemd 服务名：yaokai-me.service
 应用端口：3000
 ```
 
@@ -61,7 +61,7 @@ ENABLE_SSL=1 npm run deploy
 - 上传压缩包到服务器。
 - 远端备份旧版 `/var/www/yaokai.me`。
 - 保留远端已有 `.env.production`、`prisma/production.db*` 和 `backups/`。
-- 安装或检查 Node.js、pnpm、PM2、Nginx。
+- 安装或检查 Node.js、pnpm、Nginx。
 - 写入 Nginx 反向代理配置。
 - 安装依赖。
 - 根据 `DATABASE_URL` 自动选择 Prisma schema。
@@ -69,7 +69,7 @@ ENABLE_SSL=1 npm run deploy
 - 执行数据库迁移。
 - 按配置运行 seed。
 - 构建 Next.js。
-- 用 PM2 重启 `yaokai-me`。
+- 用 systemd 重启 `yaokai-me.service`。
 - 检查 Nginx 配置并重载。
 - 检查本机页面和公网入口。
 - 当 `ENABLE_SSL=1` 时通过 Certbot 配置 HTTPS。
@@ -139,21 +139,20 @@ PostgreSQL：prisma/postgresql/schema.prisma
 登录服务器：
 
 ```bash
-ssh -i /Users/yaokai/Desktop/it/ios/Machi2.pem ec2-user@52.194.191.244
+ssh -i /Users/yaokai/Desktop/it/ios/machiL.pem ec2-user@57.180.83.160
 ```
 
-查看 PM2 状态：
+查看应用服务状态：
 
 ```bash
-pm2 list
-pm2 logs yaokai-me
+sudo systemctl status yaokai-me --no-pager
+sudo journalctl -u yaokai-me -n 100 --no-pager
 ```
 
 重启应用：
 
 ```bash
-pm2 restart yaokai-me --update-env
-pm2 save
+sudo systemctl restart yaokai-me
 ```
 
 检查 Nginx：
@@ -227,13 +226,12 @@ cd /var/www/yaokai.me
 
 ```bash
 sudo systemctl stop nginx
-pm2 delete yaokai-me
+sudo systemctl stop yaokai-me
 sudo rm -rf /var/www/yaokai.me
 sudo cp -a /var/www/yaokai.me.backup-YYYYMMDD-HHMMSS /var/www/yaokai.me
 sudo chown -R ec2-user:ec2-user /var/www/yaokai.me
 cd /var/www/yaokai.me
-pm2 start "pnpm start" --name yaokai-me --time --update-env -- start
-pm2 save
+sudo systemctl start yaokai-me
 sudo nginx -t
 sudo systemctl start nginx
 ```
@@ -241,7 +239,7 @@ sudo systemctl start nginx
 如果只是应用进程异常，通常不需要完整回滚，先执行：
 
 ```bash
-pm2 restart yaokai-me --update-env
+sudo systemctl restart yaokai-me
 ```
 
 ## 10. 常见故障
@@ -251,8 +249,8 @@ pm2 restart yaokai-me --update-env
 确认私钥存在且权限正确：
 
 ```bash
-chmod 400 /Users/yaokai/Desktop/it/ios/Machi2.pem
-ssh -i /Users/yaokai/Desktop/it/ios/Machi2.pem ec2-user@52.194.191.244
+chmod 400 /Users/yaokai/Desktop/it/ios/machiL.pem
+ssh -i /Users/yaokai/Desktop/it/ios/machiL.pem ec2-user@57.180.83.160
 ```
 
 ### 网站 502
@@ -260,8 +258,8 @@ ssh -i /Users/yaokai/Desktop/it/ios/Machi2.pem ec2-user@52.194.191.244
 先看应用是否运行：
 
 ```bash
-pm2 list
-pm2 logs yaokai-me
+sudo systemctl status yaokai-me --no-pager
+sudo journalctl -u yaokai-me -n 100 --no-pager
 curl -I http://127.0.0.1:3000/
 ```
 
@@ -310,7 +308,7 @@ pnpm prisma migrate deploy --schema "$(./scripts/prepare-prisma-provider.sh .env
 ```bash
 cd /var/www/yaokai.me
 pnpm prisma db seed --schema "$(./scripts/prepare-prisma-provider.sh .env.production --print)"
-pm2 restart yaokai-me --update-env
+sudo systemctl restart yaokai-me
 ```
 
 ## 11. 推荐发布节奏

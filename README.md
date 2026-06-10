@@ -28,7 +28,7 @@
 - 生产环境可通过专用 Prisma schema 和迁移使用 PostgreSQL
 - bcryptjs、jose、Zod
 - React Markdown、GFM 和代码高亮
-- PM2 与 Nginx 用于生产运行
+- systemd 与 Nginx 用于生产运行
 
 ## 项目结构
 
@@ -102,11 +102,11 @@ pnpm start
 
 ```txt
 域名：yaokai.me
-服务器：52.194.191.244
+服务器：57.180.83.160
 SSH 用户：ec2-user
-SSH 私钥：/Users/yaokai/Desktop/it/ios/Machi2.pem
+SSH 私钥：/Users/yaokai/Desktop/it/ios/machiL.pem
 远端目录：/var/www/yaokai.me
-PM2 应用名：yaokai-me
+systemd 服务名：yaokai-me.service
 端口：3000
 ```
 
@@ -116,18 +116,18 @@ PM2 应用名：yaokai-me
 npm run deploy
 ```
 
-脚本会在本地打包项目并排除 `.env`、`.env.production`、本地数据库、`.next`、`node_modules`、备份目录和 Git 元数据；远端会保留生产 `.env.production`、`prisma/production.db*` 和备份目录，然后安装依赖、应用迁移、运行种子数据、构建、重启 PM2 和重载 Nginx。
+脚本会在本地打包项目并排除 `.env`、`.env.production`、本地数据库、`.next`、`node_modules`、备份目录和 Git 元数据；远端会保留生产 `.env.production`、`prisma/production.db*` 和备份目录，然后安装依赖、应用迁移、运行种子数据、构建、通过 systemd 重启 `yaokai-me.service` 并重载 Nginx。
 
-如需首次同时申请 HTTPS 证书：
+脚本默认会申请或更新 HTTPS 证书，并把 HTTP 自动跳转到 HTTPS。若只想部署 HTTP：
 
 ```bash
-ENABLE_SSL=1 npm run deploy
+ENABLE_SSL=0 npm run deploy
 ```
 
 如果 key 路径不同：
 
 ```bash
-EC2_KEY=/path/to/Machi2.pem npm run deploy
+EC2_KEY=/path/to/machiL.pem npm run deploy
 ```
 
 ## SQLite 与 PostgreSQL
@@ -169,5 +169,5 @@ pnpm prisma migrate deploy --schema prisma/postgresql/schema.prisma
 - `pnpm: command not found`：先运行 `corepack enable`，再运行 `corepack prepare pnpm@latest --activate`。
 - 后台登录失败：设置 `ADMIN_EMAIL` 和 `ADMIN_PASSWORD` 后，运行 `pnpm prisma db seed`。
 - 切换数据库后出现错误：确认当前使用的是 SQLite schema，还是 `prisma/postgresql/schema.prisma`。
-- 联系表单生产环境失败：确认 Nginx 已把请求转发到 `3000` 端口，且应用正在 PM2 中运行。
-- 部署 SSH 失败：确认 `/Users/yaokai/Desktop/it/ios/Machi2.pem` 存在，并执行 `chmod 400 /Users/yaokai/Desktop/it/ios/Machi2.pem`。
+- 联系表单生产环境失败：确认 Nginx 已把请求转发到 `3000` 端口，且 `yaokai-me.service` 正在运行。
+- 部署 SSH 失败：确认 `/Users/yaokai/Desktop/it/ios/machiL.pem` 存在，并执行 `chmod 400 /Users/yaokai/Desktop/it/ios/machiL.pem`。

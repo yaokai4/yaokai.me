@@ -1,14 +1,14 @@
 # Amazon Linux 2023 部署指南
 
-这份指南用于在 Amazon Linux 2023 上部署本项目，运行环境包含 Node.js LTS、pnpm、PM2 和 Nginx。当前默认目标是：
+这份指南用于在 Amazon Linux 2023 上部署本项目，运行环境包含 Node.js LTS、pnpm、systemd 和 Nginx。当前默认目标是：
 
 ```txt
 域名：yaokai.me
-服务器：52.194.191.244
+服务器：57.180.83.160
 SSH 用户：ec2-user
-SSH 私钥：/Users/yaokai/Desktop/it/ios/Machi2.pem
+SSH 私钥：/Users/yaokai/Desktop/it/ios/machiL.pem
 远端目录：/var/www/yaokai.me
-PM2 应用名：yaokai-me
+systemd 服务名：yaokai-me.service
 端口：3000
 ```
 
@@ -23,12 +23,12 @@ npm run deploy
 脚本会自动完成：
 
 - 本地打包项目，排除 `.env`、`.env.production`、本地数据库、`.next`、`node_modules`、备份目录和 Git 元数据。
-- 上传到 `52.194.191.244`。
+- 上传到 `57.180.83.160`。
 - 远端保留生产 `.env.production`、`prisma/production.db*` 和备份目录。
-- 安装或检查 Node.js、pnpm、PM2、Nginx。
+- 安装或检查 Node.js、pnpm、Nginx。
 - 写入 `yaokai.me www.yaokai.me` 的 Nginx 反向代理。
 - 安装依赖、生成 Prisma Client、应用迁移、运行种子数据、构建 Next.js。
-- 启动或重载 PM2 应用 `yaokai-me`。
+- 启动或重载 systemd 服务 `yaokai-me.service`。
 - 执行本机健康检查和公网入口提示。
 
 如需同时签发 HTTPS 证书：
@@ -40,7 +40,7 @@ ENABLE_SSL=1 npm run deploy
 如果 SSH key 路径不同：
 
 ```bash
-EC2_KEY=/path/to/Machi2.pem npm run deploy
+EC2_KEY=/path/to/machiL.pem npm run deploy
 ```
 
 ## 1. 准备服务器
@@ -57,9 +57,9 @@ sudo DOMAIN="yaokai.me www.yaokai.me" APP_NAME=yaokai-me APP_DIR=/var/www/yaokai
 - git、curl、nginx、sqlite
 - Node.js LTS
 - 通过 Corepack 启用 pnpm
-- PM2
+- systemd 应用服务
 - 指向 `127.0.0.1:3000` 的 Nginx 反向代理
-- PM2 开机自启动配置
+- `yaokai-me.service` 开机自启动配置
 
 默认值：
 
@@ -125,14 +125,14 @@ RUN_SEED=1 ./scripts/deploy-amazon-linux-2023.sh
 
 脚本会执行：
 
-- 检查 Node.js、pnpm 和 PM2
+- 检查 Node.js 和 pnpm
 - 安装依赖
 - 按 SQLite 或 PostgreSQL 选择正确 Prisma schema
 - 生成 Prisma Client
 - 应用迁移
 - 当 `RUN_SEED=1` 时运行种子数据
 - 构建 Next.js
-- 启动或重载 PM2 应用 `yaokai-me`
+- 启动或重载 systemd 服务 `yaokai-me.service`
 - 校验并重载 Nginx
 
 ## 5. Nginx
@@ -153,16 +153,14 @@ sudo systemctl restart nginx
 
 如果修改端口，请同时更新 `.env.production` 和 Nginx upstream 目标地址。
 
-## 6. PM2
+## 6. systemd 应用服务
 
 常用命令：
 
 ```bash
-pm2 list
-pm2 logs yaokai-me
-pm2 restart yaokai-me
-pm2 reload yaokai-me
-pm2 save
+sudo systemctl status yaokai-me --no-pager
+sudo journalctl -u yaokai-me -n 100 --no-pager
+sudo systemctl restart yaokai-me
 ```
 
 ## 7. 域名与 DNS
@@ -197,7 +195,7 @@ chmod +x scripts/update.sh
 ./scripts/update.sh
 ```
 
-该脚本会执行 `git pull`、安装依赖、应用迁移、重新构建、重载 PM2，并重载 Nginx。
+该脚本会执行 `git pull`、安装依赖、应用迁移、重新构建、重启 systemd 应用服务，并重载 Nginx。
 
 ## 10. 手动启动
 
@@ -239,8 +237,8 @@ https://yaokai.me/yaokai
 
 ## 13. 排错
 
-- 应用返回 502：查看 `pm2 logs yaokai-me`，确认应用监听在 `3000` 端口。
+- 应用返回 502：查看 `sudo journalctl -u yaokai-me -n 100 --no-pager`，确认应用监听在 `3000` 端口。
 - Nginx 重载失败：运行 `sudo nginx -t`，检查 `/etc/nginx/conf.d/yaokai-me.conf`。
 - 后台账号不存在：确认 `.env.production` 有后台账号配置，然后运行 `pnpm prisma db seed`。
 - Prisma 数据库类型不匹配：运行 `./scripts/prepare-prisma-provider.sh .env.production --print`，确认当前选中的 schema。
-- 静态资源缺失：重新运行 `pnpm build` 并重载 PM2。
+- 静态资源缺失：重新运行 `pnpm build` 并重启 `yaokai-me.service`。

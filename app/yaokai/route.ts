@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ADMIN_ENTRY_COOKIE, AUTH_COOKIE } from "@/lib/auth";
+import { ADMIN_ENTRY_COOKIE, AUTH_COOKIE, shouldUseSecureCookie } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   const session = request.cookies.get(AUTH_COOKIE)?.value;
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
   response.cookies.set(ADMIN_ENTRY_COOKIE, "1", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: shouldUseSecureCookie(),
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24

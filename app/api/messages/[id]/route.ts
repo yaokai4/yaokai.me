@@ -12,7 +12,15 @@ export async function PUT(request: Request, { params }: Context) {
     await requireAdmin();
     const { id } = await params;
     const data = messageUpdateSchema.parse(await request.json());
-    const message = await prisma.message.update({ where: { id }, data });
+    const status = data.status || (typeof data.read === "boolean" ? (data.read ? "READ" : "UNREAD") : undefined);
+    const message = await prisma.message.update({
+      where: { id },
+      data: {
+        ...data,
+        status,
+        read: typeof data.read === "boolean" ? data.read : status ? status !== "UNREAD" : undefined
+      }
+    });
     return ok(message);
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized") return fail("未授权。", "UNAUTHORIZED", 401);

@@ -13,9 +13,13 @@ function articlePayload(input: unknown) {
   return {
     ...data,
     tags: stringifyArray(data.tags),
+    relatedProjects: stringifyArray(data.relatedProjects),
+    relatedGuides: stringifyArray(data.relatedGuides),
+    subtitle: data.subtitle || null,
     coverImage: data.coverImage || null,
     seoTitle: data.seoTitle || null,
     seoDescription: data.seoDescription || null,
+    ogImage: data.ogImage || null,
     publishedAt: data.status === "PUBLISHED" ? (data.publishedAt ? new Date(data.publishedAt) : new Date()) : data.publishedAt ? new Date(data.publishedAt) : null
   };
 }

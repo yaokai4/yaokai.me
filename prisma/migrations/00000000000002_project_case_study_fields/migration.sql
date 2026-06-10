@@ -1,0 +1,12 @@
+ALTER TABLE "Project" ADD COLUMN "longDescription" TEXT;
+ALTER TABLE "Project" ADD COLUMN "screenshots" TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE "Project" ADD COLUMN "status" TEXT NOT NULL DEFAULT 'Case Study';
+ALTER TABLE "Project" ADD COLUMN "architectureNotes" TEXT;
+ALTER TABLE "Project" ADD COLUMN "responsibilities" TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE "Project" ADD COLUMN "keyChallenges" TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE "Project" ADD COLUMN "solutions" TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE "Project" ADD COLUMN "technicalHighlights" TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE "Project" ADD COLUMN "measurableResults" TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE "Project" ADD COLUMN "nextSteps" TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE "Project" ADD COLUMN "startDate" TEXT;
+ALTER TABLE "Project" ADD COLUMN "endDate" TEXT;

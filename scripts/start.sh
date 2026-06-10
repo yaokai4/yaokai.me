@@ -2,6 +2,7 @@
 set -euo pipefail
 
 APP_NAME="${APP_NAME:-yaokai-me}"
+APP_DIR="${APP_DIR:-$(pwd)}"
 PORT="${PORT:-3000}"
 
 ensure_sqlite_db_file() {
@@ -38,8 +39,36 @@ set +a
 PRISMA_SCHEMA="$(./scripts/prepare-prisma-provider.sh .env.production --print)"
 ensure_sqlite_db_file .env.production
 pnpm prisma generate --schema "$PRISMA_SCHEMA"
-pm2 delete "$APP_NAME" >/dev/null 2>&1 || true
-pm2 start "pnpm start" --name "$APP_NAME" --time --update-env -- start
-pm2 save
+
+if ! command -v sudo >/dev/null 2>&1; then
+  echo "缺少 sudo，无法创建 systemd 服务。请使用 pnpm start 手动运行。"
+  exit 1
+fi
+
+sudo tee "/etc/systemd/system/${APP_NAME}.service" >/dev/null <<EOF
+[Unit]
+Description=${APP_NAME} Next.js app
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=$(id -un)
+WorkingDirectory=${APP_DIR}
+EnvironmentFile=${APP_DIR}/.env.production
+Environment=NODE_ENV=production
+Environment=PORT=${PORT}
+ExecStart=/usr/bin/pnpm start
+Restart=always
+RestartSec=5
+KillSignal=SIGINT
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl daemon-reload
+sudo systemctl enable --now "${APP_NAME}.service"
+sudo systemctl restart "${APP_NAME}.service"
 
 echo "${APP_NAME} 正在运行：http://127.0.0.1:${PORT}"

@@ -14,6 +14,9 @@ type Message = {
   email: string;
   content: string;
   read: boolean;
+  status?: string;
+  source?: string;
+  userAgent?: string | null;
   createdAt: string | Date;
 };
 
@@ -59,7 +62,8 @@ export function MessagesManager({ initialMessages }: { initialMessages: Message[
           { key: "name", label: "姓名", sortable: true },
           { key: "email", label: "邮箱", sortable: true },
           { key: "content", label: "留言", render: (item) => <span className="line-clamp-3">{item.content}</span> },
-          { key: "read", label: "状态", render: (item) => <StatusBadge label={item.read ? "已读" : "未读"} tone={item.read ? "success" : "warning"} /> },
+          { key: "source", label: "来源", render: (item) => <span>{item.source || "contact"}</span>, sortable: true },
+          { key: "read", label: "状态", render: (item) => <StatusBadge label={item.status === "REPLIED" ? "已回复" : item.status === "ARCHIVED" ? "已归档" : item.read ? "已读" : "未读"} tone={item.read ? "success" : "warning"} /> },
           { key: "createdAt", label: "创建时间", render: (item) => formatDate(item.createdAt), sortable: true }
         ]}
         actions={(item) => (

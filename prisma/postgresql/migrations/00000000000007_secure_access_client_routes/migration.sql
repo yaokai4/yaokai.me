@@ -1,0 +1,1 @@
+ALTER TABLE "VpsEndpoint" ADD COLUMN "clientAllowedIps" TEXT NOT NULL DEFAULT '0.0.0.0/0';

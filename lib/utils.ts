@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { Locale } from "@/lib/i18n";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -62,20 +63,40 @@ export function slugify(input: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-export function formatDate(date?: Date | string | null) {
+const intlDateLocales: Record<Locale, string> = {
+  zh: "zh-CN",
+  ja: "ja-JP",
+  en: "en"
+};
+
+export function formatDate(date?: Date | string | null, locale: Locale = "zh") {
   if (!date) return "";
 
-  return new Intl.DateTimeFormat("zh-CN", {
+  return new Intl.DateTimeFormat(intlDateLocales[locale], {
     year: "numeric",
     month: "short",
     day: "numeric"
   }).format(new Date(date));
 }
 
-export function readingTime(content: string) {
-  const words = content.trim().split(/\s+/).filter(Boolean).length;
+export function readingTime(content: string, locale: Locale = "zh") {
   const cjkChars = (content.match(/[\u4e00-\u9fa5]/g) || []).length;
-  const minutes = Math.max(1, Math.ceil((words + cjkChars / 2) / 220));
+  const latinWords = content
+    .replace(/[\u4e00-\u9fa5]/g, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(latinWords / 220 + cjkChars / 320));
+  if (locale === "en") return `${minutes} min read`;
+  if (locale === "ja") return `約 ${minutes} 分で読めます`;
+  return `约 ${minutes} 分钟阅读`;
+}
+
+export function formatStoredReadingTime(value: string, locale: Locale = "zh") {
+  const minutes = Number(value.match(/\d+/)?.[0]);
+  if (!minutes) return value;
+  if (locale === "en") return `${minutes} min read`;
+  if (locale === "ja") return `約 ${minutes} 分で読めます`;
   return `约 ${minutes} 分钟阅读`;
 }
 

@@ -44,7 +44,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 className="rounded-md border border-white/70 bg-white/92 p-4 text-slate-950 shadow-[0_24px_80px_rgba(78,89,132,0.18)] backdrop-blur-xl"
               >
                 <div className="flex gap-3">
-                  <Icon className="mt-0.5 h-5 w-5 text-cyan-600" />
+                  <Icon className="mt-0.5 h-5 w-5 text-indigo-600" />
                   <div>
                     <p className="text-sm font-semibold">{item.title}</p>
                     {item.description ? <p className="mt-1 text-sm text-slate-600">{item.description}</p> : null}

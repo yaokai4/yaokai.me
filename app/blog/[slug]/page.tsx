@@ -1,16 +1,20 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { BlogCard } from "@/components/site/BlogCard";
+import { GuideCard } from "@/components/site/GuideExplorer";
 import { MarkdownRenderer } from "@/components/site/MarkdownRenderer";
 import { ReadingProgress } from "@/components/site/ReadingProgress";
 import { TableOfContents } from "@/components/site/TableOfContents";
 import { Badge } from "@/components/ui/Badge";
 import { prisma } from "@/lib/prisma";
-import { createMetadata } from "@/lib/seo";
+import { blogPostingJsonLd, breadcrumbJsonLd, createMetadata } from "@/lib/seo";
 import { extractToc, getReadingTime } from "@/lib/markdown";
 import { formatDate } from "@/lib/utils";
-import { normalizeArticle } from "@/lib/data";
+import { normalizeArticle, normalizeGuide } from "@/lib/data";
+import { getRequestLocale } from "@/lib/server-locale";
+import { withLocalePath } from "@/lib/i18n";
+import { siteCopy } from "@/lib/public-copy";
 
 export const dynamic = "force-dynamic";
 
@@ -18,14 +22,18 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const article = await prisma.article.findUnique({ where: { slug } });
+  const [locale, article] = await Promise.all([
+    getRequestLocale(),
+    prisma.article.findUnique({ where: { slug } })
+  ]);
   if (!article) return {};
 
   return createMetadata({
     title: article.seoTitle || article.title,
     description: article.seoDescription || article.excerpt,
     path: `/blog/${article.slug}`,
-    image: article.coverImage
+    image: article.coverImage,
+    locale
   });
 }
 
@@ -34,34 +42,46 @@ export default async function ArticlePage({ params }: Props) {
   const rawArticle = await prisma.article.findFirst({ where: { slug, status: "PUBLISHED" } });
   if (!rawArticle) notFound();
 
+  const locale = await getRequestLocale();
+  const t = siteCopy[locale].details.blog;
   const article = normalizeArticle(rawArticle);
-  const articles = (await prisma.article.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }]
-  })).map(normalizeArticle);
+  const [articles, guides] = await Promise.all([
+    prisma.article.findMany({
+      where: { status: "PUBLISHED" },
+      orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }]
+    }).then((items) => items.map(normalizeArticle)),
+    prisma.guide.findMany({
+      where: { status: "PUBLISHED" },
+      orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }],
+      take: 6
+    }).then((items) => items.map(normalizeGuide))
+  ]);
   const index = articles.findIndex((item) => item.id === article.id);
   const previous = index > 0 ? articles[index - 1] : null;
   const next = index >= 0 && index < articles.length - 1 ? articles[index + 1] : null;
   const related = articles.filter((item) => item.id !== article.id && item.category === article.category).slice(0, 2);
+  const relatedGuides = guides
+    .filter((item) => item.tags.some((tag) => article.tags.includes(tag)) || article.category.includes(item.category.split(" ")[0]))
+    .slice(0, 2);
   const toc = extractToc(article.content);
 
   return (
     <>
       <ReadingProgress />
       <section className="section-container pt-32">
-        <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-slate-500 transition hover:text-cyan-700">
+        <Link href={withLocalePath("/blog", locale)} className="inline-flex items-center gap-2 text-sm text-slate-500 transition hover:text-indigo-700 focus-ring">
           <ArrowLeft className="h-4 w-4" />
-          返回文章
+          {t.back}
         </Link>
         <div className="mt-8 max-w-4xl">
           <Badge>{article.category}</Badge>
           <h1 className="mt-6 text-balance text-5xl font-black leading-tight text-slate-950 md:text-7xl">{article.title}</h1>
           <p className="mt-6 text-lg leading-8 text-slate-600">{article.excerpt}</p>
-          <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-500">
-            <span>{formatDate(article.publishedAt)}</span>
-            <span>{getReadingTime(article.content)}</span>
+          <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+            <span className="rounded-md border border-slate-200/80 bg-white/70 px-3 py-1.5 font-semibold">{formatDate(article.publishedAt, locale)}</span>
+            <span className="rounded-md border border-slate-200/80 bg-white/70 px-3 py-1.5 font-semibold">{getReadingTime(article.content, locale)}</span>
             {article.tags.map((tag) => (
-              <span key={tag}>#{tag}</span>
+              <Badge key={tag}>{tag}</Badge>
             ))}
           </div>
         </div>
@@ -78,29 +98,62 @@ export default async function ArticlePage({ params }: Props) {
 
       <section className="section-container grid gap-5 pb-16 md:grid-cols-2">
         {previous ? (
-          <Link href={`/blog/${previous.slug}`} className="premium-glass-card rounded-md p-5">
-            <p className="text-sm font-bold text-slate-500">上一篇</p>
+          <Link href={withLocalePath(`/blog/${previous.slug}`, locale)} className="premium-glass-card rounded-md p-5">
+            <p className="text-sm font-bold text-slate-500">{t.previous}</p>
             <p className="mt-2 font-black text-slate-950">{previous.title}</p>
           </Link>
         ) : null}
         {next ? (
-          <Link href={`/blog/${next.slug}`} className="premium-glass-card rounded-md p-5 md:text-right">
-            <p className="text-sm font-bold text-slate-500">下一篇</p>
+          <Link href={withLocalePath(`/blog/${next.slug}`, locale)} className="premium-glass-card rounded-md p-5 md:text-right">
+            <p className="text-sm font-bold text-slate-500">{t.next}</p>
             <p className="mt-2 font-black text-slate-950">{next.title}</p>
           </Link>
         ) : null}
       </section>
 
-      {related.length ? (
-        <section className="section-container pb-24">
-          <h2 className="mb-6 text-2xl font-black text-slate-950">相关文章</h2>
-          <div className="grid gap-5 md:grid-cols-2">
-            {related.map((item) => (
+      <section className="section-container grid gap-10 pb-24 lg:grid-cols-2">
+        <div>
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <h2 className="text-2xl font-black text-slate-950">{t.nextReading}</h2>
+            <Link href={withLocalePath("/blog", locale)} className="inline-flex items-center gap-2 text-sm font-bold text-indigo-700 focus-ring">
+              {t.allArticles}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="grid gap-5">
+            {(related.length ? related : articles.filter((item) => item.id !== article.id).slice(0, 2)).map((item) => (
               <BlogCard key={item.id} article={item} />
             ))}
           </div>
-        </section>
-      ) : null}
+        </div>
+        <div>
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <h2 className="text-2xl font-black text-slate-950">{t.relatedGuides}</h2>
+            <Link href={withLocalePath("/guide", locale)} className="inline-flex items-center gap-2 text-sm font-bold text-indigo-700 focus-ring">
+              {t.allGuides}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="grid gap-5">
+            {(relatedGuides.length ? relatedGuides : guides.slice(0, 2)).map((item) => (
+              <GuideCard key={item.id} guide={item} />
+            ))}
+          </div>
+        </div>
+      </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            blogPostingJsonLd(article),
+            breadcrumbJsonLd([
+              { name: t.breadcrumbHome, path: "/" },
+              { name: t.breadcrumbBlog, path: "/blog" },
+              { name: article.title, path: `/blog/${article.slug}` }
+            ])
+          ])
+        }}
+      />
     </>
   );
 }

@@ -1,25 +1,35 @@
 import { PageHeader } from "@/components/site/PageHeader";
 import { ResourceExplorer } from "@/components/site/ResourceExplorer";
 import { getResources } from "@/lib/data";
+import { getRequestLocale } from "@/lib/server-locale";
 import { createMetadata } from "@/lib/seo";
+import { siteCopy } from "@/lib/public-copy";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = createMetadata({
-  title: "资源库 - 姚凯",
-  description: "开发、设计、AI 工作流与 Machi 双端工程相关资源。",
-  path: "/resources"
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const t = siteCopy[locale].pages.resources;
+
+  return createMetadata({
+    title: t.metaTitle,
+    description: t.metaDescription,
+    path: "/resources",
+    locale
+  });
+}
 
 export default async function ResourcesPage() {
+  const locale = await getRequestLocale();
+  const t = siteCopy[locale].pages.resources;
   const resources = await getResources();
 
   return (
     <>
       <PageHeader
-        eyebrow="资源库"
-        title="我长期使用和参考的工具、文档与技术资源。"
-        description="这里包括 AI 协作工具、Next.js/React/Prisma、SwiftUI/SwiftData、Python、SQLite，以及用于产品和视觉判断的参考资源。"
+        eyebrow={t.eyebrow}
+        title={t.title}
+        description={t.description}
       />
       <section className="section-container py-16">
         <ResourceExplorer resources={resources} />

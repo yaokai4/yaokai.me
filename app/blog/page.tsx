@@ -1,25 +1,35 @@
 import { BlogExplorer } from "@/components/site/BlogExplorer";
 import { PageHeader } from "@/components/site/PageHeader";
 import { getPublicArticles } from "@/lib/data";
+import { getRequestLocale } from "@/lib/server-locale";
 import { createMetadata } from "@/lib/seo";
+import { siteCopy } from "@/lib/public-copy";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = createMetadata({
-  title: "文章 - 姚凯",
-  description: "关于工程、产品、AI 工作流和设计思考的长文章。",
-  path: "/blog"
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const t = siteCopy[locale].pages.blog;
+
+  return createMetadata({
+    title: t.metaTitle,
+    description: t.metaDescription,
+    path: "/blog",
+    locale
+  });
+}
 
 export default async function BlogPage() {
+  const locale = await getRequestLocale();
+  const t = siteCopy[locale].pages.blog;
   const articles = await getPublicArticles();
 
   return (
     <>
       <PageHeader
-        eyebrow="文章"
-        title="把经验整理成可以复用的思考。"
-        description="这里记录工程深度、产品判断、AI 工作流、设计方法和真实构建过程中的复盘。"
+        eyebrow={t.eyebrow}
+        title={t.title}
+        description={t.description}
       />
       <section className="section-container py-16">
         <BlogExplorer articles={articles} />

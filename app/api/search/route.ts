@@ -5,7 +5,7 @@ import { parseJsonArray } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const [articles, projects, guides, resources, playbooks] = await Promise.all([
+  const [articles, projects, guides, resources, playbooks, nowItems] = await Promise.all([
     prisma.article.findMany({
       where: { status: "PUBLISHED" },
       select: { title: true, slug: true, excerpt: true, category: true, tags: true },
@@ -27,6 +27,10 @@ export async function GET() {
     prisma.playbook.findMany({
       select: { title: true, slug: true, scenario: true, principles: true },
       orderBy: [{ featured: "desc" }, { createdAt: "desc" }]
+    }),
+    prisma.nowItem.findMany({
+      select: { title: true, description: true, type: true, status: true },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }]
     })
   ]);
 
@@ -67,6 +71,13 @@ export async function GET() {
         description: item.scenario,
         href: "/playbook",
         meta: parseJsonArray(item.principles).join(" ")
+      })),
+      ...nowItems.map((item) => ({
+        type: "当前状态",
+        title: item.title,
+        description: item.description,
+        href: "/now",
+        meta: [item.type, item.status].join(" ")
       }))
     ]
   });

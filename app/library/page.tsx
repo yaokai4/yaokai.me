@@ -1,15 +1,21 @@
 import { PageHeader } from "@/components/site/PageHeader";
 import { ResourceExplorer } from "@/components/site/ResourceExplorer";
 import { getResources } from "@/lib/data";
+import { getRequestLocale } from "@/lib/server-locale";
 import { createMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = createMetadata({
-  title: "资源库 - 姚凯",
-  description: "我长期使用、参考和推荐的开发、设计、AI、产品与内容资源。",
-  path: "/library"
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+
+  return createMetadata({
+    title: "资源库 - 姚凯",
+    description: "我长期使用、参考和推荐的开发、设计、AI、产品与内容资源。",
+    path: "/library",
+    locale
+  });
+}
 
 export default async function LibraryPage() {
   const resources = await getResources();

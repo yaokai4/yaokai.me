@@ -16,17 +16,31 @@ export function getSocials(settings: SettingsMap) {
   return parseJson<Array<{ label: string; href: string }>>(settings.socials, []);
 }
 
-export function normalizeArticle<T extends { tags: string; content: string }>(article: T) {
+export function normalizeArticle<T extends { tags: string; content: string } & Partial<Record<"relatedProjects" | "relatedGuides", string>>>(article: T) {
   return {
     ...article,
-    tags: parseJsonArray(article.tags)
+    tags: parseJsonArray(article.tags),
+    relatedProjects: parseJsonArray(article.relatedProjects),
+    relatedGuides: parseJsonArray(article.relatedGuides)
   };
 }
 
-export function normalizeProject<T extends { techStack: string }>(project: T) {
+export function normalizeProject<T extends { techStack: string } & Partial<Record<"screenshots" | "gallery" | "tags" | "responsibilities" | "keyChallenges" | "solutions" | "features" | "technicalHighlights" | "metrics" | "measurableResults" | "lessons" | "nextSteps", string>>>(project: T) {
   return {
     ...project,
-    techStack: parseJsonArray(project.techStack)
+    techStack: parseJsonArray(project.techStack),
+    screenshots: parseJsonArray(project.screenshots),
+    gallery: parseJsonArray(project.gallery),
+    tags: parseJsonArray(project.tags),
+    responsibilities: parseJsonArray(project.responsibilities),
+    keyChallenges: parseJsonArray(project.keyChallenges),
+    solutions: parseJsonArray(project.solutions),
+    features: parseJsonArray(project.features),
+    technicalHighlights: parseJsonArray(project.technicalHighlights),
+    metrics: parseJsonArray(project.metrics),
+    measurableResults: parseJsonArray(project.measurableResults),
+    lessons: parseJsonArray(project.lessons),
+    nextSteps: parseJsonArray(project.nextSteps)
   };
 }
 
@@ -37,10 +51,12 @@ export function normalizePost<T extends { images: string }>(post: T) {
   };
 }
 
-export function normalizeGuide<T extends { tags: string }>(guide: T) {
+export function normalizeGuide<T extends { tags: string } & Partial<Record<"steps" | "checklist", string>>>(guide: T) {
   return {
     ...guide,
-    tags: parseJsonArray(guide.tags)
+    tags: parseJsonArray(guide.tags),
+    steps: parseJsonArray(guide.steps),
+    checklist: parseJsonArray(guide.checklist)
   };
 }
 

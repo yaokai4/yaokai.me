@@ -39,8 +39,7 @@ pnpm install --frozen-lockfile || pnpm install
 pnpm prisma generate --schema "$PRISMA_SCHEMA"
 pnpm prisma migrate deploy --schema "$PRISMA_SCHEMA"
 pnpm build
-pm2 reload "$APP_NAME" --update-env
-pm2 save
+sudo systemctl restart "${APP_NAME}.service"
 sudo nginx -t
 sudo systemctl reload nginx
 

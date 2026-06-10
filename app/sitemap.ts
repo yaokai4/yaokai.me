@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
+import { locales, withLocalePath } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
 
@@ -11,24 +12,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     prisma.guide.findMany({ where: { status: "PUBLISHED" }, select: { slug: true, updatedAt: true } })
   ]);
 
-  const staticRoutes = ["/", "/explore", "/guide", "/library", "/resources", "/playbook", "/playbooks", "/stack", "/now", "/manifesto", "/about", "/projects", "/blog", "/posts", "/contact"].map((path) => ({
-    url: `${siteUrl}${path}`,
-    lastModified: new Date()
-  }));
+  const localize = (path: string, lastModified: Date) =>
+    locales.map((locale) => ({
+      url: `${siteUrl}${withLocalePath(path, locale)}`,
+      lastModified,
+      alternates: {
+        languages: Object.fromEntries(locales.map((item) => [item === "zh" ? "zh-CN" : item === "ja" ? "ja-JP" : "en", `${siteUrl}${withLocalePath(path, item)}`]))
+      }
+    }));
+
+  const staticRoutes = ["/", "/projects", "/blog", "/about", "/contact", "/explore", "/guide", "/playbook", "/stack", "/library", "/now", "/manifesto"].flatMap((path) =>
+    localize(path, new Date())
+  );
 
   return [
     ...staticRoutes,
-    ...articles.map((article) => ({
-      url: `${siteUrl}/blog/${article.slug}`,
-      lastModified: article.updatedAt
-    })),
-    ...guides.map((guide) => ({
-      url: `${siteUrl}/guide/${guide.slug}`,
-      lastModified: guide.updatedAt
-    })),
-    ...projects.map((project) => ({
-      url: `${siteUrl}/projects/${project.slug}`,
-      lastModified: project.updatedAt
-    }))
+    ...articles.flatMap((article) => localize(`/blog/${article.slug}`, article.updatedAt)),
+    ...guides.flatMap((guide) => localize(`/guide/${guide.slug}`, guide.updatedAt)),
+    ...projects.flatMap((project) => localize(`/projects/${project.slug}`, project.updatedAt))
   ];
 }

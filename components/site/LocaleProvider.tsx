@@ -21,7 +21,6 @@ export function LocaleProvider({ initialLocale, children }: { initialLocale: Loc
     setLocaleState(next);
     document.cookie = `${localeCookieName}=${next}; path=/; max-age=31536000; SameSite=Lax`;
     window.localStorage.setItem(localeCookieName, next);
-    window.requestAnimationFrame(() => window.location.reload());
   }, []);
 
   const value = React.useMemo(() => ({ locale, setLocale }), [locale, setLocale]);
