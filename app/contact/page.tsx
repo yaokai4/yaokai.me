@@ -11,10 +11,20 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   const locale = await getRequestLocale();
+  const titles = {
+    zh: "联系 - 姚凯",
+    ja: "お問い合わせ - 姚凱",
+    en: "Contact - Yaokai"
+  } as const;
+  const descriptions = {
+    zh: "联系姚凯，讨论职位机会、项目合作、Machi、Shangence 商衡或网站相关问题。",
+    ja: "姚凱へのお問い合わせ。求人、協業、Machi、Shangence 商衡、このサイトについて。",
+    en: "Contact Yaokai about roles, collaboration, Machi, Shangence, or this website."
+  } as const;
 
   return createMetadata({
-    title: "联系 - 姚凯",
-    description: "联系我，讨论合作、产品想法、工程系统、AI 工作流或内容创作。",
+    title: titles[locale],
+    description: descriptions[locale],
     path: "/contact",
     locale
   });
@@ -23,59 +33,59 @@ export async function generateMetadata() {
 const pageCopy = {
   zh: {
     eyebrow: "联系",
-    title: "如果一个项目需要审美、判断和执行力同时在线，我们可以认真聊一次。",
-    description: "适合个人品牌网站、全栈产品原型、AI 工作流、内容系统、设计升级，或任何值得从结构到上线都认真打磨的数字体验。",
+    title: "找我聊职位、合作，或者直接问项目细节都可以。",
+    description: "我现在主要关注日本的 Web / 全栈开发机会，也欢迎围绕 Machi、Shangence 商衡、个人网站、App 上架和产品实现聊一聊。",
     email: "邮箱",
-    emailMissing: "请直接使用右侧表单，我会尽快回复。",
+    emailMissing: "也可以直接使用右侧表单，我会尽快回复。",
     socials: "社交链接",
-    socialsMissing: "当前优先使用联系表单沟通。",
-    collaboration: "协作方式",
-    collaborationBody: "支持远程协作，重视异步沟通、清晰边界、阶段性交付、真实验收和可维护结果。",
-    fitTitle: "我适合什么样的需求？",
-    fitBody: "不是简单套模板，也不是只做静态展示。我更适合参与需要产品结构、界面质感、全栈实现和长期维护一起考虑的项目。",
+    socialsMissing: "GitHub 和邮箱是最稳定的入口。",
+    collaboration: "现在的方向",
+    collaborationBody: "希望参与 Web 应用、全栈开发、自社服务、前端、iOS / Android 相关工作。远程或线下都可以具体聊。",
+    fitTitle: "可以聊什么",
+    fitBody: "职位机会、项目合作、代码仓库、作品集、简历、Machi / Shangence 的实现细节，或者这个网站本身。",
     collaborationTypes: [
-      ["个人品牌系统", "把作品、文章、方法论、资源库和视觉系统做成一个长期可维护、可持续积累信任的数字产品。"],
-      ["AI 工作流", "把研究、产品拆解、开发、内容生产和复盘串成可执行、可验证、可复用的协作流程。"],
-      ["全栈产品原型", "从数据模型、界面、后台、权限到部署，构建能真实运行、后续可扩展的第一版系统。"],
-      ["高级视觉升级", "重构 Hero、导航、卡片、动效、阅读体验、移动端和状态反馈，让网站从普通变成精致。"]
+      ["职位机会", "Web 应用、前端、全栈、自社服务、移动端都可以聊。"],
+      ["产品实现", "从需求、UI、API、数据库、支付、后台到部署，我都能说明自己做过的部分。"],
+      ["Machi / Shangence", "两个产品的技术结构、业务判断、上架准备和后续计划。"],
+      ["个人网站", "如果你想看代码、后台、部署或三语切换实现，也可以直接问。"]
     ]
   },
   ja: {
     eyebrow: "連絡",
-    title: "見た目、判断、実装力が同時に必要なプロジェクトなら、一度整理して話しましょう。",
-    description: "個人ブランドサイト、フルスタック試作、AI ワークフロー、コンテンツシステム、UI 改善に向いています。",
+    title: "求人、協業、プロジェクトの詳細など、お気軽にご連絡ください。",
+    description: "現在は日本での Web / フルスタック開発の機会を中心に探しています。Machi、Shangence 商衡、個人サイト、アプリ公開準備についても話せます。",
     email: "メール",
     emailMissing: "右側のフォームからご連絡ください。できるだけ早く返信します。",
     socials: "ソーシャルリンク",
-    socialsMissing: "まずはフォームでの連絡を優先しています。",
-    collaboration: "協業スタイル",
-    collaborationBody: "リモート対応、非同期コミュニケーション、明確な範囲設定、段階的な納品、検証可能な結果を重視します。",
-    fitTitle: "どのような相談に向いているか",
-    fitBody: "単なるテンプレート適用ではなく、構造、見た目、実装、長期運用を一緒に考えるプロジェクトに向いています。",
+    socialsMissing: "GitHub とメールが一番確実です。",
+    collaboration: "探している方向",
+    collaborationBody: "Webアプリ、フルスタック、自社サービス、フロントエンド、iOS / Android 関連の仕事に関心があります。リモート・対面どちらも相談できます。",
+    fitTitle: "相談できること",
+    fitBody: "求人、協業、コード、制作実績、職務経歴、Machi / Shangence の実装、このサイトについて。",
     collaborationTypes: [
-      ["個人ブランドシステム", "制作実績、記事、方法論、リソース、視覚システムを長く運用できるデジタルプロダクトにします。"],
-      ["AI ワークフロー", "調査、プロダクト分解、開発、コンテンツ、振り返りを検証可能な協業フローにします。"],
-      ["フルスタック試作", "データモデル、UI、管理画面、権限、デプロイまで、実際に動く第一版を作ります。"],
-      ["上質な UI 改善", "Hero、ナビ、カード、動き、読書体験、モバイル、状態表現を整えます。"]
+      ["求人", "Webアプリ、フロントエンド、フルスタック、自社サービス、モバイル関連。"],
+      ["プロダクト実装", "要件、UI、API、DB、決済、管理画面、デプロイまで説明できます。"],
+      ["Machi / Shangence", "技術構成、事業判断、アプリ公開準備、今後の計画。"],
+      ["個人サイト", "コード、管理画面、デプロイ、3言語切替の実装について。"]
     ]
   },
   en: {
     eyebrow: "Contact",
-    title: "If a project needs taste, judgment, and execution at the same time, we can have a focused conversation.",
-    description: "Good fit for personal brand sites, full-stack prototypes, AI workflows, content systems, UI upgrades, and digital products worth polishing from structure to launch.",
+    title: "Reach out about roles, collaboration, or details behind the projects.",
+    description: "I am looking mainly at Web / full-stack opportunities in Japan, and I am happy to talk about Machi, Shangence, this site, app release prep, or product implementation.",
     email: "Email",
     emailMissing: "Please use the form and I will reply as soon as possible.",
     socials: "Social Links",
-    socialsMissing: "The contact form is the best place to start right now.",
-    collaboration: "Collaboration",
-    collaborationBody: "Remote-friendly, async by default, with clear scope, staged delivery, real validation, and maintainable outcomes.",
-    fitTitle: "What kind of work fits me?",
-    fitBody: "I am not just applying templates or building static pages. I fit work that needs product structure, interface quality, full-stack implementation, and long-term maintainability.",
+    socialsMissing: "GitHub and email are the most reliable routes.",
+    collaboration: "Current direction",
+    collaborationBody: "I am interested in Web apps, full-stack roles, in-house products, frontend, and iOS / Android adjacent work. Remote or in-person can both work.",
+    fitTitle: "Good things to discuss",
+    fitBody: "Roles, collaboration, source code, portfolio details, resume, Machi / Shangence implementation, or this site itself.",
     collaborationTypes: [
-      ["Personal brand system", "Turning work, writing, methods, resources, and visual identity into a long-term digital product that can build trust."],
-      ["AI workflow", "Connecting research, product framing, development, content, and retrospectives into a reusable, verifiable workflow."],
-      ["Full-stack prototype", "Building a real first version from data model, interface, admin tools, permissions, and deployment."],
-      ["Premium UI upgrade", "Refining hero, navigation, cards, motion, reading experience, mobile details, and interface states."]
+      ["Roles", "Web app, frontend, full-stack, in-house product, and mobile-adjacent work."],
+      ["Product implementation", "Requirements, UI, API, database, payments, admin tools, and deployment."],
+      ["Machi / Shangence", "Architecture, product decisions, release prep, and next steps."],
+      ["This site", "Code, CMS, deployment, and the three-language implementation."]
     ]
   }
 } as const;

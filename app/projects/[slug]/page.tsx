@@ -15,6 +15,7 @@ import { breadcrumbJsonLd, createMetadata, creativeWorkJsonLd } from "@/lib/seo"
 import { normalizeArticle, normalizeGuide, normalizeProject } from "@/lib/data";
 import { getRequestLocale } from "@/lib/server-locale";
 import { withLocalePath } from "@/lib/i18n";
+import { localizeProject, localizeProjects } from "@/lib/project-localization";
 import { siteCopy } from "@/lib/public-copy";
 
 export const dynamic = "force-dynamic";
@@ -29,12 +30,13 @@ export async function generateMetadata({ params }: Props) {
   ]);
   if (!project) return {};
   const t = siteCopy[locale].details.project;
+  const localizedProject = localizeProject(normalizeProject(project), locale);
 
   return createMetadata({
-    title: `${project.title} - ${t.metaSuffix}`,
-    description: project.excerpt,
-    path: `/projects/${project.slug}`,
-    image: project.coverImage,
+    title: `${localizedProject.title} - ${t.metaSuffix}`,
+    description: localizedProject.excerpt,
+    path: `/projects/${localizedProject.slug}`,
+    image: localizedProject.coverImage,
     locale
   });
 }
@@ -46,12 +48,13 @@ export default async function ProjectDetailPage({ params }: Props) {
 
   const locale = await getRequestLocale();
   const t = siteCopy[locale].details.project;
-  const project = normalizeProject(rawProject);
-  const [all, articles, guides] = await Promise.all([
+  const project = localizeProject(normalizeProject(rawProject), locale);
+  const [rawAll, articles, guides] = await Promise.all([
     prisma.project.findMany({ orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }] }).then((items) => items.map(normalizeProject)),
     prisma.article.findMany({ where: { status: "PUBLISHED" }, orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }], take: 6 }).then((items) => items.map(normalizeArticle)),
     prisma.guide.findMany({ where: { status: "PUBLISHED" }, orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }], take: 6 }).then((items) => items.map(normalizeGuide))
   ]);
+  const all = localizeProjects(rawAll, locale);
   const index = all.findIndex((item) => item.id === project.id);
   const previous = index > 0 ? all[index - 1] : null;
   const next = index >= 0 && index < all.length - 1 ? all[index + 1] : null;

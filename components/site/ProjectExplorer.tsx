@@ -7,6 +7,7 @@ import { SearchInput } from "@/components/site/SearchInput";
 import { useLocale } from "@/components/site/LocaleProvider";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/State";
+import { localizeProjects } from "@/lib/project-localization";
 import { siteCopy } from "@/lib/public-copy";
 
 type Project = {
@@ -25,12 +26,13 @@ export function ProjectExplorer({ projects }: { projects: Project[] }) {
   const copy = siteCopy[locale];
   const t = copy.explorers.projects;
   const allLabel = copy.common.all;
+  const localizedProjects = React.useMemo(() => localizeProjects(projects, locale), [projects, locale]);
   const [query, setQuery] = React.useState("");
   const [category, setCategory] = React.useState<string>(allLabel);
-  const categories = React.useMemo(() => [allLabel, ...Array.from(new Set(projects.map((project) => project.category)))], [allLabel, projects]);
+  const categories = React.useMemo(() => [allLabel, ...Array.from(new Set(localizedProjects.map((project) => project.category)))], [allLabel, localizedProjects]);
   const activeCategory = categories.includes(category) ? category : allLabel;
 
-  const filtered = projects.filter((project) => {
+  const filtered = localizedProjects.filter((project) => {
     const haystack = `${project.title} ${project.excerpt} ${project.category} ${project.techStack.join(" ")}`.toLowerCase();
     const matchesQuery = haystack.includes(query.toLowerCase());
     const matchesCategory = activeCategory === allLabel || project.category === activeCategory;

@@ -18,7 +18,7 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[1.25fr_0.75fr_0.85fr_0.85fr]">
           <div className="max-w-md">
             <p className="font-serif text-xl font-semibold tracking-[0.22em] text-indigo-900">姚 凱</p>
-            <p className="editorial-label mt-2">Yao Kai — Creative Engineering</p>
+            <p className="editorial-label mt-2">Yao Kai / Machi · Shangence</p>
             <p className="mt-5 text-base font-bold leading-7 text-slate-900">
               {copy.footerTitle}
             </p>

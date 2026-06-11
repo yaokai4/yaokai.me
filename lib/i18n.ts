@@ -79,178 +79,92 @@ export function localeAlternates(path = "/") {
 
 export const shellCopy = {
   zh: {
-    brandSubtitle: "Creative Engineering",
+    brandSubtitle: "Machi · Shangence 开发者",
     primaryNav: [
       ["首页", "/"],
       ["作品", "/projects"],
       ["文章", "/blog"],
       ["技术栈", "/stack"],
-      ["关于", "/about"],
-      ["联系", "/contact"]
-    ],
-    moreLabel: "更多",
-    moreGroups: [
-      {
-        title: "Explore",
-        links: [
-          ["内容地图", "/explore", "按目的浏览作品、文章、指南和资源"],
-          ["指南", "/guide", "可复用的开发与产品实践指南"],
-          ["资源", "/resources", "工具、文档和参考资料"]
-        ]
-      },
-      {
-        title: "System",
-        links: [
-          ["方法论", "/playbook", "做事流程与项目拆解方式"],
-          ["Library", "/library", "长期使用的资源库入口"],
-          ["VPS 运维", "/vps/docs", "服务器与安全接入说明"]
-        ]
-      },
-      {
-        title: "Personal",
-        links: [
-          ["近况", "/now", "当前正在构建和研究的事"],
-          ["宣言", "/manifesto", "关于创造、AI 和长期工作的原则"]
-        ]
-      }
+      ["关于", "/about"]
     ],
     searchLabel: "搜索内容",
     searchShort: "搜索",
-    searchPlaceholder: "搜索文章、项目、指南、资源、方法论...",
-    searchLoading: "正在整理可浏览内容...",
+    searchPlaceholder: "搜索文章、项目...",
+    searchLoading: "正在加载...",
     searchEmpty: "没有找到匹配内容，换个关键词试试。",
-    contactCta: "合作联系",
-    mobileTitle: "内容地图",
-    mobileSubtitle: "选择一条路线继续探索",
-    mobileSearch: "搜索文章、项目、指南",
-    mobileContact: "开始合作沟通",
-    footerBadge: "Personal Digital Product",
-    footerTitle: "用技术、设计、产品思维与 AI 工作流，把复杂想法做成精致作品。",
+    contactCta: "联系我",
+    mobileTitle: "菜单",
+    mobileSubtitle: "选择一个页面",
+    mobileSearch: "搜索文章、项目",
+    mobileContact: "联系我",
+    footerTitle: "两个在线产品的开发者。从想法、代码到部署运维，都自己来。",
     footerContact: "联系我",
     footerGroups: [
-      { title: "主站", links: [["作品", "/projects"], ["文章", "/blog"], ["关于", "/about"], ["联系", "/contact"]] },
-      { title: "系统", links: [["指南", "/guide"], ["方法论", "/playbook"], ["技术栈", "/stack"], ["资源库", "/library"], ["宣言", "/manifesto"]] }
+      { title: "导航", links: [["作品", "/projects"], ["文章", "/blog"], ["技术栈", "/stack"], ["关于", "/about"], ["联系", "/contact"]] },
+      { title: "产品", links: [["Machi", "https://machicity.com"], ["Shangence 商衡", "https://machicity.life/ja"]] }
     ],
     footerRights: "© 2026 姚凯。保留所有权利。",
-    footerNote: "Built as a precise, multilingual personal website."
+    footerNote: "用 Next.js 构建，跑在东京的一台小服务器上。"
   },
   ja: {
-    brandSubtitle: "Creative Engineering",
+    brandSubtitle: "Machi · Shangence 開発者",
     primaryNav: [
       ["ホーム", "/"],
       ["制作実績", "/projects"],
       ["記事", "/blog"],
       ["技術スタック", "/stack"],
-      ["プロフィール", "/about"],
-      ["連絡", "/contact"]
-    ],
-    moreLabel: "その他",
-    moreGroups: [
-      {
-        title: "Explore",
-        links: [
-          ["コンテンツマップ", "/explore", "目的別に制作実績、記事、ガイドを探す"],
-          ["ガイド", "/guide", "再利用できる開発とプロダクトの実践ガイド"],
-          ["リソース", "/resources", "ツール、資料、参考リンク"]
-        ]
-      },
-      {
-        title: "System",
-        links: [
-          ["プレイブック", "/playbook", "判断基準と制作プロセス"],
-          ["ライブラリ", "/library", "長く使っている資料と道具"],
-          ["VPS 運用", "/vps/docs", "サーバーと安全接続の説明"]
-        ]
-      },
-      {
-        title: "Personal",
-        links: [
-          ["現在地", "/now", "いま取り組んでいること"],
-          ["マニフェスト", "/manifesto", "創作、AI、長期的な仕事の原則"]
-        ]
-      }
+      ["プロフィール", "/about"]
     ],
     searchLabel: "検索",
     searchShort: "検索",
-    searchPlaceholder: "記事、プロジェクト、ガイド、リソースを検索...",
-    searchLoading: "コンテンツを整理しています...",
+    searchPlaceholder: "記事、プロジェクトを検索...",
+    searchLoading: "読み込み中...",
     searchEmpty: "一致する内容が見つかりません。別のキーワードを試してください。",
-    contactCta: "相談する",
-    mobileTitle: "コンテンツ宇宙",
-    mobileSubtitle: "気になる入口から見てください",
-    mobileSearch: "記事・制作実績・ガイドを検索",
-    mobileContact: "相談を始める",
-    footerBadge: "Personal Digital Product",
-    footerTitle: "技術、デザイン、プロダクト思考、AI ワークフローで、複雑なアイデアを美しいデジタル体験にします。",
+    contactCta: "連絡する",
+    mobileTitle: "メニュー",
+    mobileSubtitle: "ページを選択",
+    mobileSearch: "記事・制作実績を検索",
+    mobileContact: "連絡する",
+    footerTitle: "2つのプロダクトを一人で作り、運用しています。",
     footerContact: "連絡する",
     footerGroups: [
-      { title: "メイン", links: [["制作実績", "/projects"], ["記事", "/blog"], ["プロフィール", "/about"], ["連絡", "/contact"]] },
-      { title: "システム", links: [["ガイド", "/guide"], ["プレイブック", "/playbook"], ["技術スタック", "/stack"], ["ライブラリ", "/library"], ["マニフェスト", "/manifesto"]] }
+      { title: "ナビ", links: [["制作実績", "/projects"], ["記事", "/blog"], ["技術スタック", "/stack"], ["プロフィール", "/about"], ["連絡", "/contact"]] },
+      { title: "プロダクト", links: [["Machi", "https://machicity.com"], ["Shangence 商衡", "https://machicity.life/ja"]] }
     ],
     footerRights: "© 2026 姚凯。All rights reserved.",
-    footerNote: "A precise, multilingual personal website."
+    footerNote: "Next.js で作り、東京の小さなサーバーで動いています。"
   },
   en: {
-    brandSubtitle: "Creative Engineering",
+    brandSubtitle: "Builder of Machi & Shangence",
     primaryNav: [
       ["Home", "/"],
       ["Work", "/projects"],
       ["Writing", "/blog"],
       ["Stack", "/stack"],
-      ["About", "/about"],
-      ["Contact", "/contact"]
-    ],
-    moreLabel: "More",
-    moreGroups: [
-      {
-        title: "Explore",
-        links: [
-          ["Content Map", "/explore", "Browse work, writing, guides, and resources by goal"],
-          ["Guides", "/guide", "Reusable development and product guides"],
-          ["Resources", "/resources", "Tools, docs, and references"]
-        ]
-      },
-      {
-        title: "System",
-        links: [
-          ["Playbook", "/playbook", "Operating principles and project breakdowns"],
-          ["Library", "/library", "Resources and tools I keep returning to"],
-          ["VPS Notes", "/vps/docs", "Server and secure access notes"]
-        ]
-      },
-      {
-        title: "Personal",
-        links: [
-          ["Now", "/now", "What I am building and studying now"],
-          ["Manifesto", "/manifesto", "Principles for craft, AI, and long-term work"]
-        ]
-      }
+      ["About", "/about"]
     ],
     searchLabel: "Search",
     searchShort: "Search",
-    searchPlaceholder: "Search writing, projects, guides, resources...",
-    searchLoading: "Preparing the content system...",
+    searchPlaceholder: "Search writing and projects...",
+    searchLoading: "Loading...",
     searchEmpty: "No matching content found. Try another keyword.",
-    contactCta: "Work together",
-    mobileTitle: "Content System",
-    mobileSubtitle: "Choose a path and keep exploring",
-    mobileSearch: "Search writing, projects, guides",
-    mobileContact: "Start a conversation",
-    footerBadge: "Personal Digital Product",
-    footerTitle: "I turn complex ideas into polished digital products with engineering, design, product thinking, and AI workflows.",
+    contactCta: "Contact me",
+    mobileTitle: "Menu",
+    mobileSubtitle: "Pick a page",
+    mobileSearch: "Search writing and projects",
+    mobileContact: "Contact me",
+    footerTitle: "I build and run two products end to end.",
     footerContact: "Contact me",
     footerGroups: [
-      { title: "Main", links: [["Work", "/projects"], ["Writing", "/blog"], ["About", "/about"], ["Contact", "/contact"]] },
-      { title: "System", links: [["Guides", "/guide"], ["Playbook", "/playbook"], ["Stack", "/stack"], ["Library", "/library"], ["Manifesto", "/manifesto"]] }
+      { title: "Pages", links: [["Work", "/projects"], ["Writing", "/blog"], ["Stack", "/stack"], ["About", "/about"], ["Contact", "/contact"]] },
+      { title: "Products", links: [["Machi", "https://machicity.com"], ["Shangence", "https://machicity.life/ja"]] }
     ],
     footerRights: "© 2026 Yaokai. All rights reserved.",
-    footerNote: "Built as a precise, multilingual personal website."
+    footerNote: "Built with Next.js, running on a small server in Tokyo."
   }
 } satisfies Record<Locale, {
   brandSubtitle: string;
   primaryNav: string[][];
-  moreLabel: string;
-  moreGroups: { title: string; links: string[][] }[];
   searchLabel: string;
   searchShort: string;
   searchPlaceholder: string;
@@ -261,7 +175,6 @@ export const shellCopy = {
   mobileSubtitle: string;
   mobileSearch: string;
   mobileContact: string;
-  footerBadge: string;
   footerTitle: string;
   footerContact: string;
   footerGroups: { title: string; links: string[][] }[];

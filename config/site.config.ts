@@ -20,15 +20,15 @@ function fromEnv(value: string | undefined) {
 export const siteConfig = {
   name: "姚凯",
   url: fromEnv(process.env.NEXT_PUBLIC_SITE_URL) || "https://yaokai.me",
-  description: "姚凯的个人网站，展示 Web / 全栈开发作品、技术文章、项目复盘与日本 IT 求职方向的能力证据。",
-  contactEmail: fromEnv(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
+  description: "姚凯的个人网站。Machi 与 Shangence 商衡的开发者，展示 Web / iOS / Android / Backend / AWS 项目与开发笔记。",
+  contactEmail: fromEnv(process.env.NEXT_PUBLIC_CONTACT_EMAIL) || "hi@yaokai.me",
   location: {
     zh: "日本",
     ja: "日本",
     en: "Japan"
   },
   socialLinks: [
-    { label: "GitHub", href: fromEnv(process.env.NEXT_PUBLIC_GITHUB_URL) },
+    { label: "GitHub", href: fromEnv(process.env.NEXT_PUBLIC_GITHUB_URL) || "https://github.com/yaokai4" },
     { label: "LinkedIn", href: fromEnv(process.env.NEXT_PUBLIC_LINKEDIN_URL) },
     { label: "X", href: fromEnv(process.env.NEXT_PUBLIC_X_URL) }
   ].filter((item) => isUsableUrl(item.href)) satisfies SocialLink[]

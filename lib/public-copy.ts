@@ -13,17 +13,17 @@ export const siteCopy = {
     pages: {
       projects: {
         metaTitle: "作品集 - 姚凯",
-        metaDescription: "精选项目案例，展示背景、角色、产品判断、技术架构、解决方案、结果与复盘。",
+        metaDescription: "姚凯的真实项目：Machi、Shangence 商衡、yaokai.me，以及公开 GitHub 仓库。",
         eyebrow: "作品集",
-        title: "不是作品截图合集，而是判断、架构和交付能力的证据。",
-        description: "按分类、技术栈和主题浏览项目。每个案例都会呈现背景、挑战、方案、架构、结果与复盘，让你看到界面背后的真实执行过程。"
+        title: "我真正做过、正在维护的项目。",
+        description: "这里放简历和 GitHub 上能对得上的项目：Machi、Shangence 商衡、本站，以及 Machi 的 Web / iOS / Android 三端实现。"
       },
       blog: {
         metaTitle: "文章 - 姚凯",
-        metaDescription: "围绕工程、产品判断、AI 工作流、设计审美和长期内容系统的深度文章。",
+        metaDescription: "姚凯的开发笔记、项目复盘、踩坑记录和求职相关心得。",
         eyebrow: "文章",
-        title: "把一次项目里的判断，写成下一次可以复用的方法。",
-        description: "这里记录工程深度、产品取舍、AI 协作、视觉判断和真实构建过程中的复盘，让经验持续变成更稳定的行动力。"
+        title: "开发笔记，慢慢写。",
+        description: "这里以后主要放我从后台发布的心得：项目复盘、踩坑记录、架构取舍、上架准备，以及在日本找工作的真实记录。"
       },
       guide: {
         metaTitle: "指南 - 姚凯",
@@ -157,17 +157,17 @@ export const siteCopy = {
     pages: {
       projects: {
         metaTitle: "制作実績 - Yaokai",
-        metaDescription: "背景、役割、プロダクト判断、技術構成、解決策、結果、振り返りまで見える制作実績。",
+        metaDescription: "Machi、Shangence 商衡、yaokai.me と公開 GitHub リポジトリ。",
         eyebrow: "制作実績",
-        title: "スクリーンショットではなく、判断、構造、納品品質の証拠として見せます。",
-        description: "カテゴリ、技術スタック、テーマで探せます。各ケースでは背景、課題、解決策、構成、結果、振り返りまで整理しています。"
+        title: "実際に作り、今も手を入れているプロジェクトです。",
+        description: "職務経歴書と GitHub で確認できるものを中心にまとめました。Machi、Shangence 商衡、このサイト、そして Machi の Web / iOS / Android です。"
       },
       blog: {
         metaTitle: "記事 - Yaokai",
-        metaDescription: "エンジニアリング、プロダクト、AI ワークフロー、デザイン判断についての長文記事。",
+        metaDescription: "開発メモ、プロジェクトの振り返り、詰まった点、日本での就職活動について。",
         eyebrow: "記事",
-        title: "一つのプロジェクトで得た判断を、次に使える方法にします。",
-        description: "エンジニアリング、プロダクト判断、AI ワークフロー、デザイン、実際の構築過程の振り返りを記録しています。"
+        title: "開発メモを少しずつ書きます。",
+        description: "管理画面から、プロジェクトの振り返り、詰まった点、設計判断、アプリ公開準備、日本での就職活動について書いていきます。"
       },
       guide: {
         metaTitle: "ガイド - Yaokai",
@@ -301,17 +301,17 @@ export const siteCopy = {
     pages: {
       projects: {
         metaTitle: "Work - Yaokai",
-        metaDescription: "Selected case studies with context, role, product judgment, architecture, solution, outcome, and retrospectives.",
+        metaDescription: "Real projects by Yaokai: Machi, Shangence, yaokai.me, and public GitHub repositories.",
         eyebrow: "Work",
-        title: "Not a screenshot gallery, but evidence of judgment, architecture, and delivery quality.",
-        description: "Browse projects by category, stack, and theme. Each case shows context, challenge, solution, architecture, outcome, and lessons."
+        title: "Projects I actually built and still maintain.",
+        description: "This page focuses on work that matches my resume and GitHub: Machi, Shangence, this site, and the Web / iOS / Android clients behind Machi."
       },
       blog: {
         metaTitle: "Writing - Yaokai",
-        metaDescription: "Long-form notes on engineering, product thinking, AI workflows, and design judgment.",
+        metaDescription: "Development notes, project retrospectives, debugging notes, and thoughts from job hunting in Japan.",
         eyebrow: "Writing",
-        title: "Turning project judgment into reusable methods.",
-        description: "Notes on engineering depth, product tradeoffs, AI workflows, visual judgment, and retrospectives from real builds."
+        title: "Development notes, written gradually.",
+        description: "A place for posts I publish from the admin: project retrospectives, trade-offs, bugs, release prep, and notes from job hunting in Japan."
       },
       guide: {
         metaTitle: "Guides - Yaokai",

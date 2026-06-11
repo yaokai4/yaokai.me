@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 import { ADMIN_ENTRY_COOKIE, AUTH_COOKIE } from "@/lib/auth";
 import {
-  defaultLocale,
   getLocaleFromPathname,
   localeCookieName,
   normalizeLocale,
@@ -55,7 +54,8 @@ export async function proxy(request: NextRequest) {
 
   if (pathname === "/") {
     const url = request.nextUrl.clone();
-    url.pathname = withLocalePath("/", defaultLocale);
+    const preferred = normalizeLocale(request.cookies.get(localeCookieName)?.value);
+    url.pathname = withLocalePath("/", preferred);
     return NextResponse.redirect(url);
   }
 

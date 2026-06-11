@@ -1,13 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, ChevronDown, Mail, Menu, Search, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import * as React from "react";
 import { useLocale } from "@/components/site/LocaleProvider";
 import { CommandSearch } from "@/components/ui/CommandSearch";
-import { PremiumDropdown } from "@/components/ui/PremiumDropdown";
 import { localeLabels, locales, localeNames, shellCopy, stripLocaleFromPathname, withLocalePath, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -18,28 +17,17 @@ function isActive(pathname: string, href: string) {
 
 export function Navbar() {
   const pathname = usePathname();
-  const router = useRouter();
   const activePathname = stripLocaleFromPathname(pathname);
   const { locale, setLocale } = useLocale();
   const copy = shellCopy[locale];
   const primaryNav = copy.primaryNav.map(([label, href]) => ({ label, href }));
-  const moreGroups = copy.moreGroups.map((group) => ({
-    ...group,
-    links: group.links.map(([label, href, description]) => ({ label, href, description }))
-  }));
-  const moreNav = moreGroups.flatMap((group) => group.links);
-  const moreActive = moreNav.some((item) => isActive(activePathname, item.href));
   const [open, setOpen] = React.useState(false);
-  const [moreOpen, setMoreOpen] = React.useState(false);
-  const [mobileExpanded, setMobileExpanded] = React.useState<Record<string, boolean>>(() =>
-    Object.fromEntries(copy.moreGroups.map((group) => [group.title, true]))
-  );
   const switchLocale = React.useCallback((next: Locale) => {
     setOpen(false);
-    setMoreOpen(false);
     setLocale(next);
-    router.push(withLocalePath(pathname, next));
-  }, [pathname, router, setLocale]);
+    const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    window.location.assign(withLocalePath(stripLocaleFromPathname(currentPath), next));
+  }, [setLocale]);
 
   React.useEffect(() => {
     if (!open) return;
@@ -73,7 +61,6 @@ export function Navbar() {
             <Link
               key={item.href}
               href={withLocalePath(item.href, locale)}
-              onClick={() => setMoreOpen(false)}
               className={cn(
                 "relative rounded-sm px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-indigo-900 focus-ring",
                 isActive(activePathname, item.href) && "font-bold text-indigo-900"
@@ -84,49 +71,6 @@ export function Navbar() {
               {isActive(activePathname, item.href) ? <span className="absolute inset-x-3 -bottom-[13px] h-[2px] bg-indigo-900" /> : null}
             </Link>
           ))}
-
-          <PremiumDropdown
-            open={moreOpen}
-            onOpenChange={setMoreOpen}
-            trigger={
-              <button
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-sm px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-indigo-900 focus-ring",
-                  moreActive && "font-bold text-indigo-900"
-                )}
-                type="button"
-                aria-expanded={moreOpen}
-                aria-haspopup="menu"
-                onClick={() => setMoreOpen((value) => !value)}
-              >
-                {copy.moreLabel}
-                <ChevronDown className={cn("h-4 w-4 transition", moreOpen && "rotate-180")} />
-              </button>
-            }
-          >
-            <div className="grid gap-2">
-              {moreGroups.map((group) => (
-                <div key={group.title} className="grid gap-1">
-                  <p className="px-3 pt-1 text-[11px] font-black uppercase tracking-wide text-slate-400">{group.title}</p>
-                  {group.links.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={withLocalePath(item.href, locale)}
-                      role="menuitem"
-                      onClick={() => setMoreOpen(false)}
-                      className="group/item rounded-[14px] px-3 py-3 transition hover:bg-indigo-50/80 focus-ring"
-                    >
-                      <span className="flex items-center justify-between gap-3 text-sm font-bold text-slate-950">
-                        {item.label}
-                        <ArrowUpRight className="h-4 w-4 text-slate-400 transition group-hover/item:-translate-y-0.5 group-hover/item:translate-x-0.5 group-hover/item:text-indigo-600" />
-                      </span>
-                      <span className="mt-1 block text-xs leading-5 text-slate-500">{item.description}</span>
-                    </Link>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </PremiumDropdown>
         </div>
 
         <div className="flex items-center gap-2">
@@ -139,10 +83,6 @@ export function Navbar() {
             <Search className="h-4 w-4" />
           </button>
           <LanguageSwitcher locale={locale} onChange={switchLocale} />
-          <Link href={withLocalePath("/contact", locale)} className="magnetic-button hidden h-10 items-center gap-2 rounded-full border border-indigo-900 bg-indigo-900 px-4 text-sm font-bold text-white shadow-[0_2px_10px_rgba(15,45,78,0.2)] transition hover:-translate-y-0.5 hover:bg-indigo-800 sm:inline-flex focus-ring">
-            <Mail className="h-4 w-4" />
-            {copy.contactCta}
-          </Link>
           <button
             type="button"
             className="grid h-10 w-10 place-items-center rounded-full border border-indigo-200 bg-white text-slate-700 transition hover:border-indigo-400 lg:hidden focus-ring"
@@ -202,42 +142,6 @@ export function Navbar() {
                 ))}
               </div>
 
-              <div className="grid gap-2">
-                {moreGroups.map((group) => {
-                  const expanded = mobileExpanded[group.title] ?? true;
-                  return (
-                    <div key={group.title} className="rounded-[16px] border border-[#DAE2EA] bg-white p-2">
-                      <button
-                        type="button"
-                        onClick={() => setMobileExpanded((current) => ({ ...current, [group.title]: !expanded }))}
-                        className="flex min-h-11 w-full items-center justify-between rounded-[12px] px-3 text-sm font-black text-slate-950 focus-ring"
-                        aria-expanded={expanded}
-                      >
-                        {group.title}
-                        <ChevronDown className={cn("h-4 w-4 text-slate-500 transition", expanded && "rotate-180")} />
-                      </button>
-                      {expanded ? (
-                        <div className="grid gap-1 px-1 pb-1">
-                          {group.links.map((item) => (
-                            <Link
-                              key={item.href}
-                              href={withLocalePath(item.href, locale)}
-                              onClick={() => setOpen(false)}
-                              className={cn(
-                                "min-h-11 rounded-[12px] px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-indigo-50 hover:text-slate-950 focus-ring",
-                                isActive(activePathname, item.href) && "bg-indigo-50 text-indigo-900"
-                              )}
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  );
-                })}
-              </div>
-
               <div className="grid grid-cols-3 gap-2 sm:hidden">
                 {locales.map((item) => (
                   <button
@@ -266,10 +170,6 @@ export function Navbar() {
                   <Search className="h-4 w-4" />
                   {copy.mobileSearch}
                 </button>
-                <Link href={withLocalePath("/contact", locale)} className="magnetic-button inline-flex h-12 items-center justify-center gap-2 rounded-full border border-indigo-900 bg-indigo-900 text-sm font-bold text-white focus-ring">
-                  <Mail className="h-4 w-4" />
-                  {copy.mobileContact}
-                </Link>
               </div>
             </motion.div>
           </motion.div>

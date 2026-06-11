@@ -24,7 +24,7 @@ export function SiteChrome({ children, locale }: { children: React.ReactNode; lo
   }
 
   return (
-    <LocaleProvider initialLocale={locale}>
+    <LocaleProvider key={locale} initialLocale={locale}>
       <div className="site-shell">
         <a href="#main-content" className="skip-link">
           Skip to content

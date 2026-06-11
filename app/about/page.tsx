@@ -147,7 +147,8 @@ const projects = [
     } as L,
     url: "https://machicity.com",
     urlLabel: "machicity.com",
-    github: "https://github.com/yaokai4",
+    github: "https://github.com/yaokai4/Machi-Web",
+    githubLabel: "Machi-Web / iOS / Android",
     chips: ["Web / iOS / Android", "80+ REST + SSE API", "19 Tables", "AWS S3 + CloudFront"],
     desc: {
       zh: "按国家、城市、语言整理生活信息与用户投稿的城市型本地生活社区平台。将住宅、二手交易、求职、本地服务、店铺优惠、Guide、Q&A、私聊、会员功能统合进同一个城市空间，以东京为起点、面向多城市扩展而设计。不止于 SNS：把「发现 → 看详情 → 咨询 → 沟通 → 预约・购买」连接为一个完整体验。",
@@ -187,7 +188,8 @@ const projects = [
     } as L,
     url: "https://machicity.life/ja",
     urlLabel: "machicity.life/ja",
-    github: "https://github.com/yaokai4",
+    github: "https://github.com/yaokai4/Shangence",
+    githubLabel: "Shangence",
     chips: ["7-Step Form", "Rule Engine", "Stripe JPY", "PDF / Admin"],
     desc: {
       zh: "为想在日本创业的个人、小规模事业者与海外事业者整理事业风险、初期费用、验证方法、撤退基准、许认可与法务注意点的诊断服务。设计了登录前免费诊断 → 确认结果后注册会员 → 保存诊断 → 购买付费详细报告 → PDF 下载 → 履历管理的商用转化链路。AI 仅用于辅助生成说明文，风险评分由规则引擎计算。",
@@ -497,7 +499,7 @@ export default async function AboutPage() {
                     </a>
                     <span className="mx-2 text-slate-300">|</span>
                     <a href={p.github} target="_blank" rel="noreferrer" className="hover:text-indigo-900">
-                      GitHub: yaokai4
+                      GitHub: {p.githubLabel}
                     </a>
                   </p>
                 </div>

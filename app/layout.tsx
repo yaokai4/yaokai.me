@@ -8,16 +8,16 @@ import { getRequestLocale } from "@/lib/server-locale";
 
 const rootMetadataCopy = {
   zh: {
-    title: "姚凯 / Yaokai - Web Developer & Product-minded Builder",
-    description: "姚凯的个人网站，展示 Web / 全栈开发作品、技术文章、项目复盘、内容系统与 AI 工作流。"
+    title: "姚凯 / Yaokai - Machi 与 Shangence 商衡的开发者",
+    description: "姚凯的个人网站。展示 Machi、Shangence 商衡、yaokai.me、公开 GitHub 项目、简历和开发笔记。"
   },
   ja: {
-    title: "姚凯 / Yaokai - Web Developer & Product-minded Builder",
-    description: "姚凯の個人サイト。Web / フルスタック開発、プロジェクト事例、技術記事、コンテンツシステム、AI ワークフローを紹介します。"
+    title: "姚凯 / Yaokai - Machi と Shangence 商衡の開発者",
+    description: "姚凱の個人サイト。Machi、Shangence 商衡、yaokai.me、公開 GitHub プロジェクト、職務経歴、開発メモを掲載。"
   },
   en: {
-    title: "Yaokai - Web Developer & Product-minded Builder",
-    description: "Yaokai's personal website for Web and full-stack projects, writing, case studies, content systems, and AI-assisted workflows."
+    title: "Yaokai - Builder of Machi and Shangence",
+    description: "Yaokai's personal site for Machi, Shangence, yaokai.me, public GitHub projects, resume and development notes."
   }
 } as const;
 
