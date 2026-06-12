@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#06070a">
+<meta name="description" content="《盗墓往事》Tales Beneath the Tomb — 中式恐怖盗墓 ARPG（Web 版）。有些人被埋进坟墓，有些往事被埋进活人的心里。">
+<base href="/game/">
+<title>盗墓往事 · Tales Beneath the Tomb</title>
+<link rel="icon" href="assets/art/title-keyart.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/art/title-keyart.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <canvas id="game" width="960" height="540"></canvas>
+
+  <!-- HUD（DOM） -->
+  <div id="hud"></div>
+
+  <!-- 触屏控件 -->
+  <div id="touch">
+    <div id="joy"><div id="joyknob"></div></div>
+    <div id="tbtns">
+      <button class="tbtn sm" data-act="skill1" aria-label="镇邪技能"><span>镇</span><em>技能</em></button>
+      <button class="tbtn big" data-act="attack" aria-label="攻击"><span>斩</span><em>攻击</em></button>
+      <button class="tbtn" data-act="dodge" aria-label="闪避"><span>闪</span><em>闪避</em></button>
+      <button class="tbtn" data-act="block" aria-label="格挡"><span>守</span><em>格挡</em></button>
+      <button class="tbtn" data-act="interact" aria-label="调查"><span>查</span><em>调查</em></button>
+      <button class="tbtn sm" data-act="heal" aria-label="快捷药品"><span>药</span><em>药品</em></button>
+      <button class="tbtn sm" data-act="switch" aria-label="切换武器"><span>换</span><em>武器</em></button>
+      <button class="tbtn sm" data-act="lamp" aria-label="开关灯具"><span>灯</span><em>提灯</em></button>
+      <button class="tbtn sm" data-act="inventory" aria-label="行囊"><span>囊</span><em>行囊</em></button>
+      <button class="tbtn sm" data-act="journal" aria-label="札记"><span>记</span><em>札记</em></button>
+      <button class="tbtn sm" data-act="pause" aria-label="暂停"><span>停</span><em>暂停</em></button>
+    </div>
+  </div>
+
+  <!-- 模态层 -->
+  <div id="overlay"></div>
+
+  <!-- 转场遮罩 -->
+  <div id="fade"></div>
+
+  <!-- 竖屏提示 -->
+  <div id="rotate"><div>请旋转设备<br>横屏体验更佳</div></div>
+
+  <!-- 加载 -->
+  <div id="loading">
+    <h1>盗墓往事</h1>
+    <p class="en">Tales Beneath the Tomb</p>
+    <div class="lbar"><i></i></div>
+    <p class="tip">点灯中… 戴上耳机，熄掉房间的灯。</p>
+  </div>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

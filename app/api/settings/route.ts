@@ -2,6 +2,7 @@ import { fail, normalizeError, ok } from "@/lib/api-response";
 import { requireAdmin } from "@/lib/auth";
 import { getSettings } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
+import { assertSameOrigin } from "@/lib/security";
 import { settingsSchema } from "@/lib/validations";
 
 export const dynamic = "force-dynamic";
@@ -12,6 +13,7 @@ export async function GET() {
 
 export async function PUT(request: Request) {
   try {
+    assertSameOrigin(request);
     await requireAdmin();
     const data = settingsSchema.parse(await request.json());
     const entries = Object.entries(data);

@@ -49,6 +49,15 @@ const copy = {
       ["Shangence 商衡", "事业风险诊断 · 运营中", "https://machicity.life/ja", "machicity.life/ja"]
     ],
     runningNote: "本站代码公开在 GitHub",
+    proofEyebrow: "可验证信号",
+    proofTitle: "不是只会写页面，而是能把产品跑起来。",
+    proofLead: "如果你在评估我是否能独立交付，下面这些是最直接的证据。",
+    proofItems: [
+      ["三端产品", "Machi 的 Web、iOS、Android 共用一套 API 和内容模型。"],
+      ["商用闭环", "Shangence 包含诊断、Stripe 日元支付、PDF 报告和后台审核。"],
+      ["上线运维", "AWS / Nginx / systemd / 证书 / 备份 / 部署脚本都自己维护。"],
+      ["内容系统", "本站自带三语内容、搜索、SEO、管理后台和安全入口。"]
+    ],
     projectsEyebrow: "作品",
     projectsTitle: "先看这三个核心入口。",
     projectsLead: "Machi 和 Shangence 是我独立做的两个产品；yaokai.me 是这个网站和后台。Machi 的 Web / iOS / Android 代码会在作品页拆开看。",
@@ -94,6 +103,15 @@ const copy = {
       ["Shangence 商衡", "事業リスク診断 · 運用中", "https://machicity.life/ja", "machicity.life/ja"]
     ],
     runningNote: "このサイトのコードは GitHub で公開",
+    proofEyebrow: "検証できる実績",
+    proofTitle: "画面を作るだけでなく、プロダクトを動かし続けます。",
+    proofLead: "一人でどこまで任せられるかを見るなら、ここが一番わかりやすい証拠です。",
+    proofItems: [
+      ["3クライアント", "Machi の Web、iOS、Android は共通 API とコンテンツモデルを利用。"],
+      ["商用導線", "Shangence は診断、Stripe円決済、PDFレポート、管理画面まで実装。"],
+      ["公開と運用", "AWS / Nginx / systemd / 証明書 / バックアップ / デプロイを自分で管理。"],
+      ["CMS と SEO", "このサイトは3言語、検索、SEO、管理画面、セキュア入口を内蔵。"]
+    ],
     projectsEyebrow: "制作実績",
     projectsTitle: "まずは、この3つを見てください。",
     projectsLead: "Machi と Shangence は一人で作った2つのプロダクトです。yaokai.me はこのサイトと管理画面。Machi の Web / iOS / Android は制作実績ページで分けて見られます。",
@@ -139,6 +157,15 @@ const copy = {
       ["Shangence", "Business-risk assessment · live", "https://machicity.life/ja", "machicity.life/ja"]
     ],
     runningNote: "This site is open source on GitHub",
+    proofEyebrow: "Verifiable Signals",
+    proofTitle: "Not just screens — products that run in production.",
+    proofLead: "If you are evaluating whether I can ship independently, these are the clearest signals.",
+    proofItems: [
+      ["Three clients", "Machi's Web, iOS and Android clients share one API and content model."],
+      ["Commercial loop", "Shangence includes assessment, Stripe JPY payments, PDF reports and admin review."],
+      ["Operations", "AWS, Nginx, systemd, certificates, backups and deploy scripts are maintained by me."],
+      ["Content system", "This site includes trilingual content, search, SEO, admin tooling and secure entry."]
+    ],
     projectsEyebrow: "Work",
     projectsTitle: "Start with these three.",
     projectsLead: "Machi and Shangence are the two products I build solo. yaokai.me is this site and CMS. The work page breaks Machi into its Web / iOS / Android repositories.",
@@ -328,6 +355,30 @@ export function UniverseHome({ locale, articles, nowItems }: UniverseHomeProps) 
             </a>
           </div>
         </aside>
+      </section>
+
+      {/* proof */}
+      <section className="border-y border-[#DAE2EA] bg-white/82 py-10">
+        <div className="section-container grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+          <div>
+            <p className="editorial-label mb-3">{t.proofEyebrow}</p>
+            <h2 className="text-2xl font-black leading-tight tracking-tight text-indigo-950 md:text-3xl">{t.proofTitle}</h2>
+            <p className="mt-4 text-sm leading-7 text-slate-600 md:text-base md:leading-8">{t.proofLead}</p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            {t.proofItems.map(([title, description], index) => (
+              <article key={title} className="rounded-md border border-[#DAE2EA] bg-white p-4 shadow-[0_1px_2px_rgba(15,45,78,0.04)]">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-sky-200 bg-sky-50 text-xs font-black text-sky-700">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="text-base font-black text-slate-950">{title}</h3>
+                </div>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* projects */}

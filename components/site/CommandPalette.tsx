@@ -74,6 +74,15 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
     };
   }, [items.length, open]);
 
+  React.useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
   const filtered = React.useMemo(() => {
     const term = query.trim().toLowerCase();
     if (!term) return items.slice(0, 10);
@@ -133,6 +142,9 @@ export function CommandPalette({ showButton = true }: { showButton?: boolean }) 
           >
             <motion.div
               className="mx-auto w-full max-w-2xl overflow-hidden rounded-md border border-[#DAE2EA] bg-white shadow-[0_10px_40px_rgba(15,45,78,0.16)]"
+              role="dialog"
+              aria-modal="true"
+              aria-label={copy.searchLabel}
               initial={{ opacity: 0, y: 12, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}

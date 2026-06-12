@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="82"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.12"/></feComponentTransfer></filter>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%"><stop offset="0" stop-color="hsl(36 42% 58%)" stop-opacity="0.42"/><stop offset="1" stop-color="#050506" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="80" height="80" fill="none"/>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="url(#glow)" opacity="0.55"/>
+<path d="M14 35 H66 V48 H14Z" fill="#2b2b2c" stroke="#d8cfb8" stroke-width="2"/><path d="M21 48 V65 M59 48 V65" stroke="#151516" stroke-width="5"/><path d="M19 38 C28 45 37 31 47 39 C55 45 60 34 65 40" stroke="#6f8798" stroke-width="2" opacity="0.8"/><ellipse cx="38" cy="53" rx="18" ry="4" fill="#14222a" opacity="0.8"/><text x="40" y="75" text-anchor="middle" font-family="serif" font-size="6" fill="#d8cfb8" opacity="0.6">wet seat</text>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="#000" filter="url(#grain)" opacity="0.45"/>
+</svg>

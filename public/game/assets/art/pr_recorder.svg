@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="2"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.12"/></feComponentTransfer></filter>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%"><stop offset="0" stop-color="hsl(166 42% 58%)" stop-opacity="0.42"/><stop offset="1" stop-color="#050506" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="80" height="80" fill="none"/>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="url(#glow)" opacity="0.55"/>
+<rect x="18" y="25" width="44" height="32" rx="5" fill="hsl(114 28% 38%)" stroke="#d8cfb8" stroke-width="2"/><path d="M25 31 H55 M25 40 H55 M25 49 H55" stroke="#1a1713" stroke-width="2"/><text x="40" y="75" text-anchor="middle" font-family="serif" font-size="6" fill="#d8cfb8" opacity="0.6">recorder</text>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="#000" filter="url(#grain)" opacity="0.45"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="2"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.12"/></feComponentTransfer></filter>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%"><stop offset="0" stop-color="hsl(203 42% 58%)" stop-opacity="0.42"/><stop offset="1" stop-color="#050506" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="80" height="80" fill="none"/>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="url(#glow)" opacity="0.55"/>
+<rect x="8" y="17" width="64" height="38" rx="4" fill="#111821" stroke="#d8cfb8" stroke-width="2"/><path d="M12 22 Q37 35 68 19" stroke="#6f8798" stroke-width="3" opacity="0.55"/><path d="M20 18 V55 M43 18 V55" stroke="#273441" stroke-width="2"/><path d="M13 49 C22 43 28 45 37 50 C47 56 56 42 68 49" stroke="#9fb6c6" stroke-width="2" opacity="0.45"/><circle cx="59" cy="36" r="4" fill="#d8cfb8" opacity="0.28"/><path d="M56 43 Q61 50 66 43" fill="#0a0c10" opacity="0.55"/><text x="40" y="75" text-anchor="middle" font-family="serif" font-size="6" fill="#d8cfb8" opacity="0.6">bus window</text>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="#000" filter="url(#grain)" opacity="0.45"/>
+</svg>

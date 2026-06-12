@@ -2,12 +2,14 @@ import bcrypt from "bcryptjs";
 import { fail, normalizeError, ok } from "@/lib/api-response";
 import { getSessionUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { assertSameOrigin } from "@/lib/security";
 import { changePasswordSchema } from "@/lib/validations";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
+    assertSameOrigin(request);
     const user = await getSessionUser();
     if (!user) return fail("尚未登录。", "UNAUTHORIZED", 401);
 

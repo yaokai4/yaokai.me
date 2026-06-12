@@ -23,6 +23,12 @@ systemd 服务名：yaokai-me.service
 npm run deploy
 ```
 
+也可以使用固定路径的一键入口：
+
+```bash
+bash /Users/yaokai/Desktop/IT/web/yaokai.me/deploy/deploy.sh
+```
+
 启用或续签 HTTPS 证书时使用：
 
 ```bash

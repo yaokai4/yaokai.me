@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="27"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.12"/></feComponentTransfer></filter>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%"><stop offset="0" stop-color="hsl(123 42% 58%)" stop-opacity="0.42"/><stop offset="1" stop-color="#050506" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="80" height="80" fill="none"/>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="url(#glow)" opacity="0.55"/>
+<rect x="13" y="19" width="54" height="45" rx="4" fill="#241d18" stroke="#d8cfb8" stroke-width="2"/><rect x="20" y="26" width="40" height="19" fill="#101317" stroke="#5e6158" stroke-width="2"/><path d="M20 46 H60 M31 26 V45 M49 26 V45" stroke="#353b3d" stroke-width="2"/><circle cx="40" cy="35" r="5" fill="#d8cfb8" opacity="0.2"/><rect x="28" y="54" width="24" height="5" fill="#5a3a28"/><text x="40" y="75" text-anchor="middle" font-family="serif" font-size="6" fill="#d8cfb8" opacity="0.6">ticket booth</text>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="#000" filter="url(#grain)" opacity="0.45"/>
+</svg>

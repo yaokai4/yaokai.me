@@ -66,21 +66,20 @@ async function checkHome() {
     "<html lang=\"zh-CN\"",
     "姚凯 / Yaokai",
     "首页",
-    "Creative Engineering",
-    "合作联系",
-    "Full-stack Web Developer",
-    "Product-minded Builder",
-    "Product Systems",
-    "Premium UI",
-    "AI 工作流",
-    "AI Workflow",
-    "Ship &amp; Iterate",
-    "查看作品",
+    "个人开发 / 两个在线产品",
+    "Machi 和 Shangence 商衡的开发者",
+    "看作品",
+    "看简历",
+    "可验证信号",
+    "不是只会写页面，而是能把产品跑起来。",
+    "三端产品",
+    "商用闭环",
+    "上线运维",
     "联系我",
-    "Selected Projects",
-    "Capability System",
-    "Writing / Guides",
-    "当前投入"
+    "作品",
+    "能力范围",
+    "文章",
+    "近况"
   ]);
   const templateEmail = ["hello", "example", "com"].join("@").replace("@com", ".com");
   assert(!body.includes(templateEmail), "首页不应包含模板占位邮箱");
@@ -94,22 +93,23 @@ async function checkLocales() {
   const en = await fetchText("/en");
   assert(en.body.includes("<html lang=\"en\""), "英文版本应设置 html lang=en");
   assert(en.body.includes("Yaokai"), "英文首页缺少英文主标题");
-  assert(en.body.includes("Full-stack Web Developer") && en.body.includes("Product-minded Builder"), "英文首页缺少英文副标题");
-  assert(en.body.includes("View work"), "英文首页缺少作品 CTA");
-  assert(en.body.includes("Work together"), "英文导航缺少 CTA");
+  assert(en.body.includes("Builder of Machi and Shangence"), "英文首页缺少英文副标题");
+  assert(en.body.includes("See the work"), "英文首页缺少作品 CTA");
+  assert(en.body.includes("Verifiable Signals"), "英文首页缺少可验证信号区");
 
   const ja = await fetchText("/ja");
   assert(ja.body.includes("<html lang=\"ja\""), "日文版本应设置 html lang=ja");
   assert(ja.body.includes("姚凯 / Yaokai"), "日文首页缺少日文主标题");
+  assert(ja.body.includes("Machi と Shangence 商衡の開発者"), "日文首页缺少日文副标题");
   assert(ja.body.includes("制作実績を見る"), "日文首页缺少作品 CTA");
-  assert(ja.body.includes("相談する"), "日文导航缺少 CTA");
+  assert(ja.body.includes("検証できる実績"), "日文首页缺少可验证实绩区");
 
   const localizedProject = await expectStatus("/en/projects/machi-web-unified-python-backend", 200);
   assert(localizedProject.body.includes("Machi Web"), "英文前缀项目详情应正常打开");
 
   const enProjects = await expectBody("/en/projects", ["Work", "Search projects, stack, role, or category", "Featured Case", "View full case"]);
   expectNoBody(enProjects, "/en/projects", ["搜索项目、技术栈或分类", "没有找到项目", "查看案例拆解"]);
-  const enBlog = await expectBody("/en/blog", ["Writing", "Search articles, tags, or category", "Continue reading", "Digital Garden"]);
+  const enBlog = await expectBody("/en/blog", ["Writing", "Search articles, tags, or category", "No articles found"]);
   expectNoBody(enBlog, "/en/blog", ["文章 - 姚凯", "搜索文章、标签或分类", "没有找到文章", "继续阅读"]);
   const enGuide = await expectBody("/en/guide", ["Guides", "Search guides, stack, or audience", "Featured Guide", "Open method guide"]);
   expectNoBody(enGuide, "/en/guide", ["指南 - 姚凯", "搜索指南、技术栈或适合人群", "没有找到指南", "适合：", "进入指南"]);
@@ -120,7 +120,7 @@ async function checkLocales() {
 
   const jaProjects = await expectBody("/ja/projects", ["制作実績", "プロジェクト、技術、カテゴリを検索", "ケース全体を見る"]);
   expectNoBody(jaProjects, "/ja/projects", ["作品集", "搜索项目、技术栈或分类", "查看案例拆解"]);
-  const jaBlog = await expectBody("/ja/blog", ["記事", "記事、タグ、カテゴリを検索", "続きを読む"]);
+  const jaBlog = await expectBody("/ja/blog", ["記事", "記事、タグ、カテゴリを検索", "記事が見つかりません"]);
   expectNoBody(jaBlog, "/ja/blog", ["搜索文章、标签或分类", "继续阅读"]);
   const jaGuide = await expectBody("/ja/guide", ["ガイド", "ガイド、技術、対象読者を検索", "ガイドを開く"]);
   expectNoBody(jaGuide, "/ja/guide", ["搜索指南、技术栈或适合人群", "进入指南"]);
@@ -144,7 +144,7 @@ async function checkPublicContent() {
   await expectBody("/zh/stack", ["技术栈", "技能地图", "SwiftUI"]);
   await expectBody("/zh/now", ["当前状态"]);
   await expectBody("/zh/manifesto", ["宣言"]);
-  await expectBody("/zh/contact", ["如果一个项目需要审美", "Contact Form", "留言会保存", "联系姚凯"]);
+  await expectBody("/zh/contact", ["找我聊职位、合作", "可以聊什么", "职位机会", "联系姚凯"]);
   await expectBody("/zh/posts", ["动态", "更轻的记录"]);
   if (expectVpsPrivate) {
     for (const path of ["/zh/vps", "/zh/vps/status", "/zh/vps/docs", "/zh/vps/security", "/zh/vps/access", "/zh/vps/access/docs", "/zh/vps/changelog"]) {

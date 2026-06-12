@@ -3,6 +3,7 @@ import { fail, normalizeError, ok } from "@/lib/api-response";
 import { requireAdmin } from "@/lib/auth";
 import { normalizePost } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
+import { assertSameOrigin } from "@/lib/security";
 import { stringifyArray } from "@/lib/utils";
 import { postSchema } from "@/lib/validations";
 
@@ -27,6 +28,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: Request) {
   try {
+    assertSameOrigin(request);
     await requireAdmin();
     const post = await prisma.post.create({ data: postPayload(await request.json()) });
     return ok(normalizePost(post), { status: 201 });

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 90" width="160" height="90">
+  <defs>
+    <filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="48"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.12"/></feComponentTransfer></filter>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%"><stop offset="0" stop-color="hsl(170 42% 58%)" stop-opacity="0.42"/><stop offset="1" stop-color="#050506" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="160" height="90" fill="none"/>
+  <rect x="2" y="2" width="156" height="86" rx="8" fill="url(#glow)" opacity="0.55"/>
+
+  <rect x="0" y="58" width="160" height="32" fill="#090a0c"/>
+  <path d="M18 57 L80 16 L142 57 Z" fill="#251915" stroke="#d8cfb8" stroke-opacity="0.3" stroke-width="2"/>
+  <rect x="35" y="49" width="90" height="35" fill="#17110f" stroke="#5f4a35" stroke-width="2"/>
+  <rect x="70" y="58" width="20" height="26" fill="#080607"/>
+  <circle cx="81" cy="47" r="5" fill="#d9a440" opacity="0.8"/>
+  <path d="M31 71 H129" stroke="#8d2f37" stroke-width="3" opacity="0.5"/>
+
+  <rect x="2" y="2" width="156" height="86" rx="8" fill="#000" filter="url(#grain)" opacity="0.45"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="82"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.12"/></feComponentTransfer></filter>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%"><stop offset="0" stop-color="hsl(292 42% 58%)" stop-opacity="0.42"/><stop offset="1" stop-color="#050506" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="80" height="80" fill="none"/>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="url(#glow)" opacity="0.55"/>
+<path d="M24 18 H56 V64 H24Z" fill="#1c2426" stroke="#d8cfb8" stroke-width="2"/><path d="M27 16 Q40 8 53 16 L49 25 Q40 20 31 25Z" fill="#313739" stroke="#b8ad92" stroke-width="2"/><circle cx="40" cy="43" r="12" fill="#0c0e10" stroke="#6d746f" stroke-width="2"/><circle cx="40" cy="43" r="3" fill="#d8cfb8"/><path d="M29 57 H51" stroke="#8d2f37" stroke-width="3"/><text x="40" y="75" text-anchor="middle" font-family="serif" font-size="6" fill="#d8cfb8" opacity="0.6">phone</text>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="#000" filter="url(#grain)" opacity="0.45"/>
+</svg>

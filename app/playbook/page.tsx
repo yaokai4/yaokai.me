@@ -56,7 +56,7 @@ export default async function PlaybookPage() {
       </section>
       <section className="section-container grid gap-5 pb-20 pt-6 md:grid-cols-2">
         {playbooks.map((playbook) => (
-          <article key={playbook.id} className="premium-glass-card rounded-md p-5">
+          <article id={playbook.slug} key={playbook.id} className="premium-glass-card scroll-mt-28 rounded-md p-5">
             <div className="flex items-center justify-between gap-4">
               <Badge>{playbook.featured ? "精选" : "方法"}</Badge>
               <span className="text-xs text-slate-500">{playbook.slug}</span>

@@ -93,6 +93,32 @@ for (const file of ["scripts/deploy.sh", "scripts/setup-server.sh"]) {
   assert(content.includes("admin/vps/access-profiles/download"), `${file} 必须覆盖旧管理下载令牌入口`);
 }
 
+const adminWriteRoutes = [
+  "app/api/auth/change-password/route.ts",
+  "app/api/auth/logout/route.ts",
+  "app/api/blog/route.ts",
+  "app/api/blog/[id]/route.ts",
+  "app/api/guides/route.ts",
+  "app/api/guides/[id]/route.ts",
+  "app/api/projects/route.ts",
+  "app/api/projects/[id]/route.ts",
+  "app/api/resources/route.ts",
+  "app/api/resources/[id]/route.ts",
+  "app/api/now/route.ts",
+  "app/api/now/[id]/route.ts",
+  "app/api/manifesto/route.ts",
+  "app/api/manifesto/[id]/route.ts",
+  "app/api/playbooks/route.ts",
+  "app/api/playbooks/[id]/route.ts",
+  "app/api/posts/route.ts",
+  "app/api/posts/[id]/route.ts",
+  "app/api/settings/route.ts",
+  "app/api/messages/[id]/route.ts"
+];
+for (const file of adminWriteRoutes) {
+  assert(read(file).includes("assertSameOrigin"), `${file} 的后台写操作必须校验同源请求`);
+}
+
 const schema = read("prisma/schema.prisma");
 for (const model of ["VpsNode", "VpsService", "VpsUser", "VpsAccessPolicy", "VpsAccessProfile", "VpsAccessProfileDownload", "VpsAuditLog", "VpsAlert", "VpsBackup", "VpsCost", "VpsHealthCheck"]) {
   assert(schema.includes(`model ${model}`), `Prisma schema 缺少 ${model}`);

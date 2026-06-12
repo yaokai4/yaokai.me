@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="17"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.12"/></feComponentTransfer></filter>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%"><stop offset="0" stop-color="hsl(335 42% 58%)" stop-opacity="0.42"/><stop offset="1" stop-color="#050506" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="80" height="80" fill="none"/>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="url(#glow)" opacity="0.55"/>
+<rect x="10" y="15" width="60" height="52" rx="4" fill="#232027" stroke="#d8cfb8" stroke-width="2"/><path d="M16 25 H64 M16 37 H64 M16 49 H64 M16 61 H64" stroke="#3c3740" stroke-width="2"/><rect x="19" y="29" width="17" height="8" fill="#6c4d2d" stroke="#b8ad92" stroke-width="1"/><rect x="43" y="29" width="17" height="8" fill="#6c4d2d" stroke="#b8ad92" stroke-width="1"/><path d="M22 53 Q40 45 58 53" stroke="#8e2a35" stroke-width="3" opacity="0.7"/><text x="28" y="35" text-anchor="middle" font-family="serif" font-size="5" fill="#1a120d">守义</text><text x="51" y="35" text-anchor="middle" font-family="serif" font-size="5" fill="#1a120d">鹤年</text><text x="40" y="75" text-anchor="middle" font-family="serif" font-size="6" fill="#d8cfb8" opacity="0.6">namewall</text>
+  <rect x="2" y="2" width="76" height="76" rx="8" fill="#000" filter="url(#grain)" opacity="0.45"/>
+</svg>

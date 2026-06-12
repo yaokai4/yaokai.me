@@ -2,6 +2,7 @@ import { fail, normalizeError, ok } from "@/lib/api-response";
 import { requireAdmin } from "@/lib/auth";
 import { normalizeProject } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
+import { assertSameOrigin } from "@/lib/security";
 import { stringifyArray } from "@/lib/utils";
 import { projectSchema } from "@/lib/validations";
 
@@ -50,6 +51,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    assertSameOrigin(request);
     await requireAdmin();
     const data = projectPayload(await request.json());
     const exists = await prisma.project.findUnique({ where: { slug: data.slug } });

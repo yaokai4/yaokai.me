@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 128" width="96" height="128">
+  <defs>
+    <filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="49"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.12"/></feComponentTransfer></filter>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%"><stop offset="0" stop-color="hsl(286 42% 58%)" stop-opacity="0.42"/><stop offset="1" stop-color="#050506" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="96" height="128" fill="none"/>
+  <rect x="2" y="2" width="92" height="124" rx="8" fill="url(#glow)" opacity="0.55"/>
+
+  <ellipse cx="48" cy="116" rx="32" ry="7" fill="#000" opacity="0.5"/>
+  <path d="M16 58 Q48 -3 80 58 L89 111 Q48 130 7 111 Z" fill="hsl(324 42% 36%)" stroke="#d8cfb8" stroke-opacity="0.18" stroke-width="3"/>
+  <path d="M24 45 Q48 16 72 45 Q60 38 48 54 Q36 38 24 45Z" fill="hsl(64 40% 54%)" opacity="0.85"/>
+  <circle cx="38" cy="58" r="4" fill="#fff2d2"/><circle cx="58" cy="58" r="4" fill="#fff2d2"/>
+  <path d="M34 78 Q48 88 62 78" stroke="#110c0c" stroke-width="5" fill="none"/>
+  <path d="M13 69 L2 92 M83 69 L94 92" stroke="hsl(64 40% 54%)" stroke-width="9" stroke-linecap="round"/>
+  <path d="M25 105 Q48 93 71 105" stroke="#d9a440" stroke-width="3" fill="none" opacity="0.7"/>
+  <text x="48" y="123" text-anchor="middle" font-family="serif" font-size="6" fill="#d8cfb8" opacity="0.6">actor</text>
+
+  <rect x="2" y="2" width="92" height="124" rx="8" fill="#000" filter="url(#grain)" opacity="0.45"/>
+</svg>

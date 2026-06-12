@@ -25,6 +25,7 @@ export function fail(message: string, code: ErrorCode = "BAD_REQUEST", status = 
 
 export function normalizeError(error: unknown) {
   if (error instanceof Error) {
+    if (error.message === "CSRF_CHECK_FAILED") return "请求来源无效。";
     return process.env.NODE_ENV === "production" ? "系统出现了一点问题。" : error.message;
   }
 

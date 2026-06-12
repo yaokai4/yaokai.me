@@ -2,6 +2,7 @@ import { fail, normalizeError, ok } from "@/lib/api-response";
 import { requireAdmin } from "@/lib/auth";
 import { normalizeArticle } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
+import { assertSameOrigin } from "@/lib/security";
 import { stringifyArray } from "@/lib/utils";
 import { articleSchema } from "@/lib/validations";
 
@@ -34,6 +35,7 @@ export async function GET(_: Request, { params }: Context) {
 
 export async function PUT(request: Request, { params }: Context) {
   try {
+    assertSameOrigin(request);
     await requireAdmin();
     const { id } = await params;
     const data = articlePayload(await request.json());
@@ -48,8 +50,9 @@ export async function PUT(request: Request, { params }: Context) {
   }
 }
 
-export async function DELETE(_: Request, { params }: Context) {
+export async function DELETE(request: Request, { params }: Context) {
   try {
+    assertSameOrigin(request);
     await requireAdmin();
     const { id } = await params;
     await prisma.article.delete({ where: { id } });

@@ -51,6 +51,13 @@ async function vpsRedirect(request: NextRequest, pathname: string) {
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const localeFromPath = getLocaleFromPathname(pathname);
+  const normalizedPath = localeFromPath ? stripLocaleFromPathname(pathname) : pathname;
+
+  if (normalizedPath === "/playbooks") {
+    const url = request.nextUrl.clone();
+    url.pathname = localeFromPath ? withLocalePath("/playbook", localeFromPath) : "/playbook";
+    return NextResponse.redirect(url);
+  }
 
   if (pathname === "/") {
     const url = request.nextUrl.clone();

@@ -1,0 +1,45 @@
+{
+  "game": "盗墓往事",
+  "version": 2,
+  "license": "Project-owned procedural SVG/Canvas art generated for this H5 game.",
+  "runtimeBase": "assets/art/",
+  "categories": {
+    "player": {
+      "description": "陈归川：油蜡外衣、工具腰带、半块玉佩、老油灯、工兵铲/桃木剑姿态由 Canvas 矢量实时绘制。",
+      "files": ["pc_front.svg", "pc_back.svg", "pc_side.svg"]
+    },
+    "enemies": {
+      "description": "中式恐怖怪物剪影：纸行者、纸轿夫、哭嫁童、红衣影与后续章节怪物。",
+      "files": ["en_paperwalker.svg", "en_bearer.svg", "en_weepchild.svg", "en_redshade.svg"]
+    },
+    "prologueMaps": {
+      "description": "序章地图关键物件：末班车、废弃车站、雨夜山路、陈家老宅、地窖/无名墓。",
+      "files": [
+        "pr_bus_window.svg",
+        "pr_bus_seat.svg",
+        "pr_bus_door.svg",
+        "pr_station_sign.svg",
+        "pr_ticket_booth.svg",
+        "pr_clock.svg",
+        "pr_phone.svg",
+        "pr_wet_seat.svg",
+        "pr_bowls.svg",
+        "pr_recorder.svg",
+        "pr_paperman.svg",
+        "pr_cellardoor.svg",
+        "pr_namewall.svg",
+        "pr_nameplate.svg",
+        "pr_stonebeast.svg"
+      ]
+    },
+    "ui": {
+      "description": "移动端按钮使用 DOM 清晰文字标签；HUD、札记、存档、线索墙由 CSS/DOM 渲染。",
+      "files": ["title-keyart.png"]
+    }
+  },
+  "qualityRules": [
+    "All interactive prologue props must have named IDs and matching INTERACTS entries.",
+    "All prologue maps must define darkness, ambient sound, and at least one readable landmark.",
+    "Core runtime assets are SVG or Canvas vector art to avoid blurry mobile scaling."
+  ]
+}
