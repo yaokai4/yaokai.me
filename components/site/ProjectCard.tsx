@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocale } from "@/components/site/LocaleProvider";
 import { Badge } from "@/components/ui/Badge";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { withLocalePath } from "@/lib/i18n";
 import { localizeProject } from "@/lib/project-localization";
 import { siteCopy } from "@/lib/public-copy";
@@ -23,9 +24,9 @@ type Project = {
 
 export function ProjectCard({ project, variant = "default" }: { project: Project; variant?: "default" | "featured" }) {
   const isFeatured = variant === "featured";
-  const { locale } = useLocale();
+  const { locale, copyOverrides } = useLocale();
   const localizedProject = localizeProject(project, locale);
-  const t = siteCopy[locale].explorers.projects;
+  const t = applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).explorers.projects;
 
   return (
     <Link href={withLocalePath(`/projects/${localizedProject.slug}`, locale)} className={cn("premium-glass-card group grid overflow-hidden rounded-md p-0", isFeatured && "lg:grid-cols-[0.95fr_1.05fr]")}>

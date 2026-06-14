@@ -2,6 +2,8 @@ import { ArrowRight, Download, ExternalLink, Github, Globe, Mail } from "lucide-
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
+import { getCopyOverrides } from "@/lib/copy-overrides.server";
 import { withLocalePath, type Locale } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/server-locale";
 import { createMetadata } from "@/lib/seo";
@@ -186,8 +188,8 @@ const projects = [
       ja: "日本市場向け事業リスク診断サービス",
       en: "Business-risk assessment service for the Japanese market"
     } as L,
-    url: "https://machicity.life/ja",
-    urlLabel: "machicity.life/ja",
+    url: "https://shangence.com",
+    urlLabel: "shangence.com",
     github: "https://github.com/yaokai4/Shangence",
     githubLabel: "Shangence",
     chips: ["7-Step Form", "Rule Engine", "Stripe JPY", "PDF / Admin"],
@@ -353,7 +355,8 @@ function SectionHead({ jp, en }: { jp: string; en: string }) {
 }
 
 export default async function AboutPage() {
-  const locale = await getRequestLocale();
+  const [locale, copyOverrides] = await Promise.all([getRequestLocale(), getCopyOverrides()]);
+  const copy = applyCopyOverrides(t, copyOverrides, "about");
   const pick = <T,>(field: L<T>): T => field[locale];
 
   return (
@@ -361,8 +364,8 @@ export default async function AboutPage() {
       {/* ---------- hero ---------- */}
       <section className="section-container relative pt-32 md:pt-36">
         <div className="flex items-baseline justify-between gap-4">
-          <Badge>{pick(t.eyebrow)}</Badge>
-          <span className="text-xs font-semibold tracking-wide text-slate-500">{pick(t.asOf)}</span>
+          <Badge>{pick(copy.eyebrow)}</Badge>
+          <span className="text-xs font-semibold tracking-wide text-slate-500">{pick(copy.asOf)}</span>
         </div>
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[1.25fr_0.75fr]">
@@ -371,10 +374,10 @@ export default async function AboutPage() {
               <h1 className="font-serif text-5xl font-semibold tracking-[0.18em] text-indigo-900 md:text-6xl">姚 凱</h1>
               <span className="pb-1.5 text-sm font-bold uppercase tracking-[0.4em] text-sky-500">Yao Kai</span>
             </div>
-            <p className="mt-5 text-xl font-black tracking-wide text-slate-900 md:text-2xl">{pick(t.title)}</p>
-            <p className="mt-2 text-sm tracking-wider text-slate-500">{pick(t.subtitle)}</p>
+            <p className="mt-5 text-xl font-black tracking-wide text-slate-900 md:text-2xl">{pick(copy.title)}</p>
+            <p className="mt-2 text-sm tracking-wider text-slate-500">{pick(copy.subtitle)}</p>
 
-            <p className="mt-7 max-w-2xl text-[15px] leading-8 text-slate-600">{pick(t.summary)}</p>
+            <p className="mt-7 max-w-2xl text-[15px] leading-8 text-slate-600">{pick(copy.summary)}</p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
@@ -383,7 +386,7 @@ export default async function AboutPage() {
                 className="magnetic-button inline-flex h-11 items-center gap-2 rounded-full border border-indigo-900 bg-indigo-900 px-5 text-sm font-bold text-white shadow-[0_1px_2px_rgba(15,45,78,0.04)] transition hover:-translate-y-0.5 hover:bg-indigo-800 focus-ring"
               >
                 <Download className="h-4 w-4" />
-                {pick(t.download)}
+                {pick(copy.download)}
               </a>
               <a
                 href="https://github.com/yaokai4"
@@ -398,7 +401,7 @@ export default async function AboutPage() {
                 href={withLocalePath("/contact", locale)}
                 className="inline-flex h-11 items-center gap-2 rounded-full border border-transparent px-4 text-sm font-bold text-slate-700 transition hover:bg-white focus-ring"
               >
-                {pick(t.contactCta)}
+                {pick(copy.contactCta)}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -421,7 +424,7 @@ export default async function AboutPage() {
                 </div>
                 <div>
                   <dt className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-500">Products</dt>
-                  <dd className="mt-0.5 font-semibold text-slate-800">machicity.com ・ machicity.life/ja</dd>
+                  <dd className="mt-0.5 font-semibold text-slate-800">machicity.com ・ shangence.com</dd>
                 </div>
                 <div>
                   <dt className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-500">Language</dt>
@@ -430,9 +433,9 @@ export default async function AboutPage() {
               </dl>
             </div>
             <div className="mt-5 border-t border-indigo-100 pt-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-500">{pick(t.positionsLabel)}</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-500">{pick(copy.positionsLabel)}</p>
               <div className="mt-2.5 flex flex-wrap gap-1.5">
-                {pick(t.positions).map((p) => (
+                {pick(copy.positions).map((p) => (
                   <span key={p} className="rounded-full border border-indigo-200/80 bg-indigo-50/70 px-2.5 py-1 text-xs font-semibold text-indigo-800">
                     {p}
                   </span>
@@ -444,7 +447,7 @@ export default async function AboutPage() {
 
         {/* stat band */}
         <div className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {pick(t.stats).map(([num, lab, jp]) => (
+          {pick(copy.stats).map(([num, lab, jp]) => (
             <div key={lab} className="rounded-md border border-indigo-100 bg-indigo-50/60 px-4 py-5 text-center">
               <div className="text-3xl font-black tracking-tight text-indigo-900">{num}</div>
               <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-sky-600">{lab}</div>
@@ -457,9 +460,9 @@ export default async function AboutPage() {
       {/* ---------- value & core skills ---------- */}
       <section className="section-container grid gap-10 py-16 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
-          <SectionHead jp={pick(t.valueLabel)} en="Value" />
+          <SectionHead jp={pick(copy.valueLabel)} en="Value" />
           <ul className="grid gap-3">
-            {pick(t.values).map((v) => (
+            {pick(copy.values).map((v) => (
               <li key={v} className="flex gap-3 text-[15px] leading-7 text-slate-700">
                 <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-sm bg-sky-500" />
                 {v}
@@ -468,9 +471,9 @@ export default async function AboutPage() {
           </ul>
         </div>
         <div>
-          <SectionHead jp={pick(t.coreLabel)} en="Core Skills" />
+          <SectionHead jp={pick(copy.coreLabel)} en="Core Skills" />
           <dl className="grid gap-2.5">
-            {t.core.map(([lab, val]) => (
+            {copy.core.map(([lab, val]) => (
               <div key={lab} className="flex items-baseline gap-4">
                 <dt className="w-20 shrink-0 text-[11px] font-bold uppercase tracking-[0.14em] text-sky-600">{lab}</dt>
                 <dd className="text-sm font-semibold leading-6 text-slate-800">{val}</dd>
@@ -482,7 +485,7 @@ export default async function AboutPage() {
 
       {/* ---------- projects ---------- */}
       <section className="section-container py-4">
-        <SectionHead jp={pick(t.projectsLabel)} en="Projects" />
+        <SectionHead jp={pick(copy.projectsLabel)} en="Projects" />
         <div className="grid gap-6">
           {projects.map((p) => (
             <article key={p.name} className="premium-glass-card rounded-md p-7 md:p-9">
@@ -546,7 +549,7 @@ export default async function AboutPage() {
       {/* ---------- career & education ---------- */}
       <section className="section-container grid gap-12 py-16 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
-          <SectionHead jp={pick(t.careerLabel)} en="Work Experience" />
+          <SectionHead jp={pick(copy.careerLabel)} en="Work Experience" />
           <div className="grid gap-5">
             {career.map((c) => (
               <article key={c.org.ja} className="border-l-2 border-indigo-100 pl-5 transition hover:border-indigo-900">
@@ -564,7 +567,7 @@ export default async function AboutPage() {
         </div>
         <div className="grid content-start gap-10">
           <div>
-            <SectionHead jp={pick(t.eduLabel)} en="Education" />
+            <SectionHead jp={pick(copy.eduLabel)} en="Education" />
             <div className="grid gap-4">
               {education.map((e) => (
                 <div key={e.school.ja}>
@@ -576,7 +579,7 @@ export default async function AboutPage() {
             </div>
           </div>
           <div>
-            <SectionHead jp={pick(t.langLabel)} en="Languages" />
+            <SectionHead jp={pick(copy.langLabel)} en="Languages" />
             <div className="grid gap-3">
               {languages.map((l) => (
                 <div key={l.name.ja} className="flex items-baseline gap-4">
@@ -591,7 +594,7 @@ export default async function AboutPage() {
 
       {/* ---------- skill matrix ---------- */}
       <section className="section-container py-4">
-        <SectionHead jp={pick(t.skillLabel)} en="Skill Matrix" />
+        <SectionHead jp={pick(copy.skillLabel)} en="Skill Matrix" />
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] border-collapse text-left">
             <thead>
@@ -617,10 +620,10 @@ export default async function AboutPage() {
       {/* ---------- self PR + CTA ---------- */}
       <section className="section-container py-16">
         <div className="premium-glass-card rounded-md p-8 md:p-10">
-          <SectionHead jp={pick(t.prLabel)} en="Self PR" />
-          <h3 className="text-lg font-black leading-snug text-indigo-900 md:text-xl">{pick(t.prTitle)}</h3>
-          <p className="mt-4 max-w-4xl text-[15px] leading-8 text-slate-600">{pick(t.pr1)}</p>
-          <p className="mt-3 max-w-4xl text-[15px] leading-8 text-slate-600">{pick(t.pr2)}</p>
+          <SectionHead jp={pick(copy.prLabel)} en="Self PR" />
+          <h3 className="text-lg font-black leading-snug text-indigo-900 md:text-xl">{pick(copy.prTitle)}</h3>
+          <p className="mt-4 max-w-4xl text-[15px] leading-8 text-slate-600">{pick(copy.pr1)}</p>
+          <p className="mt-3 max-w-4xl text-[15px] leading-8 text-slate-600">{pick(copy.pr2)}</p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-indigo-100 pt-6">
             <a
@@ -629,7 +632,7 @@ export default async function AboutPage() {
               className="magnetic-button inline-flex h-11 items-center gap-2 rounded-full border border-indigo-900 bg-indigo-900 px-5 text-sm font-bold text-white shadow-[0_1px_2px_rgba(15,45,78,0.04)] transition hover:-translate-y-0.5 hover:bg-indigo-800 focus-ring"
             >
               <Download className="h-4 w-4" />
-              {pick(t.download)}
+              {pick(copy.download)}
             </a>
             <a
               href="mailto:hi@yaokai.me"

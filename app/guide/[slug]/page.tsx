@@ -7,7 +7,7 @@ import { MarkdownRenderer } from "@/components/site/MarkdownRenderer";
 import { ReadingProgress } from "@/components/site/ReadingProgress";
 import { TableOfContents } from "@/components/site/TableOfContents";
 import { Badge } from "@/components/ui/Badge";
-import { normalizeArticle, normalizeGuide, normalizeProject } from "@/lib/data";
+import { getPublicArticles, normalizeGuide, normalizeProject } from "@/lib/data";
 import { extractToc } from "@/lib/markdown";
 import { prisma } from "@/lib/prisma";
 import { createMetadata } from "@/lib/seo";
@@ -15,6 +15,8 @@ import { formatDate, formatStoredReadingTime } from "@/lib/utils";
 import { getRequestLocale } from "@/lib/server-locale";
 import { withLocalePath } from "@/lib/i18n";
 import { siteCopy } from "@/lib/public-copy";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
+import { getCopyOverrides } from "@/lib/copy-overrides.server";
 
 export const dynamic = "force-dynamic";
 
@@ -22,12 +24,13 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const [locale, guide] = await Promise.all([
+  const [locale, guide, copyOverrides] = await Promise.all([
     getRequestLocale(),
-    prisma.guide.findUnique({ where: { slug } })
+    prisma.guide.findUnique({ where: { slug } }),
+    getCopyOverrides()
   ]);
   if (!guide) return {};
-  const t = siteCopy[locale].details.guide;
+  const t = applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).details.guide;
 
   return createMetadata({
     title: `${guide.title} - ${t.metaSuffix}`,
@@ -43,19 +46,19 @@ export default async function GuideDetailPage({ params }: Props) {
   const rawGuide = await prisma.guide.findFirst({ where: { slug, status: "PUBLISHED" } });
   if (!rawGuide) notFound();
 
-  const locale = await getRequestLocale();
-  const t = siteCopy[locale].details.guide;
+  const [locale, copyOverrides] = await Promise.all([getRequestLocale(), getCopyOverrides()]);
+  const t = applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).details.guide;
   const guide = normalizeGuide(rawGuide);
   const [guides, rawArticles, rawProjects] = await Promise.all([
     prisma.guide.findMany({ where: { status: "PUBLISHED" }, orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }] }),
-    prisma.article.findMany({ where: { status: "PUBLISHED" }, orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }], take: 6 }),
+    getPublicArticles().then((items) => items.slice(0, 6)),
     prisma.project.findMany({ orderBy: [{ featured: "desc" }, { sortOrder: "asc" }, { createdAt: "desc" }], take: 4 })
   ]);
   const normalizedGuides = guides.map(normalizeGuide);
   const index = normalizedGuides.findIndex((item) => item.id === guide.id);
   const previous = index > 0 ? normalizedGuides[index - 1] : null;
   const next = index >= 0 && index < normalizedGuides.length - 1 ? normalizedGuides[index + 1] : null;
-  const relatedArticles = rawArticles.map(normalizeArticle).filter((item) => item.tags.some((tag) => guide.tags.includes(tag)) || item.category.includes(guide.category.split(" ")[0])).slice(0, 2);
+  const relatedArticles = rawArticles.filter((item) => item.tags.some((tag) => guide.tags.includes(tag)) || item.category.includes(guide.category.split(" ")[0])).slice(0, 2);
   const relatedProjects = rawProjects.map(normalizeProject).slice(0, 2);
   const toc = extractToc(guide.content);
 
@@ -134,7 +137,7 @@ export default async function GuideDetailPage({ params }: Props) {
             </Link>
           </div>
           <div className="grid gap-5">
-            {relatedArticles.length ? relatedArticles.map((item) => <BlogCard key={item.id} article={item} />) : rawArticles.map(normalizeArticle).slice(0, 2).map((item) => <BlogCard key={item.id} article={item} />)}
+            {relatedArticles.length ? relatedArticles.map((item) => <BlogCard key={item.id} article={item} />) : rawArticles.slice(0, 2).map((item) => <BlogCard key={item.id} article={item} />)}
           </div>
         </div>
       </section>

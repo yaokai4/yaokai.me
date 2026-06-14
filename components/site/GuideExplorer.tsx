@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/State";
 import { FilterTabs } from "@/components/site/FilterTabs";
 import { SearchInput } from "@/components/site/SearchInput";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { withLocalePath } from "@/lib/i18n";
 import { siteCopy } from "@/lib/public-copy";
 import { formatStoredReadingTime } from "@/lib/utils";
@@ -26,8 +27,8 @@ type Guide = {
 };
 
 export function GuideExplorer({ guides }: { guides: Guide[] }) {
-  const { locale } = useLocale();
-  const copy = siteCopy[locale];
+  const { locale, copyOverrides } = useLocale();
+  const copy = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`), [copyOverrides, locale]);
   const t = copy.explorers.guide;
   const allLabel = copy.common.all;
   const [query, setQuery] = React.useState("");
@@ -73,8 +74,8 @@ export function GuideExplorer({ guides }: { guides: Guide[] }) {
 }
 
 function FeaturedGuide({ guide }: { guide: Guide }) {
-  const { locale } = useLocale();
-  const t = siteCopy[locale].explorers.guide;
+  const { locale, copyOverrides } = useLocale();
+  const t = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).explorers.guide, [copyOverrides, locale]);
 
   return (
     <Link href={withLocalePath(`/guide/${guide.slug}`, locale)} className="gradient-border-card group grid overflow-hidden rounded-md p-0 lg:grid-cols-[0.82fr_1.18fr]">
@@ -108,8 +109,8 @@ function FeaturedGuide({ guide }: { guide: Guide }) {
 }
 
 export function GuideCard({ guide }: { guide: Guide }) {
-  const { locale } = useLocale();
-  const t = siteCopy[locale].explorers.guide;
+  const { locale, copyOverrides } = useLocale();
+  const t = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).explorers.guide, [copyOverrides, locale]);
 
   return (
     <Link href={withLocalePath(`/guide/${guide.slug}`, locale)} className="premium-glass-card group block rounded-md p-5">

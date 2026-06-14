@@ -28,11 +28,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/guide",
     "/resources",
     "/library",
-    "/playbook",
     "/explore",
     "/stack",
-    "/now",
-    "/manifesto",
     "/posts",
     "/about",
     "/contact"

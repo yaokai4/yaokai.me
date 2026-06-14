@@ -9,6 +9,7 @@ import { FilterTabs } from "@/components/site/FilterTabs";
 import { SearchInput } from "@/components/site/SearchInput";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/State";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { getReadingTime } from "@/lib/markdown";
 import { withLocalePath } from "@/lib/i18n";
 import { siteCopy } from "@/lib/public-copy";
@@ -27,8 +28,8 @@ type Article = {
 };
 
 export function BlogExplorer({ articles }: { articles: Article[] }) {
-  const { locale } = useLocale();
-  const copy = siteCopy[locale];
+  const { locale, copyOverrides } = useLocale();
+  const copy = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`), [copyOverrides, locale]);
   const t = copy.explorers.blog;
   const allLabel = copy.common.all;
   const [query, setQuery] = React.useState("");
@@ -74,8 +75,8 @@ export function BlogExplorer({ articles }: { articles: Article[] }) {
 }
 
 function FeaturedArticle({ article }: { article: Article }) {
-  const { locale } = useLocale();
-  const t = siteCopy[locale].explorers.blog;
+  const { locale, copyOverrides } = useLocale();
+  const t = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).explorers.blog, [copyOverrides, locale]);
 
   return (
     <Link href={withLocalePath(`/blog/${article.slug}`, locale)} className="gradient-border-card group grid overflow-hidden rounded-md p-0 lg:grid-cols-[1.1fr_0.9fr]">

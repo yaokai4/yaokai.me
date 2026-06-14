@@ -1,14 +1,15 @@
 "use client";
 
-import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
+import { Github, Globe, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { isUsableEmail, siteConfig } from "@/config/site.config";
 import { useLocale } from "@/components/site/LocaleProvider";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { shellCopy, withLocalePath } from "@/lib/i18n";
 
 export function Footer() {
-  const { locale } = useLocale();
-  const copy = shellCopy[locale];
+  const { locale, copyOverrides } = useLocale();
+  const copy = applyCopyOverrides(shellCopy[locale], copyOverrides, `shell.${locale}`);
   const email = isUsableEmail(siteConfig.contactEmail) ? siteConfig.contactEmail : "";
   const socialLinks = siteConfig.socialLinks.slice(0, 3);
 
@@ -31,7 +32,6 @@ export function Footer() {
                 {group.links.map(([label, href]) => (
                   <Link key={href} href={withLocalePath(href, locale)} className="inline-flex w-fit items-center gap-1 rounded-sm text-sm font-semibold text-slate-500 transition hover:text-indigo-700 focus-ring">
                     {label}
-                    <ArrowUpRight className="h-3.5 w-3.5" />
                   </Link>
                 ))}
               </div>
@@ -43,7 +43,7 @@ export function Footer() {
             <div className="mt-3 grid gap-2">
               {socialLinks.map((social) => (
                 <a key={social.href} href={social.href} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-2 rounded-sm text-sm font-semibold text-slate-500 transition hover:text-indigo-700 focus-ring">
-                  {social.label === "GitHub" ? <Github className="h-4 w-4" /> : social.label === "LinkedIn" ? <Linkedin className="h-4 w-4" /> : <ArrowUpRight className="h-4 w-4" />}
+                  {social.label === "GitHub" ? <Github className="h-4 w-4" /> : social.label === "LinkedIn" ? <Linkedin className="h-4 w-4" /> : <Globe className="h-4 w-4" />}
                   {social.label}
                 </a>
               ))}

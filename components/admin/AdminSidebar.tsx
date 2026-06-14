@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, BarChart3, BookOpen, FileText, FolderKanban, Home, Inbox, Library, ListChecks, LogOut, MessageSquare, ScrollText, Server, Settings, ShieldCheck } from "lucide-react";
+import { BarChart3, BookOpen, FileText, FolderKanban, Home, Inbox, Languages, Library, LogOut, MessageSquare, Server, Settings, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -11,11 +11,9 @@ const navItems = [
   { href: "/admin/projects", label: "项目", icon: FolderKanban },
   { href: "/admin/guides", label: "指南", icon: BookOpen },
   { href: "/admin/resources", label: "资源库", icon: Library },
-  { href: "/admin/now", label: "Now", icon: Activity },
-  { href: "/admin/playbooks", label: "方法论", icon: ListChecks },
-  { href: "/admin/manifesto", label: "宣言", icon: ScrollText },
   { href: "/admin/posts", label: "动态", icon: MessageSquare },
   { href: "/admin/messages", label: "留言", icon: Inbox },
+  { href: "/admin/copy", label: "全站文案", icon: Languages },
   { href: "/admin/vps", label: "Secure Access", icon: Server },
   { href: "/admin/settings", label: "设置", icon: Settings },
   { href: "/admin/security", label: "账号安全", icon: ShieldCheck }

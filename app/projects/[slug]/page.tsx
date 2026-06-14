@@ -12,11 +12,13 @@ import { ProjectCard } from "@/components/site/ProjectCard";
 import { ReadingProgress } from "@/components/site/ReadingProgress";
 import { prisma } from "@/lib/prisma";
 import { breadcrumbJsonLd, createMetadata, creativeWorkJsonLd } from "@/lib/seo";
-import { normalizeArticle, normalizeGuide, normalizeProject } from "@/lib/data";
+import { getPublicArticles, normalizeGuide, normalizeProject } from "@/lib/data";
 import { getRequestLocale } from "@/lib/server-locale";
 import { withLocalePath } from "@/lib/i18n";
 import { localizeProject, localizeProjects } from "@/lib/project-localization";
 import { siteCopy } from "@/lib/public-copy";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
+import { getCopyOverrides } from "@/lib/copy-overrides.server";
 
 export const dynamic = "force-dynamic";
 
@@ -24,12 +26,13 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const [locale, project] = await Promise.all([
+  const [locale, project, copyOverrides] = await Promise.all([
     getRequestLocale(),
-    prisma.project.findUnique({ where: { slug } })
+    prisma.project.findUnique({ where: { slug } }),
+    getCopyOverrides()
   ]);
   if (!project) return {};
-  const t = siteCopy[locale].details.project;
+  const t = applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).details.project;
   const localizedProject = localizeProject(normalizeProject(project), locale);
 
   return createMetadata({
@@ -46,12 +49,12 @@ export default async function ProjectDetailPage({ params }: Props) {
   const rawProject = await prisma.project.findUnique({ where: { slug } });
   if (!rawProject) notFound();
 
-  const locale = await getRequestLocale();
-  const t = siteCopy[locale].details.project;
+  const [locale, copyOverrides] = await Promise.all([getRequestLocale(), getCopyOverrides()]);
+  const t = applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).details.project;
   const project = localizeProject(normalizeProject(rawProject), locale);
   const [rawAll, articles, guides] = await Promise.all([
     prisma.project.findMany({ orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }] }).then((items) => items.map(normalizeProject)),
-    prisma.article.findMany({ where: { status: "PUBLISHED" }, orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }], take: 6 }).then((items) => items.map(normalizeArticle)),
+    getPublicArticles().then((items) => items.slice(0, 6)),
     prisma.guide.findMany({ where: { status: "PUBLISHED" }, orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }], take: 6 }).then((items) => items.map(normalizeGuide))
   ]);
   const all = localizeProjects(rawAll, locale);

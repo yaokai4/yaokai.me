@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { literaryArticles } from "@/lib/literary-articles";
 import { parseJson, parseJsonArray } from "@/lib/utils";
 
 export type SettingsMap = Record<string, string>;
@@ -6,10 +7,6 @@ export type SettingsMap = Record<string, string>;
 export async function getSettings(): Promise<SettingsMap> {
   const rows = await prisma.siteSetting.findMany();
   return Object.fromEntries(rows.map((row) => [row.key, row.value]));
-}
-
-export function getNowItems(settings: SettingsMap) {
-  return parseJson<string[]>(settings.now, []);
 }
 
 export function getSocials(settings: SettingsMap) {
@@ -67,15 +64,6 @@ export function normalizeResource<T extends { tags: string }>(resource: T) {
   };
 }
 
-export function normalizePlaybook<T extends { principles: string; steps: string; relatedLinks: string }>(playbook: T) {
-  return {
-    ...playbook,
-    principles: parseJsonArray(playbook.principles),
-    steps: parseJsonArray(playbook.steps),
-    relatedLinks: parseJsonArray(playbook.relatedLinks)
-  };
-}
-
 export function normalizeContentCollection<T extends { itemIds: string }>(collection: T) {
   return {
     ...collection,
@@ -89,7 +77,16 @@ export async function getPublicArticles() {
     orderBy: [{ pinned: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }]
   });
 
-  return articles.map(normalizeArticle);
+  const normalizedArticles = articles.map(normalizeArticle);
+  const dbSlugs = new Set(normalizedArticles.map((article) => article.slug));
+  const staticArticles = literaryArticles.filter((article) => !dbSlugs.has(article.slug)).map(normalizeArticle);
+
+  return [...normalizedArticles, ...staticArticles].sort((a, b) => {
+    if (a.pinned !== b.pinned) return Number(b.pinned) - Number(a.pinned);
+    const aPublished = a.publishedAt?.getTime() ?? a.createdAt.getTime();
+    const bPublished = b.publishedAt?.getTime() ?? b.createdAt.getTime();
+    return bPublished - aPublished;
+  });
 }
 
 export async function getPublicProjects() {
@@ -134,27 +131,6 @@ export async function getResources() {
   });
 
   return resources.map(normalizeResource);
-}
-
-export async function getNowRecords() {
-  return prisma.nowItem.findMany({
-    orderBy: [{ type: "asc" }, { sortOrder: "asc" }, { createdAt: "desc" }]
-  });
-}
-
-export async function getPlaybooks() {
-  const playbooks = await prisma.playbook.findMany({
-    orderBy: [{ featured: "desc" }, { createdAt: "desc" }]
-  });
-
-  return playbooks.map(normalizePlaybook);
-}
-
-export async function getManifestoItems() {
-  return prisma.manifestoItem.findMany({
-    where: { visible: true },
-    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }]
-  });
 }
 
 export async function getContentCollections() {

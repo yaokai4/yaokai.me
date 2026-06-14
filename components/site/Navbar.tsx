@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import * as React from "react";
 import { useLocale } from "@/components/site/LocaleProvider";
 import { CommandSearch } from "@/components/ui/CommandSearch";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { localeLabels, locales, localeNames, shellCopy, stripLocaleFromPathname, withLocalePath, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -15,12 +16,19 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+const brandIdentity = {
+  zh: { primary: "姚凯", secondary: "Yao Kai" },
+  ja: { primary: "姚凱", secondary: "よう がい" },
+  en: { primary: "Yao Kai", secondary: "yaokai.me" }
+} satisfies Record<Locale, { primary: string; secondary: string }>;
+
 export function Navbar() {
   const pathname = usePathname();
   const activePathname = stripLocaleFromPathname(pathname);
-  const { locale, setLocale } = useLocale();
-  const copy = shellCopy[locale];
+  const { locale, setLocale, copyOverrides } = useLocale();
+  const copy = React.useMemo(() => applyCopyOverrides(shellCopy[locale], copyOverrides, `shell.${locale}`), [copyOverrides, locale]);
   const primaryNav = copy.primaryNav.map(([label, href]) => ({ label, href }));
+  const brand = brandIdentity[locale];
   const [open, setOpen] = React.useState(false);
   const switchLocale = React.useCallback((next: Locale) => {
     setOpen(false);
@@ -49,9 +57,9 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[#DAE2EA] bg-white">
       <nav className="mx-auto flex h-16 w-full max-w-[1180px] items-center justify-between gap-3 px-5 sm:px-8">
         <Link href={withLocalePath("/", locale)} className="group inline-flex min-w-0 items-center gap-3 rounded-md px-1 py-1.5 focus-ring">
-          <span className="font-serif text-lg font-semibold leading-none tracking-[0.22em] text-indigo-900">姚凱</span>
+          <span className="font-serif text-lg font-semibold leading-none tracking-normal text-indigo-900">{brand.primary}</span>
           <span className="hidden min-w-0 border-l border-[#DAE2EA] pl-3 sm:block">
-            <span className="block text-[10px] font-bold uppercase leading-4 tracking-[0.3em] text-sky-600">Yao Kai</span>
+            <span className="block text-[10px] font-bold leading-4 tracking-[0.18em] text-sky-600">{brand.secondary}</span>
             <span className="block text-[10px] font-semibold leading-4 tracking-wider text-slate-500">{copy.brandSubtitle}</span>
           </span>
         </Link>

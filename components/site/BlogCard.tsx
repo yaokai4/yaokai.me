@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useLocale } from "@/components/site/LocaleProvider";
 import { Badge } from "@/components/ui/Badge";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { withLocalePath } from "@/lib/i18n";
 import { siteCopy } from "@/lib/public-copy";
 import { formatDate, readingTime } from "@/lib/utils";
@@ -21,8 +22,8 @@ type Article = {
 };
 
 export function BlogCard({ article }: { article: Article }) {
-  const { locale } = useLocale();
-  const t = siteCopy[locale].explorers.blog;
+  const { locale, copyOverrides } = useLocale();
+  const t = applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).explorers.blog;
 
   return (
     <Link href={withLocalePath(`/blog/${article.slug}`, locale)} className="premium-glass-card group block rounded-md p-5">

@@ -6,6 +6,7 @@ import { useLocale } from "@/components/site/LocaleProvider";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Textarea } from "@/components/ui/Form";
 import { useToast } from "@/components/ui/Toast";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 
 type Errors = Partial<Record<"name" | "email" | "content", string>>;
 
@@ -77,8 +78,8 @@ const copy = {
 
 export function ContactForm() {
   const { toast } = useToast();
-  const { locale } = useLocale();
-  const t = copy[locale];
+  const { locale, copyOverrides } = useLocale();
+  const t = React.useMemo(() => applyCopyOverrides(copy[locale], copyOverrides, `contactForm.${locale}`), [copyOverrides, locale]);
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState<Errors>({});
   const [status, setStatus] = React.useState<"idle" | "success" | "error">("idle");

@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
+import { literaryArticles } from "@/lib/literary-articles";
 import { prisma } from "@/lib/prisma";
 import { parseJsonArray } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const [articles, projects, guides, resources, playbooks] = await Promise.all([
+  const [articles, projects, guides, resources] = await Promise.all([
     prisma.article.findMany({
       where: { status: "PUBLISHED" },
       select: { title: true, slug: true, excerpt: true, category: true, tags: true },
@@ -23,16 +24,14 @@ export async function GET() {
     prisma.resource.findMany({
       select: { title: true, url: true, description: true, category: true, tags: true, useCase: true },
       orderBy: [{ featured: "desc" }, { category: "asc" }, { createdAt: "desc" }]
-    }),
-    prisma.playbook.findMany({
-      select: { title: true, slug: true, scenario: true, principles: true },
-      orderBy: [{ featured: "desc" }, { createdAt: "desc" }]
     })
   ]);
+  const dbArticleSlugs = new Set(articles.map((article) => article.slug));
+  const staticArticles = literaryArticles.filter((article) => !dbArticleSlugs.has(article.slug));
 
   return NextResponse.json({
     items: [
-      ...articles.map((item) => ({
+      ...[...articles, ...staticArticles].map((item) => ({
         type: "文章",
         title: item.title,
         description: item.excerpt,
@@ -60,13 +59,6 @@ export async function GET() {
         href: item.url,
         external: true,
         meta: [item.category, item.useCase, ...parseJsonArray(item.tags)].join(" ")
-      })),
-      ...playbooks.map((item) => ({
-        type: "方法论",
-        title: item.title,
-        description: item.scenario,
-        href: `/playbook#${item.slug}`,
-        meta: parseJsonArray(item.principles).join(" ")
       }))
     ]
   });

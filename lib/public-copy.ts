@@ -13,38 +13,38 @@ export const siteCopy = {
     pages: {
       projects: {
         metaTitle: "作品集 - 姚凯",
-        metaDescription: "姚凯的真实项目：Machi、Shangence 商衡、yaokai.me，以及公开 GitHub 仓库。",
+        metaDescription: "姚凯真正做过并持续维护的项目：Machi、Shangence 商衡、yaokai.me，以及公开 GitHub 仓库。",
         eyebrow: "作品集",
-        title: "我真正做过、正在维护的项目。",
-        description: "这里放简历和 GitHub 上能对得上的项目：Machi、Shangence 商衡、本站，以及 Machi 的 Web / iOS / Android 三端实现。"
+        title: "这些不是概念图，而是我真正推到线上的作品。",
+        description: "从 Machi、Shangence 商衡到本站，我会把能公开的背景、取舍、实现方式和后续维护都放在这里，而不是只留下几张好看的截图。"
       },
       blog: {
         metaTitle: "文章 - 姚凯",
-        metaDescription: "姚凯的开发笔记、项目复盘、踩坑记录和求职相关心得。",
+        metaDescription: "姚凯的开发笔记、项目复盘、技术取舍，以及在日本生活与求职中的观察。",
         eyebrow: "文章",
-        title: "开发笔记，慢慢写。",
-        description: "这里以后主要放我从后台发布的心得：项目复盘、踩坑记录、架构取舍、上架准备，以及在日本找工作的真实记录。"
+        title: "写一点代码背后的东西。",
+        description: "项目复盘、踩坑记录、架构取舍、上架准备，以及在日本生活和求职时慢慢形成的判断，都会放在这里。"
       },
       guide: {
         metaTitle: "指南 - 姚凯",
         metaDescription: "关于 AI 工作流、全栈开发、iOS 工程、产品判断和高级界面打磨的可执行指南。",
         eyebrow: "指南",
-        title: "把真实项目经验压缩成清晰、可执行、可检查的步骤。",
-        description: "这里收集 AI 协作、Next.js 全栈结构、Machi iOS 离线优先、Machi Web 双端同步、产品判断和视觉打磨等指南。"
+        title: "把走过的路，整理成可以复用的方法。",
+        description: "这里收集 AI 协作、Next.js 全栈结构、Machi iOS 离线优先、Machi Web 同步、产品判断和界面打磨等指南。每一篇都尽量具体、可执行、可回头检查。"
       },
       resources: {
         metaTitle: "资源库 - 姚凯",
         metaDescription: "开发、设计、AI 工作流、产品判断与 Machi 双端工程相关的精选资源。",
         eyebrow: "资源库",
-        title: "不是普通链接收藏，而是长期工作台的一部分。",
-        description: "这里包括 AI 协作工具、Next.js/React/Prisma、SwiftUI/SwiftData、Python、SQLite，以及用于产品判断和视觉审美的高质量参考资源。"
+        title: "长期放在手边的工具和参考。",
+        description: "这里包括 AI 协作工具、Next.js/React/Prisma、SwiftUI/SwiftData、Python、SQLite，也包括帮助我判断产品、视觉和写作的参考。"
       },
       posts: {
         metaTitle: "动态 - 姚凯",
         metaDescription: "短更新、构建记录、想法碎片和正在推进的真实信号。",
         eyebrow: "动态",
-        title: "更轻的记录，更真实的现场。",
-        description: "这里发布构建过程、实验记录、短想法和还在形成中的判断，让网站保持正在发生的状态。",
+        title: "短一点，离现场近一点。",
+        description: "这里发布构建过程、实验记录、短想法和还没完全成形的判断，让网站不只是展示过去，也能保留正在发生的部分。",
         emptyTitle: "暂无公开动态"
       }
     },
@@ -156,39 +156,39 @@ export const siteCopy = {
     },
     pages: {
       projects: {
-        metaTitle: "制作実績 - Yaokai",
-        metaDescription: "Machi、Shangence 商衡、yaokai.me と公開 GitHub リポジトリ。",
+        metaTitle: "制作実績 - 姚凱",
+        metaDescription: "Machi、Shangence 商衡、yaokai.me など、実際に作り、今も手を入れているプロジェクト。",
         eyebrow: "制作実績",
-        title: "実際に作り、今も手を入れているプロジェクトです。",
-        description: "職務経歴書と GitHub で確認できるものを中心にまとめました。Machi、Shangence 商衡、このサイト、そして Machi の Web / iOS / Android です。"
+        title: "構想ではなく、実際に動かしているもの。",
+        description: "Machi、Shangence 商衡、このサイトを中心に、公開できる背景、判断、実装、運用のことをまとめています。きれいなスクリーンショットだけで終わらせないためのページです。"
       },
       blog: {
-        metaTitle: "記事 - Yaokai",
-        metaDescription: "開発メモ、プロジェクトの振り返り、詰まった点、日本での就職活動について。",
+        metaTitle: "記事 - 姚凱",
+        metaDescription: "開発メモ、プロジェクトの振り返り、技術選定、日本で暮らしながら考えたこと。",
         eyebrow: "記事",
-        title: "開発メモを少しずつ書きます。",
-        description: "管理画面から、プロジェクトの振り返り、詰まった点、設計判断、アプリ公開準備、日本での就職活動について書いていきます。"
+        title: "コードの裏側にある考えを、少しずつ。",
+        description: "プロジェクトの振り返り、詰まったところ、設計の判断、アプリ公開準備、日本での生活や就職活動の中で考えたことを書いていきます。"
       },
       guide: {
-        metaTitle: "ガイド - Yaokai",
+        metaTitle: "ガイド - 姚凱",
         metaDescription: "AI ワークフロー、フルスタック開発、iOS、プロダクト判断、デザインの再利用できるガイド。",
         eyebrow: "ガイド",
-        title: "実案件の経験を、実行しやすく検証できる手順に整理します。",
-        description: "AI 協業、Next.js フルスタック構成、Machi iOS のオフライン優先、Machi Web の同期、プロダクト判断、UI 改善を扱います。"
+        title: "通ってきた道を、もう一度使える手順にする。",
+        description: "AI との協業、Next.js のフルスタック構成、Machi iOS のオフライン優先、Machi Web の同期、プロダクト判断、UI 改善を扱います。できるだけ具体的で、あとから検証できる形にします。"
       },
       resources: {
-        metaTitle: "リソース - Yaokai",
+        metaTitle: "リソース - 姚凱",
         metaDescription: "開発、デザイン、AI ワークフロー、Machi の両端開発に関する参考資料。",
         eyebrow: "リソース",
-        title: "ただのリンク集ではなく、長期的な作業台の一部です。",
-        description: "AI 協業ツール、Next.js/React/Prisma、SwiftUI/SwiftData、Python、SQLite、プロダクトと視覚判断の参考資料をまとめています。"
+        title: "手元に置いておきたい道具と資料。",
+        description: "AI 協業ツール、Next.js/React/Prisma、SwiftUI/SwiftData、Python、SQLite、プロダクト判断や視覚表現の参考になる資料をまとめています。"
       },
       posts: {
-        metaTitle: "近況 - Yaokai",
+        metaTitle: "近況 - 姚凱",
         metaDescription: "短い更新、考え、記録、進行中の学び。",
         eyebrow: "近況",
-        title: "軽い記録で、いま起きていることを見せます。",
-        description: "制作メモ、実験記録、短い考え、まだ形になりきっていない判断を残す場所です。",
+        title: "短く、現場に近い記録。",
+        description: "制作メモ、実験記録、短い考え、まだ形になりきっていない判断を残します。過去の実績だけでなく、いま動いているものも見えるように。",
         emptyTitle: "公開中の近況はまだありません"
       }
     },
@@ -301,38 +301,38 @@ export const siteCopy = {
     pages: {
       projects: {
         metaTitle: "Work - Yaokai",
-        metaDescription: "Real projects by Yaokai: Machi, Shangence, yaokai.me, and public GitHub repositories.",
+        metaDescription: "Projects Yaokai actually built and still maintains: Machi, Shangence, yaokai.me, and public GitHub repositories.",
         eyebrow: "Work",
-        title: "Projects I actually built and still maintain.",
-        description: "This page focuses on work that matches my resume and GitHub: Machi, Shangence, this site, and the Web / iOS / Android clients behind Machi."
+        title: "Not concepts. Things I built, shipped, and still maintain.",
+        description: "Machi, Shangence, and this site are gathered here with the context I can share: what I was trying to solve, what I chose, how I built it, and what still needs care."
       },
       blog: {
         metaTitle: "Writing - Yaokai",
-        metaDescription: "Development notes, project retrospectives, debugging notes, and thoughts from job hunting in Japan.",
+        metaDescription: "Development notes, project retrospectives, technical trade-offs, and observations from life and work in Japan.",
         eyebrow: "Writing",
-        title: "Development notes, written gradually.",
-        description: "A place for posts I publish from the admin: project retrospectives, trade-offs, bugs, release prep, and notes from job hunting in Japan."
+        title: "Notes from behind the code.",
+        description: "Project retrospectives, trade-offs, bugs, release prep, and thoughts that formed while living and job hunting in Japan."
       },
       guide: {
         metaTitle: "Guides - Yaokai",
         metaDescription: "Reusable guides for AI workflows, full-stack development, iOS engineering, product judgment, and visual craft.",
         eyebrow: "Guides",
-        title: "Practical guides distilled into clear, executable, checkable steps.",
-        description: "A growing library for AI collaboration, Next.js full-stack structure, Machi iOS offline-first design, Machi Web sync, product judgment, and interface polish."
+        title: "Turning paths I have walked into methods I can reuse.",
+        description: "A growing library for AI collaboration, Next.js full-stack structure, Machi iOS offline-first design, Machi Web sync, product judgment, and interface polish. Specific enough to act on, clear enough to revisit."
       },
       resources: {
         metaTitle: "Resources - Yaokai",
         metaDescription: "Development, design, AI workflow, and Machi engineering resources.",
         eyebrow: "Resources",
-        title: "Not a random link list, but part of a long-term workbench.",
-        description: "AI collaboration tools, Next.js/React/Prisma, SwiftUI/SwiftData, Python, SQLite, and references for product and visual judgment."
+        title: "Tools and references worth keeping close.",
+        description: "AI collaboration tools, Next.js/React/Prisma, SwiftUI/SwiftData, Python, SQLite, and references that help me think about product, interface, and writing."
       },
       posts: {
         metaTitle: "Updates - Yaokai",
         metaDescription: "Short updates, notes, records, and work in progress.",
         eyebrow: "Updates",
-        title: "Lighter notes, closer to the work in progress.",
-        description: "Build notes, experiments, short thoughts, and ideas still taking shape.",
+        title: "Short notes, close to the work.",
+        description: "Build notes, experiments, small thoughts, and ideas still taking shape, so the site can show what is happening now as well as what is already finished.",
         emptyTitle: "No public updates yet"
       }
     },

@@ -64,22 +64,23 @@ function expectNoBody(body, path, patterns) {
 async function checkHome() {
   const body = await expectBody("/", [
     "<html lang=\"zh-CN\"",
-    "姚凯 / Yaokai",
+    "姚凯",
+    "Yao Kai",
     "首页",
-    "个人开发 / 两个在线产品",
-    "Machi 和 Shangence 商衡的开发者",
+    "个人开发 / 日本生活",
+    "在日本把想法写成产品，也把日常写成记录。",
     "看作品",
     "看简历",
     "可验证信号",
-    "不是只会写页面，而是能把产品跑起来。",
+    "把产品交到真实世界里",
     "三端产品",
     "商用闭环",
-    "上线运维",
+    "持续运维",
     "联系我",
     "作品",
     "能力范围",
     "文章",
-    "近况"
+    "运行在东京的一台小小的 AWS 服务器上。"
   ]);
   const templateEmail = ["hello", "example", "com"].join("@").replace("@com", ".com");
   assert(!body.includes(templateEmail), "首页不应包含模板占位邮箱");
@@ -92,15 +93,16 @@ async function checkHome() {
 async function checkLocales() {
   const en = await fetchText("/en");
   assert(en.body.includes("<html lang=\"en\""), "英文版本应设置 html lang=en");
-  assert(en.body.includes("Yaokai"), "英文首页缺少英文主标题");
-  assert(en.body.includes("Builder of Machi and Shangence"), "英文首页缺少英文副标题");
+  assert(en.body.includes("Yao Kai"), "英文首页缺少英文主标题");
+  assert(en.body.includes("I turn small, stubborn ideas into shipped products."), "英文首页缺少英文副标题");
   assert(en.body.includes("See the work"), "英文首页缺少作品 CTA");
-  assert(en.body.includes("Verifiable Signals"), "英文首页缺少可验证信号区");
+  assert(en.body.includes("Verifiable signals"), "英文首页缺少可验证信号区");
 
   const ja = await fetchText("/ja");
   assert(ja.body.includes("<html lang=\"ja\""), "日文版本应设置 html lang=ja");
-  assert(ja.body.includes("姚凯 / Yaokai"), "日文首页缺少日文主标题");
-  assert(ja.body.includes("Machi と Shangence 商衡の開発者"), "日文首页缺少日文副标题");
+  assert(ja.body.includes("姚凱"), "日文首页缺少日文汉字姓名");
+  assert(ja.body.includes("よう がい"), "日文首页缺少假名姓名");
+  assert(ja.body.includes("日本で暮らしながら、アイデアをプロダクトにしている開発者です。"), "日文首页缺少日文副标题");
   assert(ja.body.includes("制作実績を見る"), "日文首页缺少作品 CTA");
   assert(ja.body.includes("検証できる実績"), "日文首页缺少可验证实绩区");
 
@@ -109,18 +111,18 @@ async function checkLocales() {
 
   const enProjects = await expectBody("/en/projects", ["Work", "Search projects, stack, role, or category", "Featured Case", "View full case"]);
   expectNoBody(enProjects, "/en/projects", ["搜索项目、技术栈或分类", "没有找到项目", "查看案例拆解"]);
-  const enBlog = await expectBody("/en/blog", ["Writing", "Search articles, tags, or category", "No articles found"]);
+  const enBlog = await expectBody("/en/blog", ["Writing", "Search articles, tags, or category", "Notes from behind the code.", "Continue reading"]);
   expectNoBody(enBlog, "/en/blog", ["文章 - 姚凯", "搜索文章、标签或分类", "没有找到文章", "继续阅读"]);
   const enGuide = await expectBody("/en/guide", ["Guides", "Search guides, stack, or audience", "Featured Guide", "Open method guide"]);
   expectNoBody(enGuide, "/en/guide", ["指南 - 姚凯", "搜索指南、技术栈或适合人群", "没有找到指南", "适合：", "进入指南"]);
   const enResources = await expectBody("/en/resources", ["Resources", "Search resources, technology, or use case", "Use case:", "View resource"]);
   expectNoBody(enResources, "/en/resources", ["搜索资源、技术或使用场景", "没有找到资源", "使用场景：", "打开资源"]);
-  const enPosts = await expectBody("/en/posts", ["Updates", "Lighter notes"]);
+  const enPosts = await expectBody("/en/posts", ["Updates", "Short notes, close to the work."]);
   expectNoBody(enPosts, "/en/posts", ["暂无公开动态"]);
 
   const jaProjects = await expectBody("/ja/projects", ["制作実績", "プロジェクト、技術、カテゴリを検索", "ケース全体を見る"]);
   expectNoBody(jaProjects, "/ja/projects", ["作品集", "搜索项目、技术栈或分类", "查看案例拆解"]);
-  const jaBlog = await expectBody("/ja/blog", ["記事", "記事、タグ、カテゴリを検索", "記事が見つかりません"]);
+  const jaBlog = await expectBody("/ja/blog", ["記事", "記事、タグ、カテゴリを検索", "コードの裏側にある考え", "続きを読む"]);
   expectNoBody(jaBlog, "/ja/blog", ["搜索文章、标签或分类", "继续阅读"]);
   const jaGuide = await expectBody("/ja/guide", ["ガイド", "ガイド、技術、対象読者を検索", "ガイドを開く"]);
   expectNoBody(jaGuide, "/ja/guide", ["搜索指南、技术栈或适合人群", "进入指南"]);
@@ -129,23 +131,12 @@ async function checkLocales() {
 }
 
 async function checkPublicContent() {
-  await expectBody("/zh/explore", ["Machi 双端产品路线", "资源库", "方法论"]);
+  await expectBody("/zh/explore", ["Machi 双端产品路线", "资源库", "工具和资料也是能力的一部分"]);
   await expectBody("/zh/library", ["资源库", "SwiftUI", "SQLite"]);
   await expectBody("/zh/resources", ["资源库", "SwiftUI", "SQLite"]);
-  await expectBody("/zh/playbook", ["方法论", "Machi"]);
-  const playbooksAlias = await fetch(makeUrl("/zh/playbooks"), { redirect: "manual" });
-  if ([301, 302, 307, 308].includes(playbooksAlias.status)) {
-    assert(locationHeader(playbooksAlias).includes("/zh/playbook"), `/playbooks 跳转地址应包含 /zh/playbook，实际为 ${locationHeader(playbooksAlias)}`);
-  } else {
-    assert(playbooksAlias.status === 200, `/playbooks 应可访问或跳转，实际为 ${playbooksAlias.status}`);
-    const aliasBody = await playbooksAlias.text();
-    assert(aliasBody.includes("Playbook") || aliasBody.includes("方法论"), "/playbooks 别名应返回方法论内容");
-  }
   await expectBody("/zh/stack", ["技术栈", "技能地图", "SwiftUI"]);
-  await expectBody("/zh/now", ["当前状态"]);
-  await expectBody("/zh/manifesto", ["宣言"]);
   await expectBody("/zh/contact", ["找我聊职位、合作", "可以聊什么", "职位机会", "联系姚凯"]);
-  await expectBody("/zh/posts", ["动态", "更轻的记录"]);
+  await expectBody("/zh/posts", ["动态", "短一点，离现场近一点。"]);
   if (expectVpsPrivate) {
     for (const path of ["/zh/vps", "/zh/vps/status", "/zh/vps/docs", "/zh/vps/security", "/zh/vps/access", "/zh/vps/access/docs", "/zh/vps/changelog"]) {
       const response = await fetch(makeUrl(path), { redirect: "manual" });
@@ -208,13 +199,13 @@ async function checkAdminLoginApi() {
 
 async function checkRobotsAndSitemap() {
   await expectBody("/robots.txt", ["Disallow: /admin", "Disallow: /api", "Disallow: /yaokai"]);
-  await expectBody("/sitemap.xml", ["/zh/explore", "/ja/guide", "/en/stack", "/zh/library", "/zh/playbook", "/zh/projects/machi-ios-native-city-life-app", "/en/guide/machi-web-backend-sync-guide"]);
+  await expectBody("/sitemap.xml", ["/zh/explore", "/ja/guide", "/en/stack", "/zh/library", "/zh/projects/machi-ios-native-city-life-app", "/en/guide/machi-web-backend-sync-guide"]);
 }
 
 async function checkSearchApi() {
   const { response, body } = await expectStatus("/api/search", 200);
   assert(response.headers.get("content-type")?.includes("application/json"), "/api/search 应返回 JSON");
-  for (const pattern of ["Machi iOS", "Machi Web", "SwiftUI", "方法论"]) {
+  for (const pattern of ["Machi iOS", "Machi Web", "SwiftUI", "资源"]) {
     assert(body.includes(pattern), `/api/search 缺少搜索内容：${pattern}`);
   }
 }

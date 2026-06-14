@@ -1,15 +1,16 @@
 import { UniverseHome } from "@/components/site/UniverseHome";
-import { getNowRecords, getPublicArticles } from "@/lib/data";
+import { getCopyOverrides } from "@/lib/copy-overrides.server";
+import { getPublicArticles } from "@/lib/data";
 import { getRequestLocale } from "@/lib/server-locale";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [locale, articles, nowItems] = await Promise.all([
+  const [locale, articles, copyOverrides] = await Promise.all([
     getRequestLocale(),
     getPublicArticles(),
-    getNowRecords()
+    getCopyOverrides()
   ]);
 
-  return <UniverseHome locale={locale} articles={articles} nowItems={nowItems} />;
+  return <UniverseHome locale={locale} articles={articles} copyOverrides={copyOverrides} />;
 }

@@ -8,6 +8,7 @@ import { EmptyState } from "@/components/ui/State";
 import { FilterTabs } from "@/components/site/FilterTabs";
 import { SearchInput } from "@/components/site/SearchInput";
 import { useLocale } from "@/components/site/LocaleProvider";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { siteCopy } from "@/lib/public-copy";
 
 type Resource = {
@@ -23,8 +24,8 @@ type Resource = {
 };
 
 export function ResourceExplorer({ resources }: { resources: Resource[] }) {
-  const { locale } = useLocale();
-  const copy = siteCopy[locale];
+  const { locale, copyOverrides } = useLocale();
+  const copy = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`), [copyOverrides, locale]);
   const t = copy.explorers.resources;
   const allLabel = copy.common.all;
   const [query, setQuery] = React.useState("");
@@ -83,8 +84,8 @@ export function ResourceExplorer({ resources }: { resources: Resource[] }) {
 }
 
 function FeaturedResource({ resource }: { resource: Resource }) {
-  const { locale } = useLocale();
-  const t = siteCopy[locale].explorers.resources;
+  const { locale, copyOverrides } = useLocale();
+  const t = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).explorers.resources, [copyOverrides, locale]);
 
   return (
     <Link href={resource.url} target="_blank" className="gradient-border-card group grid overflow-hidden rounded-md p-0 lg:grid-cols-[0.8fr_1.2fr]">

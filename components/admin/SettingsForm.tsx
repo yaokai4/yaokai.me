@@ -17,8 +17,7 @@ const fields = [
   ["ogImage", "Open Graph 图片"],
   ["theme", "主题"],
   ["icp", "备案信息"],
-  ["socials", "社交链接 JSON"],
-  ["now", "当前关注 JSON"]
+  ["socials", "社交链接 JSON"]
 ] as const;
 
 export function SettingsForm({ settings }: { settings: Record<string, string> }) {
@@ -60,9 +59,9 @@ export function SettingsForm({ settings }: { settings: Record<string, string> })
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         {fields.map(([key, label]) => (
-          <label key={key} className={key === "heroSubtitle" || key === "socials" || key === "now" ? "grid gap-2 md:col-span-2" : "grid gap-2"}>
+          <label key={key} className={key === "heroSubtitle" || key === "socials" ? "grid gap-2 md:col-span-2" : "grid gap-2"}>
             <span className="text-sm font-medium text-slate-700">{label}</span>
-            {key === "heroSubtitle" || key === "socials" || key === "now" ? (
+            {key === "heroSubtitle" || key === "socials" ? (
               <textarea
                 value={form[key] || ""}
                 onChange={(event) => setForm((current) => ({ ...current, [key]: event.target.value }))}

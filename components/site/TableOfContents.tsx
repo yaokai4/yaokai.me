@@ -4,11 +4,12 @@ import * as React from "react";
 import type { TocItem } from "@/lib/markdown";
 import { cn } from "@/lib/utils";
 import { useLocale } from "@/components/site/LocaleProvider";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { siteCopy } from "@/lib/public-copy";
 
 export function TableOfContents({ items }: { items: TocItem[] }) {
-  const { locale } = useLocale();
-  const t = siteCopy[locale].common;
+  const { locale, copyOverrides } = useLocale();
+  const t = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).common, [copyOverrides, locale]);
   const [activeId, setActiveId] = React.useState(items[0]?.id || "");
 
   React.useEffect(() => {

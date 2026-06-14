@@ -10,12 +10,7 @@ const settings = {
   heroTitle: "姚凯 - Full-stack Web Developer",
   heroSubtitle: "把需求、界面、数据、后台和部署连成可上线、可运营、可复盘的 Web 产品系统。",
   seoTitle: "姚凯 - Full-stack Web Developer & Product-minded Builder",
-  seoDescription: "姚凯的个人网站，展示全栈 Web 产品系统、Machi 双端项目、AI 工作流、项目复盘、技术指南与高级 UI 设计判断。",
-  now: json([
-    "打磨个人网站的高级视觉、内容结构和多语言体验。",
-    "整理 Machi iOS / Web / 统一后端的案例证据与工程复盘。",
-    "把 AI 协作、全栈开发、产品判断和界面打磨沉淀成可复用方法论。"
-  ])
+  seoDescription: "姚凯的个人网站，展示全栈 Web 产品系统、Machi 双端项目、AI 工作流、项目复盘、技术指南与高级 UI 设计判断。"
 };
 
 const projectUpdates = {
@@ -26,15 +21,15 @@ const projectUpdates = {
     result: "系统减少上下文切换，让零散想法进入可见、可追踪、可复用的执行循环。"
   },
   "brand-cms-creator-portfolios": {
-    excerpt: "一个面向创作者与个人品牌的内容系统，让作品、文章、方法论、资源和站点设置都能长期维护。",
+    excerpt: "一个面向创作者与个人品牌的内容系统，让作品、文章、指南、资源和站点设置都能长期维护。",
     challenge: "很多个人网站发布当天很好看，但更新成本高，后续内容无法持续生长。",
-    solution: "我把项目、文章、指南、动态、资源、方法论和视觉模块拆成可管理内容模型，并配套后台维护体验。",
+    solution: "我把项目、文章、指南、动态、资源和视觉模块拆成可管理内容模型，并配套后台维护体验。",
     result: "网站从静态展示升级成可运营的个人内容产品，既有表达力，也能长期更新。"
   },
   "bright-content-universe-website": {
-    excerpt: "一个把作品、文章、指南、资源库、方法论、Now 和 Manifesto 连接起来的明亮个人品牌产品。",
+    excerpt: "一个把作品、文章、指南和资源库连接起来的明亮个人品牌产品。",
     challenge: "普通个人网站容易停留在作品列表和博客列表，缺少内容路径、判断证据和持续维护机制。",
-    solution: "我用内容地图重新组织 Guide、Playbook、Library、Now、Manifesto 和 Case Study，并用明亮克制的视觉系统统一体验。",
+    solution: "我用内容地图重新组织 Guide、Library 和 Case Study，并用明亮克制的视觉系统统一体验。",
     result: "访问者可以从技术、产品、设计、AI 工作流或合作意向进入，沿着内容关系理解真实能力。"
   },
   "machi-ios-native-city-life-app": {
@@ -95,43 +90,7 @@ const guideUpdates = {
     excerpt: "判断一个网页是否高级，我会看首屏重心、排版节奏、卡片质感、动效克制、移动端阅读和状态反馈。"
   },
   "personal-brand-system": {
-    excerpt: "个人品牌网站不只是展示自己，而是把项目、文章、指南、资源、Now 和复盘组织成长期信任系统。"
-  }
-};
-
-const nowItems = [
-  ["高级化个人网站", "继续打磨首页定位、页面文案、内容路径、多语言体验和视觉细节，让网站更像一个成熟数字产品。", "当前项目", "进行中", 86],
-  ["Machi 项目证据整理", "把 iOS 原生客户端、Web 客户端和统一后端的架构、同步、离线能力整理成更清晰的案例证据。", "当前项目", "进行中", 78],
-  ["AI 工作流沉淀", "把需求拆解、方案生成、代码实现、测试验收和复盘整理成可重复执行的方法。", "研究方向", "持续优化", 72],
-  ["高级 UI 判断体系", "持续整理首屏、排版、玻璃质感、动效节奏、移动端和状态反馈的判断标准。", "设计打磨", "进行中", 66],
-  ["内容系统迭代", "让项目、文章、指南、资源、方法论和 Now 互相连接，形成更完整的探索路径。", "下一步", "计划中", 58]
-];
-
-const manifestoItems = [
-  ["技术是把判断变成现实的媒介", "我喜欢技术，是因为它能把抽象判断转化成可被使用、可被验证、可被维护、可被继续改进的东西。"],
-  ["高级感来自系统，而不是装饰", "真正高级的界面来自信息层级、节奏、留白、反馈、一致性和克制，不只是颜色漂亮。"],
-  ["AI 应该放大人的判断", "我会把 AI 放进研究、起草、实现、检查和复盘，但关键判断必须回到目标、证据和质量标准。"],
-  ["长期主义需要可维护系统", "如果一个作品只能在发布当天成立，它还不是系统。真正的作品应该能持续更新、复盘和生长。"],
-  ["好的产品减少摩擦", "有价值的界面应该让用户更快理解、更少犹豫、更自然完成行动，而不是制造额外解释。"],
-  ["创造需要证据", "我更相信可以被项目、文章、指南、复盘和持续输出证明的能力。"]
-];
-
-const playbookUpdates = {
-  "product-judgement-framework": {
-    scenario: "当一个功能看起来很有吸引力，但资源有限、时间有限、维护成本也真实存在时。",
-    example: "如果一个功能只能让页面显得更丰富，却不能提高用户完成目标的概率，我会推迟它。"
-  },
-  "development-workflow": {
-    scenario: "从需求到上线，需要稳定推进、可验证交付，而不是临场发挥时。",
-    example: "我会优先让系统真实可运行，再逐步提升视觉、交互和内容表达。"
-  },
-  "ai-collaboration-workflow": {
-    scenario: "需要快速探索复杂方案，但仍要保持人负责方向、证据负责验收时。",
-    example: "AI 生成的内容不能直接成为结论，必须经过项目上下文、运行结果和质量标准验证。"
-  },
-  "design-quality-check": {
-    scenario: "页面看起来还行，但缺少高级感、信任感、记忆点和继续探索的欲望时。",
-    example: "如果背景很美却影响阅读，这不是设计进步，而是噪音增加。"
+    excerpt: "个人品牌网站不只是展示自己，而是把项目、文章、指南、资源和复盘组织成长期信任系统。"
   }
 };
 
@@ -174,24 +133,6 @@ async function main() {
       where: { slug },
       data: { ...data, seoDescription: data.excerpt }
     }).catch(() => null);
-  }
-
-  await prisma.nowItem.deleteMany();
-  for (const [index, [title, description, type, status, progress]] of nowItems.entries()) {
-    await prisma.nowItem.create({
-      data: { title, description, type, status, progress, sortOrder: index + 1 }
-    });
-  }
-
-  await prisma.manifestoItem.deleteMany();
-  for (const [index, [title, content]] of manifestoItems.entries()) {
-    await prisma.manifestoItem.create({
-      data: { title, content, sortOrder: index + 1, visible: true }
-    });
-  }
-
-  for (const [slug, data] of Object.entries(playbookUpdates)) {
-    await prisma.playbook.update({ where: { slug }, data }).catch(() => null);
   }
 
   console.log("Public-facing content polish complete.");

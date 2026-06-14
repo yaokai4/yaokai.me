@@ -8,9 +8,10 @@ import { Footer } from "@/components/site/Footer";
 import { LocaleProvider } from "@/components/site/LocaleProvider";
 import { Navbar } from "@/components/site/Navbar";
 import { PageTransition } from "@/components/site/PageTransition";
+import type { CopyOverrides } from "@/lib/copy-overrides";
 import type { Locale } from "@/lib/i18n";
 
-export function SiteChrome({ children, locale }: { children: React.ReactNode; locale: Locale }) {
+export function SiteChrome({ children, locale, copyOverrides = {} }: { children: React.ReactNode; locale: Locale; copyOverrides?: CopyOverrides }) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
 
@@ -24,7 +25,7 @@ export function SiteChrome({ children, locale }: { children: React.ReactNode; lo
   }
 
   return (
-    <LocaleProvider key={locale} initialLocale={locale}>
+    <LocaleProvider key={locale} initialLocale={locale} copyOverrides={copyOverrides}>
       <div className="site-shell">
         <a href="#main-content" className="skip-link">
           Skip to content

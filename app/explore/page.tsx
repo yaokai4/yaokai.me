@@ -3,11 +3,9 @@ import {
   BrainCircuit,
   Brush,
   Code2,
-  Compass,
   MessageCircle,
   Rocket,
-  Sparkles,
-  Workflow
+  Sparkles
 } from "lucide-react";
 import Link from "next/link";
 import { BlogCard } from "@/components/site/BlogCard";
@@ -18,8 +16,6 @@ import { Badge } from "@/components/ui/Badge";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import {
   getContentCollections,
-  getNowRecords,
-  getPlaybooks,
   getPublicArticles,
   getPublicGuides,
   getPublicProjects,
@@ -37,7 +33,7 @@ export async function generateMetadata() {
 
   return createMetadata({
     title: "探索 - 姚凯",
-    description: "按目标路线探索作品、文章、指南、资源库、方法论和当前状态。",
+    description: "按目标路线探索作品、文章、指南、资源库和技术能力。",
     path: "/explore",
     locale
   });
@@ -46,22 +42,19 @@ export async function generateMetadata() {
 const recommendedPaths = [
   { title: "想了解我的技术能力", href: "/stack", icon: Code2, detail: "看技术雷达、全栈结构、Machi 双端和部署能力。" },
   { title: "想了解我的 AI 工作流", href: "/guide", icon: BrainCircuit, detail: "从 AI 协作、原型到开发复盘，进入指南库。" },
-  { title: "想了解我的产品思维", href: "/playbook", icon: Compass, detail: "看我如何判断功能优先级、成功信号和维护成本。" },
   { title: "想了解我的设计审美", href: "/blog/fluid-gradient-personal-site-principles", icon: Brush, detail: "看明亮流体视觉、卡片、按钮、阅读体验的判断标准。" },
   { title: "想了解我的项目经验", href: "/projects", icon: Rocket, detail: "进入高级 Case Study，查看背景、挑战、方案和结果。" },
   { title: "想合作或联系我", href: "/contact", icon: MessageCircle, detail: "适合产品原型、全栈实现、AI 工作流和个人品牌网站。" }
 ];
 
 export default async function ExplorePage() {
-  const [locale, collections, guides, projects, articles, resources, playbooks, nowItems, skills] = await Promise.all([
+  const [locale, collections, guides, projects, articles, resources, skills] = await Promise.all([
     getRequestLocale(),
     getContentCollections(),
     getPublicGuides(),
     getPublicProjects(),
     getPublicArticles(),
     getResources(),
-    getPlaybooks(),
-    getNowRecords(),
     getSkills()
   ]);
 
@@ -75,7 +68,7 @@ export default async function ExplorePage() {
       <PageHeader
         eyebrow="探索"
         title="选择一条路线，进入一个被认真策展的内容地图。"
-        description="你可以从技术能力、AI 工作流、产品思维、设计审美、项目经验或合作意向进入，沿着项目、文章、指南、资源和方法论继续探索。"
+        description="你可以从技术能力、AI 工作流、设计审美、项目经验或合作意向进入，沿着项目、文章、指南和资源继续探索。"
       />
 
       <section className="wide-container relative pt-14">
@@ -105,7 +98,7 @@ export default async function ExplorePage() {
         <SectionHeader
           eyebrow="推荐路径"
           title="你想先看哪一种能力证据？"
-          description="每条路径都不是孤立页面，而是把项目、文章、指南、方法论和资源连接成一条可继续深入的线索。"
+          description="每条路径都不是孤立页面，而是把项目、文章、指南和资源连接成一条可继续深入的线索。"
         />
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {recommendedPaths.map((path) => {
@@ -131,7 +124,7 @@ export default async function ExplorePage() {
         <SectionHeader
           eyebrow="主题路线"
           title="内容不只是列表，而是可以被理解和验证的路径。"
-          description="这些路线会把真实项目、长文章、指南和方法论连接成完整上下文，让访问者更快建立判断。"
+          description="这些路线会把真实项目、长文章、指南和资源连接成完整上下文，让访问者更快建立判断。"
         />
         <div className="grid gap-4 md:grid-cols-2">
           {collections.map((collection) => (
@@ -192,22 +185,10 @@ export default async function ExplorePage() {
         </div>
       </section>
 
-      <section className="section-container grid gap-12 py-16 lg:grid-cols-[1fr_1fr_0.9fr]">
-        <div>
-          <SectionHeader eyebrow="方法论" title="我如何把事情推进到可交付。" />
-          <div className="grid gap-4">
-            {playbooks.slice(0, 3).map((playbook) => (
-              <Link key={playbook.id} href={withLocalePath("/playbook", locale)} className="premium-glass-card block rounded-md p-5">
-                <Workflow className="h-5 w-5 text-indigo-700" />
-                <h3 className="mt-5 text-xl font-black text-slate-950">{playbook.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-600">{playbook.scenario}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
+      <section className="section-container py-16">
         <div>
           <SectionHeader eyebrow="资源库" title="工具和资料也是能力的一部分。" />
-          <div className="grid gap-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {featuredResources.map((resource) => (
               <a key={resource.id} href={resource.url} target="_blank" rel="noreferrer" className="premium-glass-card block rounded-md p-5">
                 <Badge>{resource.category}</Badge>
@@ -217,21 +198,6 @@ export default async function ExplorePage() {
             ))}
           </div>
         </div>
-        <aside>
-          <SectionHeader eyebrow="Now" title="当前状态。" />
-          <div className="grid gap-4">
-            {nowItems.slice(0, 4).map((item) => (
-              <article key={item.id} className="premium-glass-card rounded-md p-5">
-                <div className="flex items-center justify-between gap-3">
-                  <Badge>{item.type}</Badge>
-                  <span className="text-xs font-bold text-indigo-700">{item.status}</span>
-                </div>
-                <h3 className="mt-5 text-lg font-black text-slate-950">{item.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </aside>
       </section>
 
       <section className="section-container pb-24 pt-10">

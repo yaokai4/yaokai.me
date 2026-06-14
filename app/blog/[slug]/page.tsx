@@ -11,10 +11,13 @@ import { prisma } from "@/lib/prisma";
 import { blogPostingJsonLd, breadcrumbJsonLd, createMetadata } from "@/lib/seo";
 import { extractToc, getReadingTime } from "@/lib/markdown";
 import { formatDate } from "@/lib/utils";
-import { normalizeArticle, normalizeGuide } from "@/lib/data";
+import { getPublicArticles, normalizeArticle, normalizeGuide } from "@/lib/data";
 import { getRequestLocale } from "@/lib/server-locale";
 import { withLocalePath } from "@/lib/i18n";
 import { siteCopy } from "@/lib/public-copy";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
+import { getCopyOverrides } from "@/lib/copy-overrides.server";
+import { findLiteraryArticle } from "@/lib/literary-articles";
 
 export const dynamic = "force-dynamic";
 
@@ -26,13 +29,14 @@ export async function generateMetadata({ params }: Props) {
     getRequestLocale(),
     prisma.article.findUnique({ where: { slug } })
   ]);
-  if (!article) return {};
+  const resolvedArticle = article || findLiteraryArticle(slug);
+  if (!resolvedArticle) return {};
 
   return createMetadata({
-    title: article.seoTitle || article.title,
-    description: article.seoDescription || article.excerpt,
-    path: `/blog/${article.slug}`,
-    image: article.coverImage,
+    title: resolvedArticle.seoTitle || resolvedArticle.title,
+    description: resolvedArticle.seoDescription || resolvedArticle.excerpt,
+    path: `/blog/${resolvedArticle.slug}`,
+    image: resolvedArticle.coverImage,
     locale
   });
 }
@@ -40,16 +44,15 @@ export async function generateMetadata({ params }: Props) {
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
   const rawArticle = await prisma.article.findFirst({ where: { slug, status: "PUBLISHED" } });
-  if (!rawArticle) notFound();
+  const fallbackArticle = rawArticle ? null : findLiteraryArticle(slug);
+  const sourceArticle = rawArticle || fallbackArticle;
+  if (!sourceArticle) notFound();
 
-  const locale = await getRequestLocale();
-  const t = siteCopy[locale].details.blog;
-  const article = normalizeArticle(rawArticle);
+  const [locale, copyOverrides] = await Promise.all([getRequestLocale(), getCopyOverrides()]);
+  const t = applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).details.blog;
+  const article = normalizeArticle(sourceArticle);
   const [articles, guides] = await Promise.all([
-    prisma.article.findMany({
-      where: { status: "PUBLISHED" },
-      orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }]
-    }).then((items) => items.map(normalizeArticle)),
+    getPublicArticles(),
     prisma.guide.findMany({
       where: { status: "PUBLISHED" },
       orderBy: [{ featured: "desc" }, { publishedAt: "desc" }, { createdAt: "desc" }],

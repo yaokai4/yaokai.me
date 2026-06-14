@@ -3,6 +3,8 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { SkillRadar } from "@/components/site/SkillRadar";
 import { Badge } from "@/components/ui/Badge";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
+import { getCopyOverrides } from "@/lib/copy-overrides.server";
 import { getResources, getSkills } from "@/lib/data";
 import { getRequestLocale } from "@/lib/server-locale";
 import { createMetadata } from "@/lib/seo";
@@ -10,8 +12,8 @@ import { createMetadata } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
-  const locale = await getRequestLocale();
-  const t = stackCopy[locale];
+  const [locale, copyOverrides] = await Promise.all([getRequestLocale(), getCopyOverrides()]);
+  const t = applyCopyOverrides(stackCopy[locale], copyOverrides, `stack.${locale}`);
 
   return createMetadata({
     title: t.metaTitle,
@@ -24,66 +26,66 @@ export async function generateMetadata() {
 const stackCopy = {
   zh: {
     metaTitle: "技术栈 - 姚凯",
-    metaDescription: "用技术雷达展示前端体验、系统工程、AI 工作流、设计、部署与自动化能力如何服务真实项目。",
+    metaDescription: "姚凯的技术栈：前端体验、系统工程、移动端、AI 工作流、设计判断、部署与自动化如何服务真实产品。",
     eyebrow: "技术栈",
-    title: "不是 Logo 墙，而是一套能把想法稳定交付的技术雷达。",
-    description: "这里展示我如何组合前端、后端、数据库、部署、设计工具、AI 工具和自动化能力，让一个项目从想法变成可上线、可维护的产品系统。",
+    title: "技术对我来说，不是 Logo 墙，而是判断和交付的工具。",
+    description: "这里展示我如何组合前端、后端、数据库、移动端、部署、设计工具、AI 工具和自动化，让一个想法慢慢变成可上线、可维护、能继续生长的产品系统。",
     narratives: [
-      ["前端体验", "我关注的不只是页面能运行，而是信息层级、交互反馈、动效节奏、移动端阅读和可访问性是否共同服务用户目标。", Sparkles],
-      ["系统工程", "从数据库模型、API 契约、后台管理、权限边界到部署脚本，我倾向把项目做成能长期维护和持续迭代的系统。", Layers3],
-      ["AI 工作流", "我把 AI 当成产品、设计、开发和内容沉淀的协作层，用它提升速度，但最终由真实体验和工程质量验收。", Radar]
+      ["前端体验", "我关心的不只是页面能不能运行，而是信息层级、交互反馈、动效节奏和移动端阅读是否一起服务用户。", Sparkles],
+      ["系统工程", "从数据库模型、API 契约、后台管理、权限边界到部署脚本，我希望项目在上线之后仍然容易理解和维护。", Layers3],
+      ["AI 工作流", "我把 AI 当作调研、设计、开发和内容整理的协作层，但最终仍由真实体验和工程质量来验收。", Radar]
     ],
     skillEyebrow: "技能地图",
-    skillTitle: "按能力类型组织，而不是堆技术名词。",
-    skillDescription: "每项技术都要回答三个问题：我用它做什么、为什么选择它、它如何服务真实项目。",
+    skillTitle: "按能力组织，而不是堆技术名词。",
+    skillDescription: "每项技术都要回答三个问题：我用它解决什么、为什么选择它、它如何帮助真实项目继续前进。",
     resourceEyebrow: "相关资源",
-    resourceTitle: "这些工具和文档构成我的长期工作台。",
-    resourceDescription: "技术栈不是静态清单，而是会随着项目复杂度、产品目标和协作方式不断进化。",
+    resourceTitle: "这些工具和文档，是我长期放在手边的工作台。",
+    resourceDescription: "技术栈不是静态清单，它会随着项目复杂度、产品目标、协作方式和审美判断一起变化。",
     openResource: "查看资源"
   },
   ja: {
-    metaTitle: "技術スタック - Yaokai",
-    metaDescription: "フロントエンド、システム設計、AI ワークフロー、デザイン、デプロイ、自動化を技術レーダーとして整理。",
+    metaTitle: "技術スタック - 姚凱",
+    metaDescription: "フロントエンド、システム設計、モバイル、AI ワークフロー、デザイン判断、デプロイ、自動化を整理。",
     eyebrow: "技術スタック",
-    title: "Logo の一覧ではなく、アイデアを安定して届けるための技術レーダー。",
-    description: "フロント、バックエンド、データベース、デプロイ、デザインツール、AI ツール、自動化をどう組み合わせるかを整理しています。",
+    title: "技術はロゴの一覧ではなく、判断して届けるための道具です。",
+    description: "フロントエンド、バックエンド、データベース、モバイル、デプロイ、デザインツール、AI ツール、自動化をどう組み合わせているかを整理しています。目的は、アイデアを公開でき、運用でき、後から育てられる形にすることです。",
     narratives: [
-      ["フロント体験", "動くだけでなく、情報階層、反応、動き、モバイルでの読みやすさが目的に沿っているかを見ます。", Sparkles],
-      ["システム設計", "データモデル、API、管理画面、権限、デプロイまで、長く運用できる構造を重視します。", Layers3],
-      ["AI ワークフロー", "AI を調査、設計、開発、内容整理の協業層として使い、最終品質は体験と工程で確認します。", Radar]
+      ["フロント体験", "動くだけでなく、情報の見せ方、反応、動き、モバイルでの読みやすさが目的に合っているかを見ます。", Sparkles],
+      ["システム設計", "データモデル、API、管理画面、権限、デプロイまで、公開後も理解しやすく保守しやすい構造を重視します。", Layers3],
+      ["AI ワークフロー", "AI を調査、設計、開発、内容整理の協業層として使います。ただし最終的な品質は、体験と実装で確認します。", Radar]
     ],
     skillEyebrow: "スキルマップ",
-    skillTitle: "技術名の羅列ではなく、能力の種類で整理します。",
-    skillDescription: "それぞれの技術について、何に使うか、なぜ選ぶか、実案件にどう効くかを見ます。",
+    skillTitle: "技術名ではなく、できることの単位で整理します。",
+    skillDescription: "それぞれの技術について、何を解くために使うのか、なぜ選ぶのか、実際のプロジェクトにどう効くのかを見ます。",
     resourceEyebrow: "関連リソース",
-    resourceTitle: "長く使う道具と資料が作業台をつくります。",
-    resourceDescription: "技術スタックは固定リストではなく、プロジェクトの複雑さと目標に合わせて進化します。",
+    resourceTitle: "長く手元に置く道具と資料が、作業台をつくります。",
+    resourceDescription: "技術スタックは固定リストではありません。プロジェクトの複雑さ、目的、協業のしかた、見せ方の判断に合わせて変わっていきます。",
     openResource: "リソースを見る"
   },
   en: {
     metaTitle: "Stack - Yaokai",
-    metaDescription: "A technical radar across front-end experience, systems engineering, AI workflows, design, deployment, and automation.",
+    metaDescription: "Yaokai's stack across front-end experience, systems engineering, mobile, AI workflows, design judgment, deployment, and automation.",
     eyebrow: "Stack",
-    title: "Not a logo wall, but a technical radar for shipping stable product systems.",
-    description: "How I combine front end, back end, databases, deployment, design tools, AI tools, and automation to move an idea toward a shippable, maintainable product.",
+    title: "Technology is not a logo wall. It is how I make decisions and ship.",
+    description: "How I combine front end, back end, databases, mobile clients, deployment, design tools, AI tools, and automation to move an idea toward something shippable, maintainable, and still able to grow.",
     narratives: [
-      ["Front-end experience", "I care whether hierarchy, feedback, motion, mobile reading, and accessibility serve the user goal, not just whether the page works.", Sparkles],
-      ["Systems engineering", "From data models and API contracts to admin tools, permissions, and deployment scripts, I build for long-term maintenance.", Layers3],
-      ["AI workflow", "I use AI as a collaboration layer for product, design, development, and content, then validate quality through real experience and engineering checks.", Radar]
+      ["Front-end experience", "I care whether hierarchy, feedback, motion, mobile reading, and accessibility serve the user, not only whether the page runs.", Sparkles],
+      ["Systems engineering", "From data models and API contracts to admin tools, permissions, and deployment scripts, I build so the project is still understandable after launch.", Layers3],
+      ["AI workflow", "I use AI as a collaboration layer for research, design, development, and content, then validate the result through real experience and engineering checks.", Radar]
     ],
     skillEyebrow: "Skill Map",
     skillTitle: "Organized by capability, not by technology names.",
-    skillDescription: "Each tool should answer what I use it for, why I choose it, and how it supports real projects.",
+    skillDescription: "Each tool should answer what problem it helps me solve, why I choose it, and how it supports real projects.",
     resourceEyebrow: "Related Resources",
-    resourceTitle: "These tools and docs form my long-term workbench.",
-    resourceDescription: "A stack is not a static list. It evolves with project complexity, product goals, and collaboration style.",
+    resourceTitle: "These tools and docs form the workbench I keep returning to.",
+    resourceDescription: "A stack is not a static list. It changes with project complexity, product goals, collaboration style, and visual judgment.",
     openResource: "View resource"
   }
 } as const;
 
 export default async function StackPage() {
-  const [locale, skills, resources] = await Promise.all([getRequestLocale(), getSkills(), getResources()]);
-  const t = stackCopy[locale];
+  const [locale, skills, resources, copyOverrides] = await Promise.all([getRequestLocale(), getSkills(), getResources(), getCopyOverrides()]);
+  const t = applyCopyOverrides(stackCopy[locale], copyOverrides, `stack.${locale}`);
   const featuredResources = resources.filter((resource) => resource.featured).slice(0, 6);
   const categories = Array.from(new Set(skills.map((skill) => skill.category)));
 

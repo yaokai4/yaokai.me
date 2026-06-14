@@ -79,7 +79,7 @@ export function localeAlternates(path = "/") {
 
 export const shellCopy = {
   zh: {
-    brandSubtitle: "Machi · Shangence 开发者",
+    brandSubtitle: "独立开发者 / 日本在住",
     primaryNav: [
       ["首页", "/"],
       ["作品", "/projects"],
@@ -97,17 +97,17 @@ export const shellCopy = {
     mobileSubtitle: "选择一个页面",
     mobileSearch: "搜索全站内容",
     mobileContact: "联系我",
-    footerTitle: "两个在线产品的开发者。从想法、代码到部署运维，都自己来。",
+    footerTitle: "在日本独立做产品，也把开发、生活和判断写下来。",
     footerContact: "联系我",
     footerGroups: [
       { title: "导航", links: [["作品", "/projects"], ["文章", "/blog"], ["技术栈", "/stack"], ["关于", "/about"], ["联系", "/contact"]] },
-      { title: "产品", links: [["Machi", "https://machicity.com"], ["Shangence 商衡", "https://machicity.life/ja"]] }
+      { title: "产品", links: [["Machi", "https://machicity.com"], ["Shangence 商衡", "https://shangence.com"]] }
     ],
-    footerRights: "© 2026 姚凯。保留所有权利。",
-    footerNote: "用 Next.js 构建，跑在东京的一台小服务器上。"
+    footerRights: "© 2026 Yao Kai. All rights reserved.",
+    footerNote: "运行在东京的一台小小的 AWS 服务器上。"
   },
   ja: {
-    brandSubtitle: "Machi · Shangence 開発者",
+    brandSubtitle: "日本在住の個人開発者",
     primaryNav: [
       ["ホーム", "/"],
       ["制作実績", "/projects"],
@@ -125,17 +125,17 @@ export const shellCopy = {
     mobileSubtitle: "ページを選択",
     mobileSearch: "サイト内を検索",
     mobileContact: "連絡する",
-    footerTitle: "2つのプロダクトを一人で作り、運用しています。",
+    footerTitle: "日本で暮らしながら、プロダクトと日々の記録を少しずつ形にしています。",
     footerContact: "連絡する",
     footerGroups: [
       { title: "ナビ", links: [["制作実績", "/projects"], ["記事", "/blog"], ["技術スタック", "/stack"], ["プロフィール", "/about"], ["連絡", "/contact"]] },
-      { title: "プロダクト", links: [["Machi", "https://machicity.com"], ["Shangence 商衡", "https://machicity.life/ja"]] }
+      { title: "プロダクト", links: [["Machi", "https://machicity.com"], ["Shangence 商衡", "https://shangence.com"]] }
     ],
-    footerRights: "© 2026 姚凯。All rights reserved.",
-    footerNote: "Next.js で作り、東京の小さなサーバーで動いています。"
+    footerRights: "© 2026 Yao Kai. All rights reserved.",
+    footerNote: "東京の小さな AWS サーバーで動いています。"
   },
   en: {
-    brandSubtitle: "Builder of Machi & Shangence",
+    brandSubtitle: "Independent developer in Japan",
     primaryNav: [
       ["Home", "/"],
       ["Work", "/projects"],
@@ -153,14 +153,14 @@ export const shellCopy = {
     mobileSubtitle: "Pick a page",
     mobileSearch: "Search the site",
     mobileContact: "Contact me",
-    footerTitle: "I build and run two products end to end.",
+    footerTitle: "Building product systems in Japan, and keeping notes along the way.",
     footerContact: "Contact me",
     footerGroups: [
       { title: "Pages", links: [["Work", "/projects"], ["Writing", "/blog"], ["Stack", "/stack"], ["About", "/about"], ["Contact", "/contact"]] },
-      { title: "Products", links: [["Machi", "https://machicity.com"], ["Shangence", "https://machicity.life/ja"]] }
+      { title: "Products", links: [["Machi", "https://machicity.com"], ["Shangence", "https://shangence.com"]] }
     ],
-    footerRights: "© 2026 Yaokai. All rights reserved.",
-    footerNote: "Built with Next.js, running on a small server in Tokyo."
+    footerRights: "© 2026 Yao Kai. All rights reserved.",
+    footerNote: "Running on a small AWS server in Tokyo."
   }
 } satisfies Record<Locale, {
   brandSubtitle: string;

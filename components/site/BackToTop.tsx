@@ -3,11 +3,12 @@
 import { ArrowUp } from "lucide-react";
 import * as React from "react";
 import { useLocale } from "@/components/site/LocaleProvider";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { siteCopy } from "@/lib/public-copy";
 
 export function BackToTop() {
-  const { locale } = useLocale();
-  const t = siteCopy[locale].common;
+  const { locale, copyOverrides } = useLocale();
+  const t = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`).common, [copyOverrides, locale]);
   const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {

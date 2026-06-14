@@ -3,6 +3,7 @@
 import { ArrowRight, ArrowUpRight, ExternalLink, Github, Mail, PenLine } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { applyCopyOverrides, type CopyOverrides } from "@/lib/copy-overrides";
 import { withLocalePath, type Locale } from "@/lib/i18n";
 
 type Article = {
@@ -17,28 +18,19 @@ type Article = {
   featured: boolean;
 };
 
-type NowItem = {
-  id: string;
-  title: string;
-  description: string;
-  type: string;
-  status: string;
-  progress: number;
-};
-
 type UniverseHomeProps = {
   locale: Locale;
   articles: Article[];
-  nowItems: NowItem[];
+  copyOverrides: CopyOverrides;
 };
 
 const copy = {
   zh: {
-    eyebrow: "个人开发 / 两个在线产品",
-    heroTitle: "姚凯 / Yaokai",
-    heroSubtitle: "Machi 和 Shangence 商衡的开发者",
+    eyebrow: "个人开发 / 日本生活",
+    heroTitle: "姚凯 / Yao Kai",
+    heroSubtitle: "在日本把想法写成产品，也把日常写成记录。",
     heroLead:
-      "我独立开发并运营着两个产品：城市生活社区 Machi（Web / iOS / Android 三端共用一套 API），和面向日本市场的事业风险诊断服务 Shangence 商衡（诊断、Stripe 支付、PDF 报告、管理后台）。从需求、设计、代码到部署和运维，每一层都是我自己做的——这个网站也不例外。",
+      "我在日本生活、写代码，也做自己的产品。Machi 是面向城市生活的本地社区，Shangence 商衡帮助人在创业或开店前先把风险想清楚。这个网站不是一份静态简历：它会放作品、开发笔记、技术选择，也会留下一些在日本生活时慢慢形成的观察。",
     chips: ["Next.js / React", "SwiftUI", "Kotlin / Compose", "Python API", "PostgreSQL", "AWS"],
     stats: [["2", "在线产品"], ["5", "公开仓库"], ["3", "Machi 客户端"]],
     workCta: "看作品",
@@ -46,24 +38,24 @@ const copy = {
     runningLabel: "正在运营",
     running: [
       ["Machi", "城市生活社区 · Web Beta 公开中", "https://machicity.com", "machicity.com"],
-      ["Shangence 商衡", "事业风险诊断 · 运营中", "https://machicity.life/ja", "machicity.life/ja"]
+      ["Shangence 商衡", "事业风险诊断 · 运营中", "https://shangence.com", "shangence.com"]
     ],
     runningNote: "本站代码公开在 GitHub",
     proofEyebrow: "可验证信号",
-    proofTitle: "不是只会写页面，而是能把产品跑起来。",
-    proofLead: "如果你在评估我是否能独立交付，下面这些是最直接的证据。",
+    proofTitle: "我在意的是，把产品交到真实世界里。",
+    proofLead: "从第一版、上线、运营到问题修复，很多细节只有真的做过才会留下痕迹。",
     proofItems: [
       ["三端产品", "Machi 的 Web、iOS、Android 共用一套 API 和内容模型。"],
       ["商用闭环", "Shangence 包含诊断、Stripe 日元支付、PDF 报告和后台审核。"],
-      ["上线运维", "AWS / Nginx / systemd / 证书 / 备份 / 部署脚本都自己维护。"],
-      ["内容系统", "本站自带三语内容、搜索、SEO、管理后台和安全入口。"]
+      ["持续运维", "AWS / Nginx / systemd / 证书 / 备份 / 部署脚本都自己维护。"],
+      ["内容系统", "这个网站自带三语内容、搜索、SEO、后台和文案编辑入口。"]
     ],
     projectsEyebrow: "作品",
-    projectsTitle: "先看这三个核心入口。",
-    projectsLead: "Machi 和 Shangence 是我独立做的两个产品；yaokai.me 是这个网站和后台。Machi 的 Web / iOS / Android 代码会在作品页拆开看。",
+    projectsTitle: "先从几个真实的入口看我。",
+    projectsLead: "Machi 和 Shangence 是我独立做的两个产品；yaokai.me 是这个个人网站和后台。作品页里会把 Machi 的 Web / iOS / Android，以及每个项目背后的取舍拆开写清楚。",
     visitLabel: "访问",
     scopeEyebrow: "能力范围",
-    scopeTitle: "一个人，从想法到上线。",
+    scopeTitle: "一个人，也要把事情做完整。",
     scopeItems: [
       ["企画与需求", "和真实用户聊，把模糊的想法写成能开工的规格。"],
       ["三端实现", "Next.js 写 Web，SwiftUI 写 iOS，Kotlin 写 Android，共用一套 API。"],
@@ -72,27 +64,20 @@ const copy = {
       ["商用配套", "Stripe 支付、管理后台、审计日志、法务页面。"]
     ],
     writingEyebrow: "文章",
-    writingTitle: "开发笔记，想到什么写什么。",
-    writingLead: "踩过的坑、做产品时的取舍，偶尔也写写在日本求职的事。",
+    writingTitle: "开发笔记，以及生活里慢慢形成的判断。",
+    writingLead: "这里会写踩过的坑、做产品时的取舍，也会留下一些在日本生活、求职和观察城市时的记录。",
     readArticle: "阅读全文",
     allArticles: "全部文章",
-    nowEyebrow: "近况",
-    nowTitle: "最近在做",
-    nowFallback: [
-      ["Machi App 上架", "iOS / Android 客户端正在准备 App Store 与 Google Play 上架。", "进行中", "Build", 80],
-      ["找工作", "在日本找 Web / 全栈方向的工作，完整简历在「关于」页。", "进行中", "Career", 60],
-      ["写文章", "把这两年开发里值得记的东西慢慢整理成文。", "刚开始", "Write", 20]
-    ],
-    ctaTitle: "想一起做点什么，或者在找一个能独立交付的工程师？",
-    ctaLead: "邮件最快。看完作品再来聊也完全可以。",
+    ctaTitle: "如果你想找一个能把想法推进到上线的人，我们可以从一封邮件开始。",
+    ctaLead: "邮件最快。你也可以先看完作品，再慢慢判断要不要聊。",
     ctaButton: "联系我"
   },
   ja: {
-    eyebrow: "個人開発 / 運用中のプロダクト2つ",
-    heroTitle: "姚凯 / Yaokai",
-    heroSubtitle: "Machi と Shangence 商衡の開発者",
+    eyebrow: "個人開発 / 日本での暮らし",
+    heroTitle: "姚凱 / よう がい",
+    heroSubtitle: "日本で暮らしながら、アイデアをプロダクトにしている開発者です。",
     heroLead:
-      "都市生活コミュニティ「Machi」（Web / iOS / Android、共通API）と、日本市場向け事業リスク診断「Shangence 商衡」（診断・Stripe決済・PDFレポート・管理画面）を、一人で開発・運用しています。要件整理からデザイン、実装、デプロイ、運用まで全部自分でやります。このサイトもそうです。",
+      "日本で生活しながら、Machi と Shangence 商衡を企画・開発・運用しています。Machi は都市の暮らしに寄り添うローカルコミュニティ、Shangence は事業を始める前にリスクを整理するためのサービスです。このサイトには、制作実績、開発メモ、技術の判断、そして日々の小さな記録を残していきます。",
     chips: ["Next.js / React", "SwiftUI", "Kotlin / Compose", "Python API", "PostgreSQL", "AWS"],
     stats: [["2", "運用中プロダクト"], ["5", "公開リポジトリ"], ["3", "Machi クライアント"]],
     workCta: "制作実績を見る",
@@ -100,24 +85,24 @@ const copy = {
     runningLabel: "運用中",
     running: [
       ["Machi", "都市生活コミュニティ · Web Beta 公開中", "https://machicity.com", "machicity.com"],
-      ["Shangence 商衡", "事業リスク診断 · 運用中", "https://machicity.life/ja", "machicity.life/ja"]
+      ["Shangence 商衡", "事業リスク診断 · 運用中", "https://shangence.com", "shangence.com"]
     ],
     runningNote: "このサイトのコードは GitHub で公開",
     proofEyebrow: "検証できる実績",
-    proofTitle: "画面を作るだけでなく、プロダクトを動かし続けます。",
-    proofLead: "一人でどこまで任せられるかを見るなら、ここが一番わかりやすい証拠です。",
+    proofTitle: "きれいな画面だけでなく、動き続けるものを作ります。",
+    proofLead: "初版を出し、運用し、不具合を直し、次の改善を考える。その一連の手触りが伝わるようにまとめています。",
     proofItems: [
       ["3クライアント", "Machi の Web、iOS、Android は共通 API とコンテンツモデルを利用。"],
       ["商用導線", "Shangence は診断、Stripe円決済、PDFレポート、管理画面まで実装。"],
       ["公開と運用", "AWS / Nginx / systemd / 証明書 / バックアップ / デプロイを自分で管理。"],
-      ["CMS と SEO", "このサイトは3言語、検索、SEO、管理画面、セキュア入口を内蔵。"]
+      ["CMS と SEO", "このサイトは3言語、検索、SEO、管理画面、文言編集の入口を内蔵。"]
     ],
     projectsEyebrow: "制作実績",
-    projectsTitle: "まずは、この3つを見てください。",
-    projectsLead: "Machi と Shangence は一人で作った2つのプロダクトです。yaokai.me はこのサイトと管理画面。Machi の Web / iOS / Android は制作実績ページで分けて見られます。",
+    projectsTitle: "まずは、実際に動いているものから。",
+    projectsLead: "Machi と Shangence は一人で作っている2つのプロダクトです。yaokai.me はこの個人サイトと管理画面。制作実績ページでは、Machi の Web / iOS / Android と、それぞれの判断を分けて見られます。",
     visitLabel: "見る",
     scopeEyebrow: "担当範囲",
-    scopeTitle: "一人で、アイデアから公開まで。",
+    scopeTitle: "一人でも、最後まで形にする。",
     scopeItems: [
       ["企画と要件", "実際のユーザーと話し、曖昧なアイデアを着手できる仕様に落とす。"],
       ["3クライアント実装", "Web は Next.js、iOS は SwiftUI、Android は Kotlin。APIは共通。"],
@@ -126,27 +111,20 @@ const copy = {
       ["商用まわり", "Stripe 決済、管理画面、監査ログ、法務ページ。"]
     ],
     writingEyebrow: "記事",
-    writingTitle: "開発メモ。思いついたら書きます。",
-    writingLead: "ハマったこと、プロダクトの判断、日本での就活のことも。",
+    writingTitle: "開発メモと、生活の中で考えたこと。",
+    writingLead: "設計で迷ったこと、実装で詰まったこと、日本で暮らす中で残しておきたくなったことを、少しずつ文章にします。",
     readArticle: "続きを読む",
     allArticles: "記事一覧",
-    nowEyebrow: "近況",
-    nowTitle: "いま取り組んでいること",
-    nowFallback: [
-      ["Machi アプリ公開", "iOS / Android クライアントの App Store / Google Play 公開を準備中。", "進行中", "Build", 80],
-      ["就職活動", "日本で Web / フルスタックの仕事を探しています。経歴はプロフィールページへ。", "進行中", "Career", 60],
-      ["記事を書く", "この2年の開発で残しておきたいことを少しずつ文章に。", "始めたばかり", "Write", 20]
-    ],
-    ctaTitle: "一緒に何か作りたい方、最後まで自走できるエンジニアを探している方へ。",
-    ctaLead: "メールが一番早いです。作品を見てからでも、お気軽にどうぞ。",
+    ctaTitle: "一緒に作りたいものがある方へ。",
+    ctaLead: "メールが一番確実です。作品を見てから、気軽に声をかけてください。",
     ctaButton: "連絡する"
   },
   en: {
-    eyebrow: "Solo developer / two products in production",
-    heroTitle: "Yaokai",
-    heroSubtitle: "Builder of Machi and Shangence",
+    eyebrow: "Independent developer / life in Japan",
+    heroTitle: "Yao Kai",
+    heroSubtitle: "I turn small, stubborn ideas into shipped products.",
     heroLead:
-      "I build and run two products on my own: Machi, a city-life community platform (Web / iOS / Android sharing one API), and Shangence, a business-risk assessment service for the Japanese market (assessment, Stripe payments, PDF reports, admin console). Requirements, design, code, deployment, operations — every layer is mine. Including this site.",
+      "I live in Japan, write code, and build products of my own. Machi is a local community for city life; Shangence helps people think through business risk before opening a shop or starting a venture. This site is not a static resume. It is where I keep the work, the technical notes, the trade-offs, and a few observations from life here.",
     chips: ["Next.js / React", "SwiftUI", "Kotlin / Compose", "Python API", "PostgreSQL", "AWS"],
     stats: [["2", "live products"], ["5", "public repos"], ["3", "Machi clients"]],
     workCta: "See the work",
@@ -154,24 +132,24 @@ const copy = {
     runningLabel: "In production",
     running: [
       ["Machi", "City-life community · Web beta live", "https://machicity.com", "machicity.com"],
-      ["Shangence", "Business-risk assessment · live", "https://machicity.life/ja", "machicity.life/ja"]
+      ["Shangence", "Business-risk assessment · live", "https://shangence.com", "shangence.com"]
     ],
     runningNote: "This site is open source on GitHub",
-    proofEyebrow: "Verifiable Signals",
-    proofTitle: "Not just screens — products that run in production.",
-    proofLead: "If you are evaluating whether I can ship independently, these are the clearest signals.",
+    proofEyebrow: "Verifiable signals",
+    proofTitle: "I care about getting products into the real world.",
+    proofLead: "The first version, the launch, the fixes, the quiet maintenance after launch — those details leave a trace.",
     proofItems: [
       ["Three clients", "Machi's Web, iOS and Android clients share one API and content model."],
       ["Commercial loop", "Shangence includes assessment, Stripe JPY payments, PDF reports and admin review."],
       ["Operations", "AWS, Nginx, systemd, certificates, backups and deploy scripts are maintained by me."],
-      ["Content system", "This site includes trilingual content, search, SEO, admin tooling and secure entry."]
+      ["Content system", "This site includes trilingual content, search, SEO, admin tooling and a copy editor."]
     ],
     projectsEyebrow: "Work",
-    projectsTitle: "Start with these three.",
-    projectsLead: "Machi and Shangence are the two products I build solo. yaokai.me is this site and CMS. The work page breaks Machi into its Web / iOS / Android repositories.",
+    projectsTitle: "Start with a few things that actually exist.",
+    projectsLead: "Machi and Shangence are the two products I build solo. yaokai.me is this personal site and CMS. The work page separates Machi into Web, iOS, and Android, and explains the choices behind each part.",
     visitLabel: "Visit",
     scopeEyebrow: "Scope",
-    scopeTitle: "One person, from idea to production.",
+    scopeTitle: "One person, but the work still has to be complete.",
     scopeItems: [
       ["Product & requirements", "Talk to real users, turn vague ideas into specs you can build from."],
       ["Three clients", "Next.js for web, SwiftUI for iOS, Kotlin for Android — one shared API."],
@@ -180,22 +158,33 @@ const copy = {
       ["Business plumbing", "Stripe payments, admin consoles, audit logs, legal pages."]
     ],
     writingEyebrow: "Writing",
-    writingTitle: "Development notes, written as they come.",
-    writingLead: "Things I got stuck on, product trade-offs, and sometimes the job hunt in Japan.",
+    writingTitle: "Development notes, and the thinking that gathers around the work.",
+    writingLead: "Bugs I ran into, product trade-offs, notes from job hunting in Japan, and small observations from the places I live through.",
     readArticle: "Read more",
     allArticles: "All posts",
-    nowEyebrow: "Now",
-    nowTitle: "What I am working on",
-    nowFallback: [
-      ["Machi app release", "Preparing the iOS / Android clients for App Store and Google Play.", "In progress", "Build", 80],
-      ["Job hunting", "Looking for web / full-stack roles in Japan. Full resume on the about page.", "In progress", "Career", 60],
-      ["Writing", "Slowly turning two years of building into posts.", "Just started", "Write", 20]
-    ],
-    ctaTitle: "Want to build something — or hiring an engineer who ships end to end?",
-    ctaLead: "Email is fastest. Browsing the work first is perfectly fine too.",
+    ctaTitle: "If you need someone who can move an idea toward launch, start with an email.",
+    ctaLead: "Email is fastest. Reading through the work first is perfectly fine too.",
     ctaButton: "Contact me"
   }
 } as const;
+
+const heroIdentities = {
+  zh: { primary: "姚凯", secondary: "Yao Kai" },
+  ja: { primary: "姚凱", secondary: "よう がい" },
+  en: { primary: "Yao Kai", secondary: "Yaokai" }
+} satisfies Record<Locale, { primary: string; secondary: string }>;
+
+function shouldUseStructuredHeroTitle(locale: Locale, title: string) {
+  const defaults = [
+    copy[locale].heroTitle,
+    "姚凯 / Yaokai",
+    "姚凯 / Yao Kai",
+    "姚凱 / よう がい",
+    "Yaokai",
+    "Yao Kai"
+  ];
+  return defaults.includes(title);
+}
 
 const projectCards = [
   {
@@ -218,8 +207,8 @@ const projectCards = [
   },
   {
     name: "Shangence 商衡",
-    url: "https://machicity.life/ja",
-    urlLabel: "machicity.life/ja",
+    url: "https://shangence.com",
+    urlLabel: "shangence.com",
     github: "https://github.com/yaokai4/Shangence",
     status: { zh: "运营中", ja: "運用中", en: "Live" },
     desc: {
@@ -254,19 +243,11 @@ const projectCards = [
   }
 ];
 
-export function UniverseHome({ locale, articles, nowItems }: UniverseHomeProps) {
-  const t = copy[locale];
+export function UniverseHome({ locale, articles, copyOverrides }: UniverseHomeProps) {
+  const t = applyCopyOverrides(copy[locale], copyOverrides, `home.${locale}`);
   const selectedArticles = articles.filter((item) => item.featured).concat(articles.filter((item) => !item.featured)).slice(0, 3);
-  const visibleNow = nowItems.length
-    ? nowItems.slice(0, 3)
-    : t.nowFallback.map(([title, description, status, type, progress], index) => ({
-        id: `fallback-${index}`,
-        title: String(title),
-        description: String(description),
-        status: String(status),
-        type: String(type),
-        progress: Number(progress)
-      }));
+  const heroIdentity = heroIdentities[locale];
+  const useStructuredHeroTitle = shouldUseStructuredHeroTitle(locale, t.heroTitle);
 
   return (
     <div className="relative overflow-hidden pb-8">
@@ -274,8 +255,15 @@ export function UniverseHome({ locale, articles, nowItems }: UniverseHomeProps) 
       <section className="wide-container relative grid gap-10 pb-14 pt-32 md:pb-20 md:pt-36 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
         <div className="min-w-0">
           <p className="editorial-label mb-5">{t.eyebrow}</p>
-          <h1 className="hero-copy font-serif text-5xl font-semibold leading-[1.05] tracking-[0.06em] text-indigo-950 sm:text-6xl md:text-7xl">
-            {t.heroTitle}
+          <h1 className="hero-copy font-serif text-5xl font-semibold leading-none tracking-normal text-indigo-950 sm:text-6xl md:text-7xl">
+            {useStructuredHeroTitle ? (
+              <span className="inline-flex flex-wrap items-baseline gap-x-5 gap-y-2">
+                <span className="leading-none">{heroIdentity.primary}</span>
+                <span className="text-[0.56em] font-semibold leading-none tracking-[0.04em] text-slate-700">{heroIdentity.secondary}</span>
+              </span>
+            ) : (
+              t.heroTitle
+            )}
           </h1>
           <p className="mt-6 text-lg font-bold leading-8 text-slate-800 sm:text-xl md:text-2xl">{t.heroSubtitle}</p>
           <div className="editorial-bar mt-6 w-full max-w-xl" />
@@ -318,7 +306,7 @@ export function UniverseHome({ locale, articles, nowItems }: UniverseHomeProps) 
               <Image src="/images/yaokai-portrait.jpg" alt="姚凯" fill className="object-cover" sizes="60px" priority />
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-black text-slate-950">姚凯 Yao Kai</p>
+              <p className="text-sm font-black text-slate-950">{locale === "ja" ? "姚凱 よう がい" : "姚凯 Yao Kai"}</p>
               <p className="mt-1 text-sm font-semibold leading-6 text-slate-500">Web · iOS · Android · Backend · AWS</p>
             </div>
           </div>
@@ -477,30 +465,6 @@ export function UniverseHome({ locale, articles, nowItems }: UniverseHomeProps) 
             </p>
           </div>
         )}
-      </section>
-
-      {/* now */}
-      <section className="section-container scroll-mt-28 py-12 md:py-16">
-        <div className="mb-9 max-w-3xl">
-          <p className="editorial-label mb-3">{t.nowEyebrow}</p>
-          <h2 className="text-2xl font-black leading-tight tracking-tight text-indigo-950 md:text-4xl">{t.nowTitle}</h2>
-          <div className="editorial-bar mt-4 w-full" />
-        </div>
-        <div className="grid gap-5 lg:grid-cols-3">
-          {visibleNow.map((item) => (
-            <article key={item.id} className="rounded-lg border border-[#DAE2EA] bg-white p-5 shadow-[0_1px_2px_rgba(15,45,78,0.04)]">
-              <div className="flex items-center justify-between gap-3">
-                <span className="rounded-full border border-indigo-200 bg-indigo-50/70 px-2.5 py-1 text-xs font-semibold tracking-wide text-indigo-800">{item.type}</span>
-                <span className="text-xs font-black text-indigo-700">{item.status}</span>
-              </div>
-              <h3 className="mt-5 text-xl font-black leading-tight text-slate-950">{item.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-600">{item.description}</p>
-              <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full rounded-full bg-indigo-800" style={{ width: `${Math.max(0, Math.min(100, item.progress))}%` }} />
-              </div>
-            </article>
-          ))}
-        </div>
       </section>
 
       {/* cta */}

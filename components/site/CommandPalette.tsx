@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useLocale } from "@/components/site/LocaleProvider";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { shellCopy, withLocalePath } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -20,8 +21,8 @@ type SearchItem = {
 
 export function CommandPalette({ showButton = true }: { showButton?: boolean }) {
   const router = useRouter();
-  const { locale } = useLocale();
-  const copy = shellCopy[locale];
+  const { locale, copyOverrides } = useLocale();
+  const copy = React.useMemo(() => applyCopyOverrides(shellCopy[locale], copyOverrides, `shell.${locale}`), [copyOverrides, locale]);
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [items, setItems] = React.useState<SearchItem[]>([]);

@@ -7,6 +7,7 @@ import { SearchInput } from "@/components/site/SearchInput";
 import { useLocale } from "@/components/site/LocaleProvider";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/State";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
 import { localizeProjects } from "@/lib/project-localization";
 import { siteCopy } from "@/lib/public-copy";
 
@@ -22,8 +23,8 @@ type Project = {
 };
 
 export function ProjectExplorer({ projects }: { projects: Project[] }) {
-  const { locale } = useLocale();
-  const copy = siteCopy[locale];
+  const { locale, copyOverrides } = useLocale();
+  const copy = React.useMemo(() => applyCopyOverrides(siteCopy[locale], copyOverrides, `site.${locale}`), [copyOverrides, locale]);
   const t = copy.explorers.projects;
   const allLabel = copy.common.all;
   const localizedProjects = React.useMemo(() => localizeProjects(projects, locale), [projects, locale]);

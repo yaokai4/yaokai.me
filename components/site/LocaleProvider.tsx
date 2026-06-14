@@ -1,16 +1,18 @@
 "use client";
 
 import * as React from "react";
+import type { CopyOverrides } from "@/lib/copy-overrides";
 import { htmlLang, localeCookieName, type Locale } from "@/lib/i18n";
 
 type LocaleContextValue = {
   locale: Locale;
   setLocale: (locale: Locale) => void;
+  copyOverrides: CopyOverrides;
 };
 
 const LocaleContext = React.createContext<LocaleContextValue | null>(null);
 
-export function LocaleProvider({ initialLocale, children }: { initialLocale: Locale; children: React.ReactNode }) {
+export function LocaleProvider({ initialLocale, copyOverrides = {}, children }: { initialLocale: Locale; copyOverrides?: CopyOverrides; children: React.ReactNode }) {
   const [locale, setLocaleState] = React.useState<Locale>(initialLocale);
 
   React.useEffect(() => {
@@ -23,7 +25,7 @@ export function LocaleProvider({ initialLocale, children }: { initialLocale: Loc
     window.localStorage.setItem(localeCookieName, next);
   }, []);
 
-  const value = React.useMemo(() => ({ locale, setLocale }), [locale, setLocale]);
+  const value = React.useMemo(() => ({ locale, setLocale, copyOverrides }), [copyOverrides, locale, setLocale]);
 
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }

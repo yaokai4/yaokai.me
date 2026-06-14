@@ -4,27 +4,35 @@ import { isUsableEmail, siteConfig } from "@/config/site.config";
 import { ContactForm } from "@/components/site/ContactForm";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Badge } from "@/components/ui/Badge";
+import { applyCopyOverrides } from "@/lib/copy-overrides";
+import { getCopyOverrides } from "@/lib/copy-overrides.server";
 import { getRequestLocale } from "@/lib/server-locale";
 import { contactPageJsonLd, createMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
+const contactMetadataCopy = {
+  zh: {
+    title: "联系 - 姚凯",
+    description: "联系姚凯，讨论职位机会、项目合作、Machi、Shangence 商衡或网站相关问题。"
+  },
+  ja: {
+    title: "お問い合わせ - 姚凱",
+    description: "姚凱へのお問い合わせ。求人、協業、Machi、Shangence 商衡、このサイトについて。"
+  },
+  en: {
+    title: "Contact - Yaokai",
+    description: "Contact Yaokai about roles, collaboration, Machi, Shangence, or this website."
+  }
+} as const;
+
 export async function generateMetadata() {
-  const locale = await getRequestLocale();
-  const titles = {
-    zh: "联系 - 姚凯",
-    ja: "お問い合わせ - 姚凱",
-    en: "Contact - Yaokai"
-  } as const;
-  const descriptions = {
-    zh: "联系姚凯，讨论职位机会、项目合作、Machi、Shangence 商衡或网站相关问题。",
-    ja: "姚凱へのお問い合わせ。求人、協業、Machi、Shangence 商衡、このサイトについて。",
-    en: "Contact Yaokai about roles, collaboration, Machi, Shangence, or this website."
-  } as const;
+  const [locale, copyOverrides] = await Promise.all([getRequestLocale(), getCopyOverrides()]);
+  const copy = applyCopyOverrides(contactMetadataCopy[locale], copyOverrides, `contact.${locale}.metadata`);
 
   return createMetadata({
-    title: titles[locale],
-    description: descriptions[locale],
+    title: copy.title,
+    description: copy.description,
     path: "/contact",
     locale
   });
@@ -91,8 +99,8 @@ const pageCopy = {
 } as const;
 
 export default async function ContactPage() {
-  const locale = await getRequestLocale();
-  const t = pageCopy[locale];
+  const [locale, copyOverrides] = await Promise.all([getRequestLocale(), getCopyOverrides()]);
+  const t = applyCopyOverrides(pageCopy[locale], copyOverrides, `contact.${locale}`);
   const email = isUsableEmail(siteConfig.contactEmail) ? siteConfig.contactEmail : "";
   const socials = siteConfig.socialLinks;
 
