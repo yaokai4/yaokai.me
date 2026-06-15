@@ -350,6 +350,10 @@ export function SecureAccessConsole({
       toast({ title: "尚未生成访问配置", description: "请先生成 Access Profile，再验证全隧道出口。", type: "error" });
       return;
     }
+    if (!connectionVerified) {
+      toast({ title: "隧道尚未连接", description: "请先完成 latest handshake 与真实流量验证，再检查全隧道出口。", type: "error" });
+      return;
+    }
 
     try {
       setLoading("验证全隧道出口");
@@ -478,7 +482,7 @@ export function SecureAccessConsole({
   async function copyShadowrocketImportUrl() {
     if (!shadowrocketUrl) return;
     await navigator.clipboard.writeText(shadowrocketUrl);
-    toast({ title: "私有导入链接已复制", description: "请在 10 分钟内添加到 Shadowrocket，此链接成功读取一次后立即失效。", type: "success" });
+    toast({ title: "私有导入链接已复制", description: "请删除旧节点后重新订阅，并选择新导入的 WireGuard 节点。链接 180 天内可读取一次。", type: "success" });
   }
 
   async function rotateProfile() {
@@ -553,12 +557,15 @@ export function SecureAccessConsole({
     runtimeStatus.hasTransfer &&
     runtimeStatus.hasRemoteEndpoint
   );
+  const hasTunnelTraffic = Boolean(runtimeStatus?.latestHandshakeAt && runtimeStatus.hasTransfer);
   const connectionReason = !importReady
     ? null
     : !runtimeStatus
       ? "配置可以导入，但尚未执行真实连接检查，不能判定网络可用。"
       : !runtimeStatus.latestHandshakeAt
-        ? `服务端尚未收到任何 handshake。请优先确认 AWS/Lightsail 防火墙允许 UDP ${endpoint?.listenPort || 51820} 入站，并重新导入当前配置。`
+        ? runtimeStatus.hasTransfer
+          ? "服务端已收到握手请求并发出响应，但客户端没有完成握手。请删除 Shadowrocket 中的旧节点，使用新链接重新订阅并选择新节点。"
+          : `服务端尚未收到任何 handshake。请优先确认 AWS/Lightsail 防火墙允许 UDP ${endpoint?.listenPort || 51820} 入站，并重新导入当前配置。`
         : !runtimeStatus.hasTransfer
           ? "服务端已看到 handshake，但尚未看到 transfer 字节，请在客户端打开网页产生流量后重新检查。"
           : !runtimeStatus.hasRemoteEndpoint
@@ -663,8 +670,8 @@ export function SecureAccessConsole({
           <h2 className="text-base font-semibold text-slate-950">导入说明</h2>
           <div className="mt-4 grid gap-3 text-sm leading-7 text-slate-600">
             <p><span className="font-semibold text-slate-950">WireGuard 客户端：</span>使用二维码 / .conf 导入。</p>
-            <p><span className="font-semibold text-slate-950">Shadowrocket：</span>生成私有导入链接，在右上角 `+` 中选择 Subscribe 后粘贴链接。</p>
-            <p><span className="font-semibold text-slate-950">链接安全：</span>链接 10 分钟内有效，成功读取一次后立即失效，不能用于后续刷新。</p>
+            <p><span className="font-semibold text-slate-950">Shadowrocket：</span>删除旧节点，生成新的私有导入链接，在右上角 `+` 中选择 Subscribe 后粘贴链接，并选择新导入的 WireGuard 节点。</p>
+            <p><span className="font-semibold text-slate-950">链接安全：</span>链接 180 天内有效，成功读取一次后立即失效，不能用于后续刷新。</p>
             <p className="rounded-md border border-indigo-100 bg-indigo-50/55 p-3 text-slate-700">
               Shadowrocket 导入的是当前账号的 WireGuard Device Profile。重新生成、暂停、过期或吊销后，旧配置不能继续下载或接入。
             </p>
@@ -673,8 +680,8 @@ export function SecureAccessConsole({
         <div className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
           <h2 className="text-base font-semibold text-slate-950">导入失败常见原因</h2>
           <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm leading-7 text-slate-600">
-            <li>把 WireGuard `.conf` 下载地址直接填入 Shadowrocket。请使用专门生成的 Shadowrocket 私有导入链接。</li>
-            <li>私有导入链接已读取、已超过 10 分钟，或对应 Access Profile 已暂停、过期或吊销。</li>
+            <li>把 WireGuard `.conf` 下载地址直接填入 Shadowrocket，或仍在使用旧格式节点。请删除旧节点并使用新生成的 Shadowrocket 私有导入链接。</li>
+            <li>私有导入链接已读取、已超过 180 天，或对应 Access Profile 已暂停、过期或吊销。</li>
             <li>Endpoint 未初始化，当前服务器还没有真正启动 WireGuard 服务。</li>
             <li>publicHost 不正确，配置中的 Endpoint 必须是公网可访问域名或 IP。</li>
             <li>UDP 端口未开放，服务器和云厂商安全组需要允许 UDP listenPort。</li>
@@ -844,7 +851,7 @@ export function SecureAccessConsole({
         {shadowrocketUrl ? (
           <div className="mt-5 rounded-md border border-indigo-100 bg-indigo-50/55 p-4">
             <p className="text-sm font-semibold text-slate-950">Shadowrocket 私有导入链接</p>
-            <p className="mt-1 text-sm leading-6 text-slate-600">在 Shadowrocket 右上角 `+` 中选择 Subscribe，粘贴此链接。链接 10 分钟内仅可成功读取一次。</p>
+            <p className="mt-1 text-sm leading-6 text-slate-600">先删除旧节点，再在 Shadowrocket 右上角 `+` 中选择 Subscribe，粘贴此链接并选择新导入的 WireGuard 节点。链接 180 天内仅可成功读取一次。</p>
             <p className="mt-2 break-all text-sm text-indigo-800">{shadowrocketUrl}</p>
             <Button variant="secondary" onClick={copyShadowrocketImportUrl} className="mt-3 whitespace-normal leading-5">
               <Clipboard className="h-4 w-4" />
@@ -878,7 +885,7 @@ export function SecureAccessConsole({
               <div className="rounded-md border border-indigo-100 bg-indigo-50/55 p-4 text-sm leading-6 text-slate-700">
                 <p className="font-semibold">真实设备验收流程</p>
                 <p className="mt-1">先点击“等待真实设备连接”，再在手机或电脑 WireGuard 客户端开启连接，并打开网页产生流量。通过条件是服务端看到 latest handshake，且 transfer 字节增长。</p>
-                <p className="mt-1">全隧道模式下，点击“验证全隧道出口”后，设备浏览器观测到的公网 IP 应显示为 {expectedExitIp}。</p>
+                <p className="mt-1">握手通过后，将 Shadowrocket 全局路由设为“代理”，再点击“验证全隧道出口”；设备浏览器观测到的公网 IP 应显示为 {expectedExitIp}。</p>
                 <div className="mt-3 grid gap-2 sm:grid-cols-3">
                   <Button variant="secondary" onClick={waitForHandshake} disabled={Boolean(loading) || !profile.publicKey} className="whitespace-normal leading-5">
                     <Activity className="h-4 w-4" />
@@ -888,7 +895,7 @@ export function SecureAccessConsole({
                     <Activity className="h-4 w-4" />
                     检查连接握手
                   </Button>
-                  <Button variant="secondary" onClick={verifyEgressIp} disabled={Boolean(loading) || !profile.publicKey} className="whitespace-normal leading-5">
+                  <Button variant="secondary" onClick={verifyEgressIp} disabled={Boolean(loading) || !profile.publicKey || !connectionVerified} className="whitespace-normal leading-5">
                     <Globe2 className="h-4 w-4" />
                     验证全隧道出口
                   </Button>
@@ -927,8 +934,10 @@ export function SecureAccessConsole({
                   />
                   <ActivityRow
                     title="Transfer"
-                    meta={`Rx ${formatBytes(runtimeStatus.transferRxBytes)} / Tx ${formatBytes(runtimeStatus.transferTxBytes)}${runtimeTransferDelta !== null ? ` / 本次增长 ${formatBytes(runtimeTransferDelta)}` : ""}`}
-                    status={runtimeStatus.hasTransfer ? "success" : "pending"}
+                    meta={!runtimeStatus.latestHandshakeAt && runtimeStatus.hasTransfer
+                      ? `仅检测到握手尝试：Rx ${formatBytes(runtimeStatus.transferRxBytes)} / Tx ${formatBytes(runtimeStatus.transferTxBytes)}，隧道尚未建立`
+                      : `Rx ${formatBytes(runtimeStatus.transferRxBytes)} / Tx ${formatBytes(runtimeStatus.transferTxBytes)}${runtimeTransferDelta !== null ? ` / 本次增长 ${formatBytes(runtimeTransferDelta)}` : ""}`}
+                    status={hasTunnelTraffic ? "success" : "pending"}
                   />
                   <ActivityRow
                     title="全隧道出口 IP 预期"
@@ -947,7 +956,7 @@ export function SecureAccessConsole({
                   <ActivityRow
                     title="设备观测出口 IP"
                     meta={`${egressVerification.observedIp} / 预期 ${egressVerification.expectedIp || "未确认"} / ${egressVerification.provider}`}
-                    status={egressVerification.passed ? "success" : "pending"}
+                    status={egressVerification.passed ? "success" : "failed"}
                   />
                 </>
               ) : null}
@@ -974,7 +983,7 @@ export function SecureAccessConsole({
 
       <section className="rounded-md border border-emerald-200 bg-emerald-50 p-5 text-sm leading-7 text-emerald-900">
         <p className="font-semibold text-emerald-950">安全提示</p>
-        <p className="mt-1">安全接入配置包含设备私钥，只能导入到本人设备。重新生成或吊销都会写入审计日志；一次性配置下载链接和 Shadowrocket 私有导入链接均在 10 分钟后过期，使用后立即失效。</p>
+        <p className="mt-1">安全接入配置包含设备私钥，只能导入到本人设备。重新生成或吊销都会写入审计日志；一次性配置下载链接在 10 分钟后过期，Shadowrocket 私有导入链接在 180 天后过期，使用后均立即失效。</p>
       </section>
     </div>
   );

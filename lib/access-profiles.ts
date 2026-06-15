@@ -11,6 +11,7 @@ import type { AdminActor } from "@/lib/vps-data";
 
 export const ACCESS_PROFILE_STATUSES = ["active", "paused", "expired", "revoked"] as const;
 const PROFILE_TTL_DAYS = 180;
+const SHADOWROCKET_TOKEN_TTL_DAYS = 180;
 
 type ProfileRecord = Record<string, unknown> & {
   id: string;
@@ -486,7 +487,10 @@ export async function createProfileShadowrocketToken({
       profileId,
       requestedBy: actor.email,
       tokenHash: createShadowrocketTokenHash(token),
-      expiresAt: new Date(Date.now() + Number(process.env.VPS_ONE_TIME_TOKEN_MINUTES || 10) * 60_000),
+      expiresAt: new Date(
+        Date.now() +
+          Number(process.env.VPS_SHADOWROCKET_TOKEN_DAYS || SHADOWROCKET_TOKEN_TTL_DAYS) * 86_400_000
+      ),
       ipHash: meta.ipHash,
       userAgent: meta.userAgent
     }

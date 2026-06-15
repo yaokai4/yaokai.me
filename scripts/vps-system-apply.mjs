@@ -109,6 +109,7 @@ async function ensureEnvValues(envPath, raw, values) {
     VPS_CLIENT_ALLOWED_IPS: values.VPS_CLIENT_ALLOWED_IPS || "0.0.0.0/0",
     VPS_DEFAULT_PROFILE_EXPIRE_DAYS: values.VPS_DEFAULT_PROFILE_EXPIRE_DAYS || "180",
     VPS_ONE_TIME_TOKEN_MINUTES: values.VPS_ONE_TIME_TOKEN_MINUTES || "10",
+    VPS_SHADOWROCKET_TOKEN_DAYS: values.VPS_SHADOWROCKET_TOKEN_DAYS || "180",
     VPS_ALLOW_PUBLIC_STATUS: values.VPS_ALLOW_PUBLIC_STATUS || "false",
     VPS_DRY_RUN: apply ? "false" : values.VPS_DRY_RUN || "true",
     VPS_ALLOW_SYSTEM_APPLY: apply ? "true" : values.VPS_ALLOW_SYSTEM_APPLY || "false"

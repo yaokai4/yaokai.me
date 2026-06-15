@@ -86,6 +86,15 @@ const shadowrocketRoute = read("app/api/vps/access/shadowrocket/[token]/route.ts
 assert(shadowrocketRoute.includes("createShadowrocketTokenHash"), "Shadowrocket 导入令牌必须使用独立哈希命名空间");
 assert(shadowrocketRoute.includes("usedAt: null"), "Shadowrocket 导入令牌必须原子地限制为仅使用一次");
 assert(!shadowrocketRoute.includes("requireVpsUser"), "Shadowrocket 客户端无法携带网页登录 Cookie，导入 GET 只能使用一次性令牌鉴权");
+const accessProfiles = read("lib/access-profiles.ts");
+assert(
+  accessProfiles.includes("VPS_SHADOWROCKET_TOKEN_DAYS || SHADOWROCKET_TOKEN_TTL_DAYS"),
+  "Shadowrocket 私有导入链接必须使用独立的天数有效期配置"
+);
+assert(
+  accessProfiles.includes("const SHADOWROCKET_TOKEN_TTL_DAYS = 180"),
+  "Shadowrocket 私有导入链接默认必须有效 180 天"
+);
 for (const file of ["scripts/deploy.sh", "scripts/setup-server.sh"]) {
   const content = read(file);
   assert(content.includes("access_log off"), `${file} 必须避免记录一次性令牌 URL`);

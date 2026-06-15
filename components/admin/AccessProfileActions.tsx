@@ -110,7 +110,7 @@ export function AccessProfileActions({ profileId, status }: { profileId: string;
   async function copyShadowrocketUrl() {
     if (!shadowrocketUrl) return;
     await navigator.clipboard.writeText(shadowrocketUrl);
-    toast({ title: "私有导入链接已复制", description: "链接 10 分钟内有效，成功读取一次后立即失效。", type: "success" });
+    toast({ title: "私有导入链接已复制", description: "请先删除旧节点，再使用新链接重新订阅。链接 180 天内有效，成功读取一次后立即失效。", type: "success" });
   }
 
   const disabled = Boolean(loading) || status === "revoked" || status === "expired";
@@ -179,7 +179,7 @@ export function AccessProfileActions({ profileId, status }: { profileId: string;
       {shadowrocketUrl ? (
         <div className="mt-5 rounded-md border border-indigo-100 bg-indigo-50/55 p-4">
           <p className="text-sm font-semibold text-slate-950">Shadowrocket 私有导入链接</p>
-          <p className="mt-1 text-sm leading-6 text-slate-600">链接 10 分钟内仅可成功读取一次。导入时在 Shadowrocket 中选择 Subscribe 并粘贴此链接。</p>
+          <p className="mt-1 text-sm leading-6 text-slate-600">请先删除旧节点，再在 Shadowrocket 中选择 Subscribe 并粘贴此链接。链接 180 天内仅可成功读取一次。</p>
           <p className="mt-2 break-all text-sm text-indigo-800">{shadowrocketUrl}</p>
           <Button variant="secondary" onClick={copyShadowrocketUrl} className="mt-3 whitespace-nowrap">
             <Copy className="h-4 w-4" />

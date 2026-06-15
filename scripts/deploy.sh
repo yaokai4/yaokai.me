@@ -27,6 +27,7 @@ if [[ "$ENABLE_SSL" != "1" ]]; then
 fi
 
 LOCAL_PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+LOCAL_PROJECT_NAME="$(basename "$LOCAL_PROJECT_DIR")"
 TARBALL="${TMPDIR:-/tmp}/yaokai-me-$(date +%Y%m%d-%H%M%S).tar.gz"
 REMOTE_TARBALL="/home/${EC2_USER}/$(basename "$TARBALL")"
 
@@ -49,21 +50,21 @@ dot_clean "$LOCAL_PROJECT_DIR" 2>/dev/null || true
 echo "==> [本地] 打包项目，排除本地环境变量、数据库、构建产物和依赖目录"
 cd "$(dirname "$LOCAL_PROJECT_DIR")"
 COPYFILE_DISABLE=1 tar \
-  --exclude="yaokai.me/.next" \
-  --exclude="yaokai.me/node_modules" \
-  --exclude="yaokai.me/tsconfig.tsbuildinfo" \
-  --exclude="yaokai.me/.env" \
-  --exclude="yaokai.me/.env.local" \
-  --exclude="yaokai.me/.env.production" \
-  --exclude="yaokai.me/prisma/dev.db" \
-  --exclude="yaokai.me/prisma/production.db" \
-  --exclude="yaokai.me/prisma/*.db" \
-  --exclude="yaokai.me/backups" \
-  --exclude="yaokai.me/.git" \
-  --exclude="yaokai.me/yaokai.me" \
+  --exclude="${LOCAL_PROJECT_NAME}/.next" \
+  --exclude="${LOCAL_PROJECT_NAME}/node_modules" \
+  --exclude="${LOCAL_PROJECT_NAME}/tsconfig.tsbuildinfo" \
+  --exclude="${LOCAL_PROJECT_NAME}/.env" \
+  --exclude="${LOCAL_PROJECT_NAME}/.env.local" \
+  --exclude="${LOCAL_PROJECT_NAME}/.env.production" \
+  --exclude="${LOCAL_PROJECT_NAME}/prisma/dev.db" \
+  --exclude="${LOCAL_PROJECT_NAME}/prisma/production.db" \
+  --exclude="${LOCAL_PROJECT_NAME}/prisma/*.db" \
+  --exclude="${LOCAL_PROJECT_NAME}/backups" \
+  --exclude="${LOCAL_PROJECT_NAME}/.git" \
+  --exclude="${LOCAL_PROJECT_NAME}/yaokai.me" \
   --exclude="*/.DS_Store" \
   --exclude="*/._*" \
-  -czf "$TARBALL" "yaokai.me/"
+  -czf "$TARBALL" "${LOCAL_PROJECT_NAME}/"
 
 SIZE_MB="$(du -m "$TARBALL" | cut -f1)"
 echo "    包大小：${SIZE_MB}MB"
@@ -172,6 +173,7 @@ VPS_WG_ALLOWED_IPS="10.66.0.0/24"
 VPS_CLIENT_ALLOWED_IPS="0.0.0.0/0"
 VPS_DEFAULT_PROFILE_EXPIRE_DAYS=180
 VPS_ONE_TIME_TOKEN_MINUTES=10
+VPS_SHADOWROCKET_TOKEN_DAYS=180
 VPS_ALLOW_PUBLIC_STATUS=false
 VPS_DRY_RUN=true
 VPS_ALLOW_SYSTEM_APPLY=false
@@ -253,6 +255,7 @@ else
   if ! grep -q '^VPS_ONE_TIME_TOKEN_MINUTES=' .env.production; then
     echo "VPS_ONE_TIME_TOKEN_MINUTES=10" >> .env.production
   fi
+  set_or_replace_env VPS_SHADOWROCKET_TOKEN_DAYS "180"
   if ! grep -q '^VPS_ALLOW_PUBLIC_STATUS=' .env.production; then
     echo "VPS_ALLOW_PUBLIC_STATUS=false" >> .env.production
   fi

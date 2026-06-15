@@ -41,6 +41,14 @@ function parseEndpoint(value: string) {
   return { host, port };
 }
 
+function stripCidr(address: string | undefined) {
+  return address?.split("/")[0]?.trim();
+}
+
+function sanitizeNodeName(value: string) {
+  return value.trim().replace(/[=,\r\n]+/g, " ") || "Secure Access";
+}
+
 export function parseWireGuardConfigForShadowrocket(configText: string): ParsedWireGuardConfig {
   const values: Record<WireGuardSection, Record<string, string>> = {
     interface: {},
@@ -90,28 +98,19 @@ export function parseWireGuardConfigForShadowrocket(configText: string): ParsedW
 
 export function buildShadowrocketSubscription(configText: string, profileName: string) {
   const parsed = parseWireGuardConfigForShadowrocket(configText);
-  const ipv4 = parsed.addresses.find((address) => address.includes("."));
-  const ipv6 = parsed.addresses.find((address) => address.includes(":"));
-  const proxy: Record<string, unknown> = {
-    name: profileName.trim() || "Secure Access",
-    type: "wireguard",
-    server: parsed.endpointHost,
-    port: parsed.endpointPort,
-    ip: ipv4,
-    ipv6,
-    "private-key": parsed.privateKey,
-    "public-key": parsed.publicKey,
-    udp: true,
-    mtu: parsed.mtu,
-    dns: parsed.dns.length === 1 ? parsed.dns[0] : parsed.dns,
-    "allowed-ips": parsed.allowedIps,
-    keepalive: parsed.persistentKeepalive,
-    "persistent-keepalive": parsed.persistentKeepalive
-  };
+  const ipv4 = stripCidr(parsed.addresses.find((address) => address.includes(".")));
+  const ipv6 = stripCidr(parsed.addresses.find((address) => address.includes(":")));
+  const parameters = [
+    `privateKey=${parsed.privateKey}`,
+    `publicKey=${parsed.publicKey}`,
+    ipv4 ? `ip=${ipv4}` : null,
+    ipv6 ? `ipv6=${ipv6}` : null,
+    "udp=1",
+    parsed.dns[0] ? `dns=${parsed.dns[0]}` : null,
+    parsed.mtu ? `mtu=${parsed.mtu}` : null,
+    parsed.persistentKeepalive ? `keepalive=${parsed.persistentKeepalive}` : null
+  ].filter(Boolean);
+  const node = `${sanitizeNodeName(profileName)}=wireguard,${parsed.endpointHost},${parsed.endpointPort},${parameters.join(",")}`;
 
-  for (const [key, value] of Object.entries(proxy)) {
-    if (value === undefined || (Array.isArray(value) && value.length === 0)) delete proxy[key];
-  }
-
-  return `proxies:\n  - ${JSON.stringify(proxy)}\n`;
+  return `${Buffer.from(node, "utf8").toString("base64")}\n`;
 }
