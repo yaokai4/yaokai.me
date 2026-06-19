@@ -88,8 +88,8 @@ export async function GET(request: NextRequest, { params }: Context) {
 
     return new NextResponse(subscription, {
       headers: {
-        "content-type": "text/plain; charset=utf-8",
-        "content-disposition": "inline; filename=\"shadowrocket-secure-access.txt\"",
+        "content-type": "text/yaml; charset=utf-8",
+        "content-disposition": "inline; filename=\"shadowrocket-secure-access.yaml\"",
         "cache-control": "no-store, max-age=0",
         "x-content-type-options": "nosniff"
       }
